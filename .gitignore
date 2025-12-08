@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment
+.env
+backend/.env
+
+# Database
+database/
+*.db
+*.sqlite3
+oncopurpose.db
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build/
+dist/
+build/
+
+# PyTest
+.pytest_cache/
+
+# Temp files
+*.tmp
+
+# Ignore pip envs
+pip-log.txt
+
+# Ignore macOS metadata
+.DS_Store

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OncoPurpose - AI-Powered Oncology Drug Repurposing Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(148, 163, 184, 0.3);
+            box-shadow: 0 8px 32px rgba(71, 85, 105, 0.2);
+        }
+        .card-elevated {
+            background: #1e293b;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+        .data-number {
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .hero-card {
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .pricing-card-popular {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(71, 85, 105, 0.3);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(71, 85, 105, 0.25);
+            border-color: rgba(148, 163, 184, 0.3);
+        }
+        .feature-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.4s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(148, 163, 184, 0.3);
+            box-shadow: 0 12px 40px rgba(71, 85, 105, 0.2);
+        }
+        .logo-box {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(51, 65, 85, 0.4);
+            transition: all 0.3s ease;
+        }
+        .logo-box:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(148, 163, 184, 0.25);
+        }
+    </style>
+</head>
+<body style="background: radial-gradient(circle at 15% 20%, rgba(20, 184, 166, 0.04) 0%, transparent 40%), radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.04) 0%, transparent 40%), #0a0f1e; color: #f1f5f9;">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(10, 15, 30, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #1e293b;">
+        <div class="max-w-7xl mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-2">
+                        <div class="text-xl font-semibold" style="color: #14b8a6;">OncoPurpose</div>
+                        <span class="text-xs px-2 py-0.5 rounded" style="background-color: #134e4a; color: #5eead4;">BETA</span>
+                    </div>
+                    <div class="hidden md:flex space-x-6 text-sm">
+                        <a href="index (1).html" style="color: #e2e8f0;">Home</a>
+                        <a href="dashboard (1).html" style="color: #94a3b8;">Dashboard</a>
+                        <a href="discovery.html" style="color: #94a3b8;">Discovery</a>
+                        <a href="library.html" style="color: #94a3b8;">Research</a>
+                        <a href="analytics.html" style="color: #94a3b8;">Analytics</a>
+                    </div>
+                </div>
+                    <div class="flex items-center space-x-4">
+                    <button id="request-demo-btn" class="px-5 py-2 rounded text-sm font-medium transition-colors" style="background-color: #0d9488; color: white;">
+                        Request Demo
+                    </button>
+                    <div class="flex items-center space-x-3">
+                        <img id="user-avatar" src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                        <span id="user-name" class="hidden md:block text-sm" style="color: #94a3b8;">Dr. Sarah Chen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-24" style="background: radial-gradient(circle at 20% 30%, rgba(20, 184, 166, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%), #0a0f1e;">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid lg:grid-cols-[1fr_540px] gap-20 items-center">
+                <div class="space-y-10">
+                    <div class="space-y-6">
+                        <h1 class="text-5xl lg:text-6xl font-bold leading-tight tracking-tight" style="color: #f1f5f9; min-height: 180px;">
+                            <span id="typed-text"></span>
+                        </h1>
+                        <p class="text-xl leading-relaxed" style="color: #94a3b8; max-width: 540px;">
+                            AI-powered analysis of 12,000+ clinical trials and molecular pathway data
+                        </p>
+                        <div class="flex items-center space-x-2 text-sm" style="color: #64748b;">
+                            <svg class="w-4 h-4" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Trusted by researchers at Stanford, MIT, Mayo Clinic</span>
+                        </div>
+                    </div>
+
+                    <!-- Value Props -->
+                    <div class="space-y-4">
+                        <div class="text-xs font-bold uppercase tracking-wider" style="color: #64748b; letter-spacing: 0.15em;">Platform Overview</div>
+                        <div class="grid grid-cols-3 gap-4">
+                        <div class="stat-card p-5 rounded-xl">
+                            <div class="text-3xl font-bold data-number mb-2" style="color: #14b8a6;">64%</div>
+                            <div class="text-xs font-semibold uppercase tracking-wide" style="color: #94a3b8;">Faster to market</div>
+                        </div>
+                        <div class="stat-card p-5 rounded-xl">
+                            <div class="text-3xl font-bold data-number mb-2" style="color: #14b8a6;">1,183</div>
+                            <div class="text-xs font-semibold uppercase tracking-wide" style="color: #94a3b8;">Opportunities</div>
+                        </div>
+                        <div class="stat-card p-5 rounded-xl">
+                            <div class="text-3xl font-bold data-number mb-2" style="color: #14b8a6;">87.3%</div>
+                            <div class="text-xs font-semibold uppercase tracking-wide" style="color: #94a3b8;">Accuracy</div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="flex space-x-4">
+                            <button id="get-started-btn" class="px-8 py-3 rounded-lg font-semibold text-base transition-all hover:shadow-lg" style="background-color: #0d9488; color: white;">
+                                Request Demo
+                            </button>
+                            <button id="watch-demo-btn" class="px-8 py-3 rounded-lg font-semibold text-base border transition-all hover:border-slate-500/30" style="border-color: #334155; color: #94a3b8;">
+                                View Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-center lg:justify-end">
+                    <!-- Product Dashboard Card -->
+                    <div class="hero-card rounded-2xl p-8 border w-full" style="background-color: #ffffff; border-color: #e2e8f0; max-width: 540px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between mb-6 pb-4" style="border-bottom: 1px solid #e2e8f0;">
+                            <span class="text-sm font-medium uppercase tracking-wide" style="color: #64748b;">Active Analysis</span>
+                            <span class="text-xs px-3 py-1.5 rounded-full font-medium" style="background-color: #dcfce7; color: #166534;">● Live</span>
+                        </div>
+                        
+                        <!-- Primary Row -->
+                        <div class="mb-6">
+                            <div class="flex items-center space-x-4 mb-3">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color: #f0fdfa;">
+                                    <svg class="w-6 h-6" style="color: #14b8a6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-lg font-semibold mb-1" style="color: #0f172a;">Metformin → Breast Cancer</div>
+                                    <div class="text-base font-medium" style="color: #14b8a6;">87% Confidence Match</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Secondary Stats -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-4 rounded-xl" style="background-color: #f8fafc;">
+                                <div class="text-2xl font-bold data-number mb-1" style="color: #0f172a;">1,183</div>
+                                <div class="text-xs font-medium" style="color: #64748b;">Opportunities</div>
+                            </div>
+                            <div class="text-center p-4 rounded-xl" style="background-color: #f8fafc;">
+                                <div class="text-2xl font-bold data-number mb-1" style="color: #0f172a;">89</div>
+                                <div class="text-xs font-medium" style="color: #64748b;">High Confidence</div>
+                            </div>
+                            <div class="text-center p-4 rounded-xl" style="background-color: #f8fafc;">
+                                <div class="text-2xl font-bold data-number mb-1" style="color: #0f172a;">24</div>
+                                <div class="text-xs font-medium" style="color: #64748b;">In Progress</div>
+                            </div>
+                        </div>
