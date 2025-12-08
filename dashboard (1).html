@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        Copyright (c) 2025 OncoPurpose (trovesx)
+        All Rights Reserved.
+        For licensing info, see LICENSE or contact oncopurpose@trovesx.com
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - OncoPurpose</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Navy + Teal + Orange (Default - Professional Tech) */
+            --bg-primary: #0a1628;
+            --bg-secondary: rgba(15, 23, 42, 0.8);
+            --bg-card: rgba(30, 41, 59, 0.95);
+            --bg-hover: rgba(6, 182, 212, 0.08);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(51, 65, 85, 0.6);
+            --accent-primary: #06b6d4;
+            --accent-secondary: #22d3ee;
+            --accent-highlight: #f97316;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --nav-bg: rgba(10, 22, 40, 0.95);
+            --sidebar-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 22, 40, 0.9) 100%);
+        }
+        
+        [data-scheme="emerald"] {
+            /* Slate + Emerald + Amber (Medical/Health) */
+            --bg-primary: #0f172a;
+            --bg-secondary: rgba(30, 41, 59, 0.7);
+            --bg-card: rgba(30, 41, 59, 0.95);
+            --bg-hover: rgba(16, 185, 129, 0.08);
+            --accent-primary: #10b981;
+            --accent-secondary: #34d399;
+            --accent-highlight: #f59e0b;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --sidebar-bg: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+        }
+        
+        [data-scheme="indigo"] {
+            /* Orange + Teal (Reference Design) */
+            --bg-primary: #0a1628;
+            --bg-secondary: rgba(15, 23, 42, 0.8);
+            --bg-card: rgba(30, 41, 59, 0.95);
+            --bg-hover: rgba(249, 115, 22, 0.08);
+            --accent-primary: #f97316;
+            --accent-secondary: #fb923c;
+            --accent-highlight: #06b6d4;
+            --accent-alert: #f97316;
+            --border-color: rgba(51, 65, 85, 0.6);
+            --nav-bg: rgba(10, 22, 40, 0.95);
+            --sidebar-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 22, 40, 0.9) 100%);
+        }
+        
+        [data-scheme="purple"] {
+            /* Purple + Pink + Yellow (Modern SaaS) */
+            --bg-primary: #1e1b29;
+            --bg-secondary: rgba(30, 27, 41, 0.8);
+            --bg-card: rgba(59, 53, 76, 0.9);
+            --bg-hover: rgba(139, 92, 246, 0.08);
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #a78bfa;
+            --accent-highlight: #ec4899;
+            --border-color: rgba(139, 92, 246, 0.3);
+            --nav-bg: rgba(30, 27, 41, 0.95);
+            --sidebar-bg: linear-gradient(180deg, rgba(59, 53, 76, 0.7) 0%, rgba(30, 27, 41, 0.7) 100%);
+        }
+        
+        [data-theme="light"] {
+            /* Light Theme - adapts to current color scheme */
+            --bg-primary: #f8fafc;
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-card: #ffffff;
+            --bg-hover: rgba(226, 232, 240, 0.8);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-tertiary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: rgba(226, 232, 240, 0.9);
+            --shadow-color: rgba(0, 0, 0, 0.06);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.35s ease, color 0.35s ease;
+        }
+        .section-card {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 24px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+        .section-card:hover {
+            border-color: rgba(148, 163, 184, 0.4);
+            box-shadow: 0 8px 32px rgba(71, 85, 105, 0.2);
+        }
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(71, 85, 105, 0.25);
+            border-color: rgba(148, 163, 184, 0.4);
+        }
+        .action-button-primary {
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+            transition: all 0.22s ease-out;
+            position: relative;
+            border-radius: 6px;
+        }
+        .action-button-primary:hover {
+            background: var(--accent-secondary);
+            border-color: #6ee7b7;
+            box-shadow: 0 2px 8px rgba(71, 85, 105, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .action-button-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            transition: all 0.22s ease-out;
+            position: relative;
+            border-radius: 6px;
+        }
+        .action-button-secondary:hover {
+            background: rgba(16, 185, 129, 0.06);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid #0f172a;
+        }
+        .data-number {
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .confidence-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            transition: background 0.35s ease;
+        }
+        .table-row {
+            border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+            transition: all 0.2s ease;
+        }
+        .table-row:nth-child(even) {
+            background: rgba(51, 65, 85, 0.08);
+        }
+        .table-row:hover {
+            background: rgba(71, 85, 105, 0.15);
+        }
+        .skeleton {
+            background: linear-gradient(90deg, rgba(51, 65, 85, 0.3) 25%, rgba(51, 65, 85, 0.5) 50%, rgba(51, 65, 85, 0.3) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .status-complete { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .status-new { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .status-update { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        
+        /* Clinical button styles */
+        .action-button-primary,
+        .action-button-secondary {
+            cursor: pointer;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        .action-button-primary:active {
+            transform: translateY(1px);
+        }
+        .action-button-secondary:active {
+            transform: translateY(1px);
+        }
+        
+        /* Conditional orange for alerts/actions only in Orange+Teal scheme */
+        [data-scheme="indigo"] .action-button-primary {
+            background: #f97316;
+            border-color: #f97316;
+        }
+        [data-scheme="indigo"] .action-button-primary:hover {
+            background: #fb923c;
+            border-color: #fb923c;
+        }
+        [data-scheme="indigo"] .confidence-bar {
+            background: linear-gradient(90deg, #06b6d4 0%, #22d3ee 100%) !important;
+        }
+        [data-scheme="indigo"] .table-row .data-number,
+        [data-scheme="indigo"] .table-row .confidence-bar {
+            color: #06b6d4 !important;
+        }
+    </style>
+</head>
+<body style="background: var(--bg-primary); color: var(--text-primary);">
+    <!-- Top Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50" style="background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); transition: background 0.35s ease;">
+        <div class="max-w-7xl mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-2">
+                        <div class="text-xl font-semibold" style="color: var(--accent-primary);">OncoPurpose</div>
+                        <span class="text-xs px-2 py-0.5 rounded" style="background-color: rgba(6, 182, 212, 0.15); color: var(--accent-secondary);">BETA</span>
+                    </div>
+                    <div class="hidden md:flex space-x-6 text-sm">
+                        <a href="index (1).html" style="color: #94a3b8;">Home</a>
+                        <a href="dashboard (1).html" style="color: #e2e8f0;">Dashboard</a>
+                        <a href="discovery.html" style="color: #94a3b8;">Discovery</a>
+                        <a href="library.html" style="color: #94a3b8;">Research</a>
+                        <a href="analytics.html" style="color: #94a3b8;">Analytics</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                           <input id="global-search" type="text" placeholder="Search compounds, targets, pathways, genes..." 
+                               class="rounded px-3 py-2 text-sm w-64" style="background-color: #1e293b; border: 1px solid #334155; color: #e2e8f0; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);">
+                        <div class="absolute right-3 top-2.5 text-xs" style="color: #64748b;">🔍</div>
+                    </div>
+                    <!-- Notification Bell -->
+                    <button class="relative p-2 rounded-lg hover:bg-slate-800 transition-colors">
+                        <i data-lucide="bell" style="width: 20px; height: 20px; color: #94a3b8;"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <!-- Color Scheme Selector -->
+                    <div class="relative">
+                        <button id="scheme-toggle" class="p-2 rounded-lg hover:bg-slate-800 transition-colors" title="Change color scheme">
+                            <i data-lucide="palette" style="width: 20px; height: 20px; color: #94a3b8;"></i>
+                        </button>
+                        <div id="scheme-menu" class="hidden absolute right-0 mt-2 w-56 rounded-lg shadow-2xl border z-50" style="background: var(--bg-card); border-color: var(--border-color);">
+                            <div class="p-2">
+                                <div class="text-xs font-semibold mb-2 px-2" style="color: var(--text-tertiary);">COLOR SCHEME</div>
+                                <button data-scheme="default" class="scheme-option w-full text-left px-3 py-2.5 rounded-md flex items-center space-x-3 transition-colors hover:bg-opacity-10">
+                                    <div class="flex space-x-1">
+                                        <div class="w-4 h-4 rounded-full" style="background: #06b6d4;"></div>
+                                        <div class="w-4 h-4 rounded-full" style="background: #f97316;"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium" style="color: var(--text-primary);">Navy + Teal</div>
+                                        <div class="text-xs" style="color: var(--text-muted);">Professional Tech</div>
+                                    </div>
+                                </button>
+                                <button data-scheme="emerald" class="scheme-option w-full text-left px-3 py-2.5 rounded-md flex items-center space-x-3 transition-colors hover:bg-opacity-10">
+                                    <div class="flex space-x-1">
+                                        <div class="w-4 h-4 rounded-full" style="background: #10b981;"></div>
+                                        <div class="w-4 h-4 rounded-full" style="background: #f59e0b;"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium" style="color: var(--text-primary);">Slate + Emerald</div>
+                                        <div class="text-xs" style="color: var(--text-muted);">Medical/Health</div>
+                                    </div>
+                                </button>
+                                <button data-scheme="indigo" class="scheme-option w-full text-left px-3 py-2.5 rounded-md flex items-center space-x-3 transition-colors hover:bg-opacity-10">
+                                    <div class="flex space-x-1">
+                                        <div class="w-4 h-4 rounded-full" style="background: #f97316;"></div>
+                                        <div class="w-4 h-4 rounded-full" style="background: #06b6d4;"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium" style="color: var(--text-primary);">Orange + Teal</div>
+                                        <div class="text-xs" style="color: var(--text-muted);">Reference Design</div>
+                                    </div>
+                                </button>
+                                <button data-scheme="purple" class="scheme-option w-full text-left px-3 py-2.5 rounded-md flex items-center space-x-3 transition-colors hover:bg-opacity-10">
+                                    <div class="flex space-x-1">
+                                        <div class="w-4 h-4 rounded-full" style="background: #8b5cf6;"></div>
+                                        <div class="w-4 h-4 rounded-full" style="background: #ec4899;"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium" style="color: var(--text-primary);">Purple + Pink</div>
+                                        <div class="text-xs" style="color: var(--text-muted);">Modern SaaS</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-800 transition-colors" title="Toggle theme">
+                        <i data-lucide="sun" id="theme-icon" style="width: 20px; height: 20px; color: #94a3b8;"></i>
+                    </button>
+                    <div class="flex items-center space-x-3">
+                        <img id="user-avatar" src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                        <div class="hidden md:block">
+                            <div id="user-name" class="text-sm font-medium" style="color: #f1f5f9;">Dr. Sarah Chen</div>
+                            <div id="user-role" class="text-xs" style="color: #64748b;">Senior Research Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <div class="w-80 min-h-screen p-6" style="background: var(--sidebar-bg); backdrop-filter: blur(10px); border-right: 1px solid var(--border-color); transition: background 0.35s ease;">
+                <div class="space-y-6 sidebar-content">
+                <!-- Quick Actions -->
+                <div class="section-card p-5 rounded-xl">
+                    <h3 class="text-xs font-semibold mb-5 tracking-wider" style="color: var(--accent-primary); text-transform: uppercase; letter-spacing: 0.08em;">Quick Actions</h3>
+                    <div class="space-y-3.5">
+                        <a href="discovery.html" class="action-button-primary block p-4 text-center">
+                            <div class="flex items-center justify-center space-x-3">
+                                <i data-lucide="microscope" style="width: 20px; height: 20px; color: white;"></i>
+                                <span class="font-semibold" style="color: white; font-size: 15px;">New Analysis</span>
+                            </div>
+                        </a>
+                        <button class="action-button-secondary relative w-full p-4 text-center">
+                            <span class="notification-badge"></span>
+                            <div class="flex items-center justify-center space-x-3">
+                                <i data-lucide="file-bar-chart" style="width: 20px; height: 20px; color: #cbd5e1;"></i>
+                                <span class="font-semibold" style="color: #cbd5e1; font-size: 15px;">Generate Report</span>
+                            </div>
+                        </button>
+                        <button class="action-button-secondary w-full p-4 text-center">
+                            <div class="flex items-center justify-center space-x-3">
+                                <i data-lucide="download" style="width: 20px; height: 20px; color: #cbd5e1;"></i>
+                                <span class="font-semibold" style="color: #cbd5e1; font-size: 15px;">Export Data</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Searches -->
+                <div class="section-card p-4 rounded-xl">
+                    <h3 class="text-sm font-semibold mb-3" style="color: #f1f5f9;">Recent Searches</h3>
+                    <div class="space-y-2">
+                        <div class="p-3 rounded-lg text-sm" style="background-color: rgba(15, 23, 42, 0.6);">
+                            <div class="font-medium" style="color: #e2e8f0;">Metformin + Breast Cancer</div>
+                            <div class="text-xs" style="color: #64748b;">2 hours ago</div>
+                        </div>
+                        <div class="p-3 rounded-lg text-sm" style="background-color: rgba(15, 23, 42, 0.6);">
+                            <div class="font-medium" style="color: #e2e8f0;">NSAIDs + Colorectal</div>
+                            <div class="text-xs" style="color: #64748b;">5 hours ago</div>
+                        </div>
+                        <div class="p-3 rounded-lg text-sm" style="background-color: rgba(15, 23, 42, 0.6);">
+                            <div class="font-medium" style="color: #e2e8f0;">Statins + Prostate</div>
+                            <div class="text-xs" style="color: #64748b;">1 day ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved Opportunities -->
+                <div class="section-card p-4 rounded-xl">
+                    <h3 class="text-sm font-semibold mb-3" style="color: #f1f5f9;">Saved Opportunities</h3>
+                    <div class="space-y-2">
+                        <div class="p-3 rounded-lg text-sm" style="background-color: rgba(15, 23, 42, 0.6);">
+                            <div class="font-medium" style="color: #e2e8f0;">Aspirin → Lung Cancer</div>
+                            <div class="text-xs" style="color: var(--accent-primary);">91.7% confidence</div>
+                        </div>
+                        <div class="p-3 rounded-lg text-sm" style="background-color: rgba(15, 23, 42, 0.6);">
+                            <div class="font-medium" style="color: #e2e8f0;">Ibuprofen → Colorectal</div>
+                            <div class="text-xs" style="color: var(--accent-primary);">78.3% confidence</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Projects -->
+                <div class="section-card p-4 rounded-xl">
+                    <h3 class="text-sm font-semibold mb-3" style="color: #f1f5f9;">My Projects</h3>
+                    <div class="space-y-2">
+                        <div class="p-3 rounded-lg text-sm" style="background-color: rgba(15, 23, 42, 0.6);">
+                            <div class="font-medium" style="color: #e2e8f0;">Breast Cancer Initiative</div>
+                            <div class="text-xs" style="color: #64748b;">12 compounds analyzed</div>
+                        </div>
+                        <div class="p-3 rounded-lg text-sm" style="background-color: rgba(15, 23, 42, 0.6);">
+                            <div class="font-medium" style="color: #e2e8f0;">NSAID Repurposing</div>
+                            <div class="text-xs" style="color: #64748b;">8 compounds analyzed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-semibold mb-1" style="color: #f1f5f9;">Research Dashboard</h1>
+                <p class="text-sm" style="color: #94a3b8;">Monitor your drug repurposing opportunities and insights</p>
+            </div>
+
+            <!-- Overview Section -->
+            <div class="section-card p-6 rounded-xl mb-6">
+                <div class="mb-4">
+                    <h2 class="text-lg font-semibold" style="color: #f1f5f9;">Overview</h2>
+                    <p class="text-xs" style="color: #94a3b8;">Click any metric to filter results below</p>
+                </div>
+                
+                <div id="dashboard-kpi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="kpi-card p-5 rounded-lg">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="target" style="width: 22px; height: 22px; color: var(--accent-primary); stroke-width: 1.5;"></i>
+                            <div class="text-xs" style="color: var(--text-muted);">Total</div>
+                        </div>
+                        <div class="text-3xl font-semibold data-number mb-1" style="color: var(--accent-primary);">
+                            <span id="total-opportunities">0</span>
+                        </div>
+                        <div class="text-sm mb-2" style="color: var(--text-secondary);">Opportunities</div>
+                        <div class="text-xs" style="color: var(--accent-highlight);">↑ +12% this month</div>
+                    </div>
+
+                    <div class="kpi-card p-5 rounded-lg">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="trending-up" style="width: 22px; height: 22px; color: var(--accent-primary); stroke-width: 1.5;"></i>
+                            <div class="text-xs" style="color: var(--text-muted);">High</div>
+                        </div>
+                        <div class="text-3xl font-semibold data-number mb-1" style="color: var(--accent-primary);">
+                            <span id="high-confidence">0</span>
+                        </div>
+                        <div class="text-sm mb-2" style="color: var(--text-secondary);">High Confidence</div>
+                        <div class="text-xs" style="color: var(--accent-highlight);">↑ +8% this month</div>
+                    </div>
+
+                    <div class="kpi-card p-5 rounded-lg">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="pill" style="width: 22px; height: 22px; color: var(--accent-primary); stroke-width: 1.5;"></i>
+                            <div class="text-xs" style="color: var(--text-muted);">Analyzed</div>
+                        </div>
+                        <div class="text-3xl font-semibold data-number mb-1" style="color: var(--accent-primary);">
+                            <span id="drugs-analyzed">0</span>
+                        </div>
+                        <div class="text-sm mb-2" style="color: var(--text-secondary);">Drugs Analyzed</div>
+                        <div class="text-xs" style="color: var(--accent-highlight);">↑ +15% this month</div>
+                    </div>
+
+                    <div class="kpi-card p-5 rounded-lg">
+                        <div class="flex items-center justify-between mb-3">
+                            <i data-lucide="file-text" style="width: 22px; height: 22px; color: var(--accent-primary); stroke-width: 1.5;"></i>
+                            <div class="text-xs" style="color: var(--text-muted);">Reviewed</div>
+                        </div>
+                        <div class="text-3xl font-semibold data-number mb-1" style="color: var(--accent-primary);">
+                            <span id="papers-reviewed">0</span>
+                        </div>
+                        <div class="text-sm mb-2" style="color: var(--text-secondary);">Papers Reviewed</div>
+                        <div class="text-xs" style="color: var(--accent-highlight);">↑ +23% this month</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="section-card p-5 rounded-xl mb-6">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="filter" style="width: 18px; height: 18px; color: var(--accent-primary);"></i>
+                        <span class="text-sm font-medium" style="color: var(--text-primary);">Filters:</span>
+                    </div>
+                    <select class="text-sm px-3 py-1.5 rounded-lg" style="background-color: #1e293b; border: 1px solid #334155; color: #e2e8f0;">
+                        <option>All Cancer Types</option>
+                        <option>Breast Cancer</option>
+                        <option>Lung Cancer</option>
+                        <option>Colorectal Cancer</option>
+                        <option>Prostate Cancer</option>
+                        <option>Ovarian Cancer</option>
+                    </select>
+                    <select class="text-sm px-3 py-1.5 rounded-lg" style="background-color: #1e293b; border: 1px solid #334155; color: #e2e8f0;">
+                        <option>All Confidence Levels</option>
+                        <option>90%+ (Very High)</option>
+                        <option>75-90% (High)</option>
+                        <option>60-75% (Medium)</option>
+                        <option>Below 60% (Low)</option>
+                    </select>
+                    <select class="text-sm px-3 py-1.5 rounded-lg" style="background-color: #1e293b; border: 1px solid #334155; color: #e2e8f0;">
+                        <option>All Phases</option>
+                        <option>Phase I</option>
+                        <option>Phase II</option>
+                        <option>Phase III</option>
+                        <option>Phase IV</option>
+                    </select>
+                    <select class="text-sm px-3 py-1.5 rounded-lg" style="background-color: #1e293b; border: 1px solid #334155; color: #e2e8f0;">
+                        <option>Last 30 Days</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 90 Days</option>
+                        <option>Last Year</option>
+                        <option>All Time</option>
+                    </select>
+                    <button class="action-button-primary text-xs px-4 py-2 font-medium" style="color: white;">Apply</button>
+                    <button class="action-button-secondary text-xs px-4 py-2 font-medium" style="color: #cbd5e1;">Reset</button>
+                </div>
+            </div>
+
+            <!-- Charts and Tables Row -->
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Chart Section -->
+                <div class="lg:col-span-2">
+                    <div class="section-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h2 class="text-lg font-semibold mb-1" style="color: var(--text-primary);">Top Cancer Types by Opportunity</h2>
+                                <p class="text-xs" style="color: var(--text-tertiary);">Hover over bars for detailed insights</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs px-2 py-1 rounded" style="background-color: rgba(6, 182, 212, 0.1); color: var(--accent-primary); border: 1px solid rgba(6, 182, 212, 0.3);">
+                                    <i data-lucide="sparkles" style="width: 12px; height: 12px; display: inline; vertical-align: middle;"></i>
+                                    Model v2.1 &bull; Updated Nov 15
+                                </span>
+                                <button class="action-button-primary text-xs px-3 py-2 font-medium" style="color: white;">Export</button>
+                            </div>
+                        </div>
+                        <div id="cancer-types-chart" style="height: 340px;"></div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-semibold" style="color: #f1f5f9;">Recent Activity</h2>
+                        <button class="text-xs" style="color: #14b8a6;">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="status-icon status-complete">
+                                <i data-lucide="check" style="width: 12px; height: 12px;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">Analysis Complete</div>
+                                <div class="text-xs" style="color: #64748b;">Metformin → Breast Cancer</div>
+                                <div class="text-xs" style="color: #475569;">2 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="status-icon status-new">
+                                <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">New Opportunity</div>
+                                <div class="text-xs" style="color: #64748b;">Aspirin → Lung Cancer (91.7%)</div>
+                                <div class="text-xs" style="color: #475569;">17 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="status-icon status-complete">
+                                <i data-lucide="file-text" style="width: 12px; height: 12px;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">Report Generated</div>
+                                <div class="text-xs" style="color: #64748b;">Q4 Analysis Summary.pdf</div>
+                                <div class="text-xs" style="color: #475569;">58 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="status-icon status-update">
+                                <i data-lucide="bell" style="width: 12px; height: 12px;"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">Model Update</div>
+                                <div class="text-xs" style="color: #64748b;">Version 2.1 deployed</div>
+                                <div class="text-xs" style="color: #475569;">3 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="mt-6">
+                <div class="section-card rounded-xl overflow-hidden">
+                    <div class="p-6 border-b" style="border-color: rgba(51, 65, 85, 0.5);">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-lg font-semibold" style="color: #f1f5f9;">High-Confidence Matches</h2>
+                                <p class="text-xs mt-1" style="color: #94a3b8;">Click rows for detailed analysis and actions</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="action-button-primary text-xs px-3 py-2 font-medium" style="color: white;">
+                                    <i data-lucide="download" style="width: 14px; height: 14px; display: inline; vertical-align: middle; margin-right: 4px;"></i>
+                                    Export CSV
+                                </button>
+                                <button class="action-button-secondary text-xs px-3 py-2 font-medium" style="color: #cbd5e1;">
+                                    <i data-lucide="file-text" style="width: 14px; height: 14px; display: inline; vertical-align: middle; margin-right: 4px;"></i>
+                                    Export PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead style="background-color: rgba(51, 65, 85, 0.3);">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold" style="color: #cbd5e1;">Drug Name</th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold" style="color: #cbd5e1;">Cancer Type</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold" style="color: #cbd5e1;">Confidence</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold" style="color: #cbd5e1;">Market Size</th>
+                                    <th class="px-6 py-4 text-center text-xs font-semibold" style="color: #cbd5e1;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="drugs-table-body">
+                                <!-- Table content will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main (1).js"></script>
+    <script>
+        // Color Scheme & Theme Management
+        const htmlElement = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const schemeToggle = document.getElementById('scheme-toggle');
+        const schemeMenu = document.getElementById('scheme-menu');
+        const schemeOptions = document.querySelectorAll('.scheme-option');
+        
+        // Load saved preferences
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedScheme = localStorage.getItem('colorScheme') || 'default';
+        
+        // Apply saved preferences
+        htmlElement.setAttribute('data-theme', savedTheme);
+        if (savedScheme !== 'default') {
+            htmlElement.setAttribute('data-scheme', savedScheme);
+        }
+        updateThemeIcon(savedTheme);
+        updateActiveScheme(savedScheme);
+        
+        // Theme Toggle (Dark/Light)
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            
+            // Reinitialize charts
+            setTimeout(() => {
+                if (typeof dashboard !== 'undefined' && dashboard.initChart) {
+                    dashboard.initChart();
+                }
+            }, 100);
+        });
+        
+        // Color Scheme Selector
+        schemeToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            schemeMenu.classList.toggle('hidden');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!schemeToggle.contains(e.target) && !schemeMenu.contains(e.target)) {
+                schemeMenu.classList.add('hidden');
+            }
+        });
+        
+        // Handle scheme selection
+        schemeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const scheme = option.getAttribute('data-scheme');
+                
+                // Remove old scheme attribute
+                htmlElement.removeAttribute('data-scheme');
+                
+                // Apply new scheme (except default)
+                if (scheme !== 'default') {
+                    htmlElement.setAttribute('data-scheme', scheme);
+                }
+                
+                localStorage.setItem('colorScheme', scheme);
+                updateActiveScheme(scheme);
+                schemeMenu.classList.add('hidden');
+                
+                // Reinitialize charts with new colors
+                setTimeout(() => {
+                    if (typeof dashboard !== 'undefined' && dashboard.initChart) {
+                        dashboard.initChart();
+                    }
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                }, 100);
+            });
+        });
+        
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.setAttribute('data-lucide', 'sun');
+                themeToggle.setAttribute('title', 'Switch to light mode');
+            } else {
+                themeIcon.setAttribute('data-lucide', 'moon');
+                themeToggle.setAttribute('title', 'Switch to dark mode');
+            }
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+        
+        function updateActiveScheme(scheme) {
+            schemeOptions.forEach(option => {
+                const optionScheme = option.getAttribute('data-scheme');
+                if (optionScheme === scheme) {
+                    option.style.background = 'var(--bg-hover)';
+                    option.style.borderLeft = '3px solid var(--accent-primary)';
+                } else {
+                    option.style.background = 'transparent';
+                    option.style.borderLeft = '3px solid transparent';
+                }
+            });
+        }
+        
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // View Details Button Navigation - NEW
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('view-details-btn') || 
+                e.target.closest('.view-details-btn') ||
+                (e.target.tagName === 'BUTTON' && e.target.textContent.includes('View Details'))) {
+                const btn = e.target.classList.contains('view-details-btn') ? e.target : e.target.closest('.view-details-btn') || e.target;
+                const drugId = btn.dataset.drugId || btn.getAttribute('data-id') || '1';
+                window.location.href = `details.html?id=${drugId}`;
+            }
+        });
+        
+        // Apply Filters Button - NEW
+        const applyButtons = Array.from(document.querySelectorAll('button')).filter(btn => 
+            btn.textContent.trim() === 'Apply' || btn.textContent.includes('Apply')
+        );
+        applyButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                console.log('Apply filters clicked');
+                alert('Applying filters...\\n\\n(Backend implementation needed: GET /api/dashboard/filtered-data)');
+            });
+        });
+        
+        // Export Report Button - NEW  
+        const exportButtons = Array.from(document.querySelectorAll('button')).filter(btn => 
+            btn.textContent.includes('Export') || btn.textContent.includes('Report')
+        );
+        exportButtons.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                console.log('Export report clicked');
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = '📥 Exporting...';
+                
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    alert('Report export requires backend.\\n\\nEndpoint: POST /api/reports/export\\nFormat: PDF or CSV');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        Copyright (c) 2025 OncoPurpose (trovesx)
+        All Rights Reserved.
+        For licensing info, see LICENSE or contact oncopurpose@trovesx.com
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - OncoPurpose</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+        }
+        .glass-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+        }
+        .settings-nav {
+            transition: all 0.2s ease;
+        }
+        .settings-nav.active {
+            background: rgba(20, 184, 166, 0.12);
+            border-color: #14b8a6;
+            color: #14b8a6;
+        }
+        .settings-nav:hover {
+            background: rgba(20, 184, 166, 0.08);
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #7FB77E;
+        }
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        .team-member {
+            transition: all 0.3s ease;
+        }
+        .team-member:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #7FB77E;
+        }
+    </style>
+</head>
+<body style="background-color: #0f172a; color: #f1f5f9;">
+    <!-- Top Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold gradient-text">OncoPurpose</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors">Home</a>
+                        <a href="dashboard.html" class="nav-link text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                        <a href="discovery.html" class="nav-link text-gray-300 hover:text-white transition-colors">Discovery</a>
+                        <a href="library.html" class="nav-link text-gray-300 hover:text-white transition-colors">Research</a>
+                        <a href="analytics.html" class="nav-link text-gray-300 hover:text-white transition-colors">Analytics</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                       <div class="relative">
+                       <input id="global-search" type="text" placeholder="Search drugs, targets, diseases..." 
+                           class="bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 w-64 focus:outline-none focus:border-amber-500 text-sm">
+                        <div class="absolute right-3 top-2.5 text-gray-400">🔍</div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img id="user-avatar" src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                        <div class="hidden md:block">
+                            <div id="user-name" class="text-sm font-medium">Dr. Sarah Chen</div>
+                            <div id="user-role" class="text-xs text-gray-400">Senior Research Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-2">Settings</h1>
+                <p class="text-gray-300">Manage your account, team, and platform preferences</p>
+            </div>
+
+            <div class="grid lg:grid-cols-4 gap-6">
+                <!-- Settings Navigation -->
+                <div class="lg:col-span-1">
+                    <div class="glass-card p-6 rounded-xl sticky top-24">
+                        <nav class="space-y-2">
+                            <button class="settings-nav active w-full text-left p-3 rounded-lg border border-transparent transition-all" data-section="account">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">👤</span>
+                                    <span>Account Information</span>
+                                </div>
+                            </button>
+                            <button class="settings-nav w-full text-left p-3 rounded-lg border border-transparent transition-all" data-section="team">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">👥</span>
+                                    <span>Team Management</span>
+                                </div>
+                            </button>
+                            <button class="settings-nav w-full text-left p-3 rounded-lg border border-transparent transition-all" data-section="api">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">🔑</span>
+                                    <span>API Access</span>
+                                </div>
+                            </button>
+                            <button class="settings-nav w-full text-left p-3 rounded-lg border border-transparent transition-all" data-section="notifications">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">🔔</span>
+                                    <span>Notifications</span>
+                                </div>
+                            </button>
+                            <button class="settings-nav w-full text-left p-3 rounded-lg border border-transparent transition-all" data-section="data">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">💾</span>
+                                    <span>Data Sources</span>
+                                </div>
+                            </button>
+                            <button class="settings-nav w-full text-left p-3 rounded-lg border border-transparent transition-all" data-section="billing">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">💳</span>
+                                    <span>Billing & Subscription</span>
+                                </div>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="lg:col-span-3">
+                    <!-- Account Information Section -->
+                    <div id="account-section" class="settings-content">
+                        <div class="glass-card p-8 rounded-xl">
+                            <h2 class="text-2xl font-bold mb-6">Account Information</h2>
+                            
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Personal Details</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">Full Name</label>
+                                            <input type="text" value="Dr. Sarah Chen" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">Email Address</label>
+                                            <input type="email" value="sarah.chen@pharmacorp.com" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">Job Title</label>
+                                            <input type="text" value="Senior Research Director" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">Company</label>
+                                            <input type="text" value="PharmaCorp International" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Profile Picture</h3>
+                                    <div class="flex items-center space-x-4 mb-6">
+                                        <img src="resources/user avtars/exec2 (1).png" alt="Profile" class="w-24 h-24 rounded-full">
+                                        <div>
+                                            <button class="bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded-lg text-sm transition-colors mb-2">
+                                                Change Photo
+                                            </button>
+                                            <div class="text-xs text-gray-400">JPG, PNG up to 5MB</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 class="text-lg font-semibold mb-4">Security</h3>
+                                    <div class="space-y-3">
+                                        <button class="w-full bg-slate-700 hover:bg-slate-600 py-3 rounded-lg text-left px-4 transition-colors">
+                                            <div class="flex justify-between items-center">
+                                                <span>Change Password</span>
+                                                <span class="text-gray-400">→</span>
+                                            </div>
+                                        </button>
+                                        <button class="w-full bg-slate-700 hover:bg-slate-600 py-3 rounded-lg text-left px-4 transition-colors">
+                                            <div class="flex justify-between items-center">
+                                                <span>Two-Factor Authentication</span>
+                                                <span class="text-green-400">Enabled</span>
+                                            </div>
+                                        </button>
+                                        <button class="w-full bg-slate-700 hover:bg-slate-600 py-3 rounded-lg text-left px-4 transition-colors">
+                                            <div class="flex justify-between items-center">
+                                                <span>Login History</span>
+                                                <span class="text-gray-400">→</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end mt-8">
+                                <button class="bg-amber-600 hover:bg-amber-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Management Section -->
+                    <div id="team-section" class="settings-content hidden">
+                        <div class="glass-card p-8 rounded-xl">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold">Team Management</h2>
+                                <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                    + Invite Member
+                                </button>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="team-member p-4 rounded-lg border border-slate-600">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-4">
+                                            <img src="resources/user avtars/exec1.png" alt="Team Member" class="w-12 h-12 rounded-full">
+                                            <div>
+                                                <div class="font-medium">Dr. Michael Rodriguez</div>
+                                                <div class="text-sm text-gray-400">Principal Scientist</div>
+                                                <div class="text-xs text-gray-500">michael.rodriguez@pharmacorp.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <select class="bg-slate-700 border border-slate-600 rounded px-3 py-1 text-sm">
+                                                <option>Admin</option>
+                                                <option selected>Editor</option>
+                                                <option>Viewer</option>
+                                            </select>
+                                            <button class="text-red-400 hover:text-red-300 text-sm">
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="team-member p-4 rounded-lg border border-slate-600">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-4">
+                                            <img src="resources/user avtars/exec2 (1).png" alt="Team Member" class="w-12 h-12 rounded-full">
+                                            <div>
+                                                <div class="font-medium">Dr. Emily Watson</div>
+                                                <div class="text-sm text-gray-400">Research Associate</div>
+                                                <div class="text-xs text-gray-500">emily.watson@pharmacorp.com</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <select class="bg-slate-700 border border-slate-600 rounded px-3 py-1 text-sm">
+                                                <option>Admin</option>
+                                                <option>Editor</option>
+                                                <option selected>Viewer</option>
+                                            </select>
+                                            <button class="text-red-400 hover:text-red-300 text-sm">
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="team-member p-4 rounded-lg border border-slate-600">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="w-12 h-12 rounded-full bg-slate-600 flex items-center justify-center">
+                                                <span class="text-lg">+</span>
+                                            </div>
+                                            <div>
+                                                <div class="font-medium">Invite Team Member</div>
+                                                <div class="text-sm text-gray-400">Add a new member to your team</div>
+                                            </div>
+                                        </div>
+                                            <button class="bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                            Invite
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                                <h3 class="font-medium text-amber-400 mb-2">Role Permissions</h3>
+                                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                                    <div>
+                                        <div class="font-medium mb-1">Admin</div>
+                                        <div class="text-gray-300 text-xs">Full access to all features and team management</div>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium mb-1">Editor</div>
+                                        <div class="text-gray-300 text-xs">Can run analyses and modify projects</div>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium mb-1">Viewer</div>
+                                        <div class="text-gray-300 text-xs">Read-only access to reports and dashboards</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- API Access Section -->
+                    <div id="api-section" class="settings-content hidden">
+                        <div class="glass-card p-8 rounded-xl">
+                            <h2 class="text-2xl font-bold mb-6">API Access</h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">API Keys</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Production API Key</div>
+                                                <div class="text-sm text-gray-400">pk_live_••••••••••••••••••••••••••••••••</div>
+                                                <div class="text-xs text-gray-500">Created: March 15, 2024</div>
+                                            </div>
+                                            <div class="flex space-x-2">
+                                                <button class="bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded text-sm transition-colors">
+                                                    Copy
+                                                </button>
+                                                <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm transition-colors">
+                                                    Revoke
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Development API Key</div>
+                                                <div class="text-sm text-gray-400">pk_test_••••••••••••••••••••••••••••••••</div>
+                                                <div class="text-xs text-gray-500">Created: February 28, 2024</div>
+                                            </div>
+                                            <div class="flex space-x-2">
+                                                <button class="bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded text-sm transition-colors">
+                                                    Copy
+                                                </button>
+                                                <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm transition-colors">
+                                                    Revoke
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                        <div class="mt-4">
+                                        <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                            + Generate New Key
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">API Documentation</h3>
+                                    <div class="space-y-3">
+                                        <a href="#" class="block p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-colors">
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <div class="font-medium">REST API Reference</div>
+                                                    <div class="text-sm text-gray-400">Complete API endpoint documentation</div>
+                                                </div>
+                                                <span class="text-gray-400">→</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="block p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-colors">
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <div class="font-medium">Python SDK</div>
+                                                    <div class="text-sm text-gray-400">Installation and usage guide</div>
+                                                </div>
+                                                <span class="text-gray-400">→</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="block p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-colors">
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <div class="font-medium">Rate Limits</div>
+                                                    <div class="text-sm text-gray-400">API usage guidelines and limits</div>
+                                                </div>
+                                                <span class="text-gray-400">→</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">API Usage</h3>
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div class="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center">
+                                            <div class="text-2xl font-bold text-amber-400 mb-1">12,847</div>
+                                            <div class="text-sm text-gray-300">Requests Today</div>
+                                        </div>
+                                        <div class="p-4 bg-green-500/10 rounded-lg border border-green-500/20 text-center">
+                                            <div class="text-2xl font-bold text-green-400 mb-1">384,521</div>
+                                            <div class="text-sm text-gray-300">Requests This Month</div>
+                                        </div>
+                                        <div class="p-4 bg-teal-500/10 rounded-lg border border-teal-500/20 text-center">
+                                            <div class="text-2xl font-bold text-teal-400 mb-1">2.1M</div>
+                                            <div class="text-sm text-gray-300">Total Requests</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Section -->
+                    <div id="notifications-section" class="settings-content hidden">
+                        <div class="glass-card p-8 rounded-xl">
+                            <h2 class="text-2xl font-bold mb-6">Notification Preferences</h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Email Notifications</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Analysis Complete</div>
+                                                <div class="text-sm text-gray-400">When drug analysis finishes</div>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">New Opportunities</div>
+                                                <div class="text-sm text-gray-400">When high-confidence matches are found</div>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Team Updates</div>
+                                                <div class="text-sm text-gray-400">When team members make changes</div>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Weekly Reports</div>
+                                                <div class="text-sm text-gray-400">Summary of weekly activity</div>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Push Notifications</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Real-time Alerts</div>
+                                                <div class="text-sm text-gray-400">Critical analysis results</div>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Deadline Reminders</div>
+                                                <div class="text-sm text-gray-400">Project milestone notifications</div>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Notification Frequency</h3>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center space-x-3">
+                                            <input type="radio" name="frequency" value="immediate" checked class="text-amber-600">
+                                            <span>Immediate</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3">
+                                            <input type="radio" name="frequency" value="hourly" class="text-amber-600">
+                                            <span>Hourly Digest</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3">
+                                            <input type="radio" name="frequency" value="daily" class="text-amber-600">
+                                            <span>Daily Summary</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end mt-8">
+                                <button class="bg-amber-600 hover:bg-amber-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                                    Save Preferences
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Sources Section -->
+                    <div id="data-section" class="settings-content hidden">
+                        <div class="glass-card p-8 rounded-xl">
+                            <h2 class="text-2xl font-bold mb-6">Data Sources</h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Connected Databases</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-2xl">🧬</div>
+                                                <div>
+                                                    <div class="font-medium">PubMed Database</div>
+                                                    <div class="text-sm text-gray-400">34.2M research papers</div>
+                                                </div>
+                                            </div>
+                                            <div class="text-green-400">Connected</div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-2xl">🔬</div>
+                                                <div>
+                                                    <div class="font-medium">ClinicalTrials.gov</div>
+                                                    <div class="text-sm text-gray-400">456K clinical trials</div>
+                                                </div>
+                                            </div>
+                                            <div class="text-green-400">Connected</div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-2xl">💊</div>
+                                                <div>
+                                                    <div class="font-medium">DrugBank</div>
+                                                    <div class="text-sm text-gray-400">15.8K drug entries</div>
+                                                </div>
+                                            </div>
+                                            <div class="text-green-400">Connected</div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-2xl">📊</div>
+                                                <div>
+                                                    <div class="font-medium">FDA Orange Book</div>
+                                                    <div class="text-sm text-gray-400">Patent and exclusivity data</div>
+                                                </div>
+                                            </div>
+                                            <button class="text-yellow-400 hover:text-yellow-300 text-sm">
+                                                Reconnect
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Data Refresh Schedule</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Research Papers</div>
+                                                <div class="text-sm text-gray-400">Daily at 2:00 AM UTC</div>
+                                            </div>
+                                            <div class="text-green-400 text-sm">Active</div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Clinical Trials</div>
+                                                <div class="text-sm text-gray-400">Weekly on Sundays</div>
+                                            </div>
+                                            <div class="text-green-400 text-sm">Active</div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Market Data</div>
+                                                <div class="text-sm text-gray-400">Monthly on 1st</div>
+                                            </div>
+                                            <div class="text-green-400 text-sm">Active</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Data Usage</h3>
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div class="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center">
+                                            <div class="text-2xl font-bold text-amber-400 mb-1">2.4TB</div>
+                                            <div class="text-sm text-gray-300">Total Data</div>
+                                        </div>
+                                        <div class="p-4 bg-green-500/10 rounded-lg border border-green-500/20 text-center">
+                                            <div class="text-2xl font-bold text-green-400 mb-1">156GB</div>
+                                            <div class="text-sm text-gray-300">This Month</div>
+                                        </div>
+                                        <div class="p-4 bg-teal-500/10 rounded-lg border border-teal-500/20 text-center">
+                                            <div class="text-2xl font-bold text-teal-400 mb-1">99.8%</div>
+                                            <div class="text-sm text-gray-300">Uptime</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Section -->
+                    <div id="billing-section" class="settings-content hidden">
+                        <div class="glass-card p-8 rounded-xl">
+                            <h2 class="text-2xl font-bold mb-6">Billing & Subscription</h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Current Plan</h3>
+                                    <div class="p-6 bg-gradient-to-r from-teal-600/20 to-amber-600/20 rounded-lg border border-teal-500/30">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <div>
+                                                <div class="text-2xl font-bold">Enterprise Plan</div>
+                                                <div class="text-gray-300">Perfect for large pharmaceutical companies</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="text-3xl font-bold">$200,000</div>
+                                                <div class="text-gray-400">per year</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                            <div class="text-sm text-gray-300">
+                                                <div class="mb-2">✓ Unlimited analyses</div>
+                                                <div class="mb-2">✓ Advanced AI predictions</div>
+                                                <div class="mb-2">✓ Priority support</div>
+                                                <div class="mb-2">✓ Custom integrations</div>
+                                            </div>
+                                            <div class="text-sm text-gray-300">
+                                                <div class="mb-2">✓ Team collaboration</div>
+                                                <div class="mb-2">✓ Advanced analytics</div>
+                                                <div class="mb-2">✓ API access</div>
+                                                <div class="mb-2">✓ White-label options</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex space-x-4">
+                                            <button class="bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                                Upgrade Plan
+                                            </button>
+                                            <button class="bg-slate-600 hover:bg-slate-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                                Change Plan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Billing History</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Enterprise Plan - Annual</div>
+                                                <div class="text-sm text-gray-400">March 15, 2024 - March 15, 2025</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-medium">$200,000</div>
+                                                <div class="text-sm text-green-400">Paid</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Enterprise Plan - Annual</div>
+                                                <div class="text-sm text-gray-400">March 15, 2023 - March 15, 2024</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-medium">$200,000</div>
+                                                <div class="text-sm text-green-400">Paid</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+                                            <div>
+                                                <div class="font-medium">Research Plan - Annual</div>
+                                                <div class="text-sm text-gray-400">March 15, 2022 - March 15, 2023</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-medium">$50,000</div>
+                                                <div class="text-sm text-green-400">Paid</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Payment Method</h3>
+                                    <div class="p-4 bg-slate-700/30 rounded-lg">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="text-2xl">💳</div>
+                                                <div>
+                                                    <div class="font-medium">Corporate Credit Card</div>
+                                                    <div class="text-sm text-gray-400">•••• •••• •••• 4242</div>
+                                                    <div class="text-xs text-gray-500">Expires: 12/2026</div>
+                                                </div>
+                                            </div>
+                                            <button class="bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-4">Usage This Billing Period</h3>
+                                    <div class="grid md:grid-cols-4 gap-4">
+                                        <div class="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center">
+                                            <div class="text-2xl font-bold text-amber-400 mb-1">2,847</div>
+                                            <div class="text-sm text-gray-300">Analyses Run</div>
+                                        </div>
+                                        <div class="p-4 bg-green-500/10 rounded-lg border border-green-500/20 text-center">
+                                            <div class="text-2xl font-bold text-green-400 mb-1">156</div>
+                                            <div class="text-sm text-gray-300">Team Members</div>
+                                        </div>
+                                        <div class="p-4 bg-teal-500/10 rounded-lg border border-teal-500/20 text-center">
+                                            <div class="text-2xl font-bold text-teal-400 mb-1">1.2TB</div>
+                                            <div class="text-sm text-gray-300">Data Processed</div>
+                                        </div>
+                                        <div class="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 text-center">
+                                            <div class="text-2xl font-bold text-amber-400 mb-1">99.9%</div>
+                                            <div class="text-sm text-gray-300">Uptime</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main (1).js"></script>
+    <script>
+        // Settings navigation functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.settings-nav');
+            const contentSections = document.querySelectorAll('.settings-content');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetSection = button.dataset.section;
+                    
+                    // Remove active class from all buttons and sections
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.add('hidden'));
+                    
+                    // Add active class to clicked button and corresponding section
+                    button.classList.add('active');
+                    document.getElementById(`${targetSection}-section`).classList.remove('hidden');
+                });
+            });
+            
+            // Form submission handlers
+            const saveButtons = document.querySelectorAll('button:contains("Save")');
+            saveButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    utils.showToast('Settings saved successfully');
+                });
+            });
+            
+            // API key copy functionality
+            const copyButtons = document.querySelectorAll('button:contains("Copy")');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    utils.showToast('API key copied to clipboard');
+                });
+            });
+            
+            // Team invitation functionality
+            const inviteButtons = document.querySelectorAll('button:contains("Invite")');
+            inviteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    utils.showToast('Team invitation sent');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

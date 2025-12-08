@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        Copyright (c) 2025 OncoPurpose (trovesx)
+        All Rights Reserved.
+        For licensing info, see LICENSE or contact oncopurpose@trovesx.com
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Details - OncoPurpose</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+        }
+        .glass-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+        }
+        .data-number {
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+        }
+        .tab-button {
+            transition: all 0.2s ease;
+        }
+        .tab-button.active {
+            background: rgba(20, 184, 166, 0.12);
+            border-color: #14b8a6;
+            color: #14b8a6;
+        }
+        .tab-button:hover {
+            background: rgba(20, 184, 166, 0.06);
+        }
+        .confidence-circle {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+        .confidence-circle svg {
+            transform: rotate(-90deg);
+        }
+        .confidence-circle .percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .evidence-card {
+            transition: all 0.3s ease;
+        }
+        .evidence-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(127, 183, 126, 0.08);
+        }
+        .paper-card {
+            transition: all 0.3s ease;
+        }
+            .paper-card:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #7FB77E;
+        }
+    </style>
+</head>
+<body style="background-color: #0f172a; color: #f1f5f9;">
+    <!-- Top Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold gradient-text">OncoPurpose</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors">Home</a>
+                        <a href="dashboard.html" class="nav-link text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                        <a href="discovery.html" class="nav-link text-gray-300 hover:text-white transition-colors">Discovery</a>
+                        <a href="library.html" class="nav-link text-gray-300 hover:text-white transition-colors">Research</a>
+                        <a href="analytics.html" class="nav-link text-gray-300 hover:text-white transition-colors">Analytics</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                           <input id="global-search" type="text" placeholder="Search drugs, targets, diseases..." 
+                               class="bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 w-64 focus:outline-none focus:border-emerald-500 text-sm">
+                        <div class="absolute right-3 top-2.5 text-gray-400">🔍</div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img id="user-avatar" src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                        <div class="hidden md:block">
+                            <div id="user-name" class="text-sm font-medium">Dr. Sarah Chen</div>
+                            <div id="user-role" class="text-xs text-gray-400">Senior Research Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Hero Section -->
+            <div class="glass-card p-8 rounded-2xl mb-8">
+                <div class="grid lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-2">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="resources/drug structure/metformin.png" alt="Metformin" class="w-16 h-16 rounded-lg">
+                            <div>
+                                <h1 class="text-3xl font-bold">Metformin</h1>
+                                <p class="text-gray-300">Repurposing for Breast Cancer Treatment</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <div class="text-sm text-gray-400 mb-1">Current Indication</div>
+                                <div class="text-lg font-medium">Type 2 Diabetes Mellitus</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-400 mb-1">Target Indication</div>
+                                <div class="text-lg font-medium text-emerald-400">Breast Cancer</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-400 mb-1">Mechanism of Action</div>
+                                <div class="text-lg font-medium">AMPK Activation</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-400 mb-1">Development Phase</div>
+                                <div class="text-lg font-medium text-yellow-400">Phase II</div>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button class="bg-amber-600 hover:bg-amber-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                                📊 Generate Report
+                            </button>
+                            <button class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                                💾 Save to Project
+                            </button>
+                            <button class="bg-teal-600 hover:bg-teal-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                                📤 Share Analysis
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                            <div class="confidence-circle mx-auto mb-4">
+                            <svg width="120" height="120" class="absolute">
+                                <circle cx="60" cy="60" r="50" stroke="#334155" stroke-width="8" fill="none"/>
+                                <circle cx="60" cy="60" r="50" stroke="#7FB77E" stroke-width="8" fill="none" 
+                                        stroke-dasharray="314" stroke-dashoffset="41" class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="percentage text-amber-400">87%</div>
+                        </div>
+                        <div class="text-sm text-gray-400 mb-2">Confidence Score</div>
+                        <div class="text-2xl font-bold text-green-400 mb-2">$2.3B</div>
+                        <div class="text-sm text-gray-400">Market Size Estimate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex space-x-1 mb-8 bg-slate-800/50 p-1 rounded-lg">
+                <button class="tab-button active flex-1 py-3 px-6 rounded-md font-medium transition-all" data-tab="evidence">
+                    Evidence Summary
+                </button>
+                <button class="tab-button flex-1 py-3 px-6 rounded-md font-medium transition-all" data-tab="business">
+                    Business Intelligence
+                </button>
+                <button class="tab-button flex-1 py-3 px-6 rounded-md font-medium transition-all" data-tab="clinical">
+                    Clinical Insights
+                </button>
+                <button class="tab-button flex-1 py-3 px-6 rounded-md font-medium transition-all" data-tab="regulatory">
+                    Regulatory Pathway
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="tab-content">
+                <!-- Evidence Summary Tab -->
+                <div id="evidence-tab" class="tab-content">
+                    <div class="grid lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Mechanism of Action -->
+                            <div class="glass-card p-6 rounded-xl">
+                                <h3 class="text-xl font-semibold mb-4">Mechanism of Action</h3>
+                                <div class="space-y-4">
+                                    <p class="text-gray-300">
+                                        Metformin exerts its anti-cancer effects through multiple pathways, primarily involving 
+                                        AMP-activated protein kinase (AMPK) activation and subsequent mTOR inhibition. This dual 
+                                        mechanism targets the metabolic vulnerabilities of cancer cells.
+                                    </p>
+                                    <div class="bg-slate-700/50 p-4 rounded-lg">
+                                        <div class="text-sm font-medium mb-2">Key Pathways:</div>
+                                        <ul class="text-sm text-gray-300 space-y-1">
+                                            <li>• AMPK activation → mTORC1 inhibition</li>
+                                            <li>• Insulin/IGF-1 signaling reduction</li>
+                                            <li>• Cell cycle arrest at G1 phase</li>
+                                            <li>• Apoptosis induction via caspase activation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Clinical Evidence -->
+                            <div class="glass-card p-6 rounded-xl">
+                                <h3 class="text-xl font-semibold mb-4">Clinical Evidence</h3>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="evidence-card bg-slate-700/30 p-4 rounded-lg border border-slate-600">
+                                        <div class="text-2xl font-bold text-emerald-400 mb-2">12</div>
+                                        <div class="text-sm text-gray-300">Active Clinical Trials</div>
+                                        <div class="text-xs text-gray-400 mt-1">Phase I-III studies</div>
+                                    </div>
+                                    <div class="evidence-card bg-slate-700/30 p-4 rounded-lg border border-slate-600">
+                                        <div class="text-2xl font-bold text-teal-400 mb-2">45</div>
+                                        <div class="text-sm text-gray-300">Research Papers</div>
+                                        <div class="text-xs text-gray-400 mt-1">Peer-reviewed publications</div>
+                                    </div>
+                                    <div class="evidence-card bg-slate-700/30 p-4 rounded-lg border border-slate-600">
+                                        <div class="text-2xl font-bold text-emerald-400 mb-2">3</div>
+                                        <div class="text-sm text-gray-300">Meta-Analyses</div>
+                                        <div class="text-xs text-gray-400 mt-1">Systematic reviews</div>
+                                    </div>
+                                    <div class="evidence-card bg-slate-700/30 p-4 rounded-lg border border-slate-600">
+                                        <div class="text-2xl font-bold text-green-400 mb-2">89%</div>
+                                        <div class="text-sm text-gray-300">Positive Outcomes</div>
+                                        <div class="text-xs text-gray-400 mt-1">Across all studies</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Supporting Research -->
+                            <div class="glass-card p-6 rounded-xl">
+                                <h3 class="text-xl font-semibold mb-4">Supporting Research</h3>
+                                <div class="space-y-3">
+                                    <div class="paper-card p-4 rounded-lg border border-slate-600">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div class="font-medium">Metformin and breast cancer: a comprehensive review</div>
+                                            <div class="text-sm text-gray-400">2024</div>
+                                        </div>
+                                        <div class="text-sm text-gray-400 mb-2">Nature Cancer • Johnson et al.</div>
+                                        <div class="text-sm text-gray-300 mb-3">
+                                            Comprehensive analysis of metformin's mechanisms in breast cancer treatment, 
+                                            including clinical trial data from 15 studies.
+                                        </div>
+                                            <div class="flex space-x-2">
+                                            <button class="text-xs bg-amber-600 hover:bg-amber-700 px-3 py-1 rounded">Download</button>
+                                            <button class="text-xs bg-green-600 hover:bg-green-700 px-3 py-1 rounded">Cite</button>
+                                            <button class="text-xs bg-teal-600 hover:bg-teal-700 px-3 py-1 rounded">Save</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="paper-card p-4 rounded-lg border border-slate-600">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div class="font-medium">AMPK-mediated tumor suppression in breast cancer</div>
+                                            <div class="text-sm text-gray-400">2024</div>
+                                        </div>
+                                        <div class="text-sm text-gray-400 mb-2">Cell Metabolism • Chen et al.</div>
+                                        <div class="text-sm text-gray-300 mb-3">
+                                            Mechanistic study demonstrating AMPK pathway activation and downstream 
+                                            effects on tumor growth inhibition.
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button class="text-xs bg-emerald-600 hover:bg-emerald-700 px-3 py-1 rounded">Download</button>
+                                            <button class="text-xs bg-green-600 hover:bg-green-700 px-3 py-1 rounded">Cite</button>
+                                            <button class="text-xs bg-teal-600 hover:bg-teal-700 px-3 py-1 rounded">Save</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="paper-card p-4 rounded-lg border border-slate-600">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div class="font-medium">Phase II trial: Metformin + chemotherapy</div>
+                                            <div class="text-sm text-gray-400">2023</div>
+                                        </div>
+                                        <div class="text-sm text-gray-400 mb-2">JCO • Martinez et al.</div>
+                                        <div class="text-sm text-gray-300 mb-3">
+                                            Randomized controlled trial showing improved progression-free survival 
+                                            in triple-negative breast cancer patients.
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button class="text-xs bg-emerald-600 hover:bg-emerald-700 px-3 py-1 rounded">Download</button>
+                                            <button class="text-xs bg-green-600 hover:bg-green-700 px-3 py-1 rounded">Cite</button>
+                                            <button class="text-xs bg-teal-600 hover:bg-teal-700 px-3 py-1 rounded">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Safety Profile -->
+                        <div class="space-y-6">
+                            <div class="glass-card p-6 rounded-xl">
+                                <h3 class="text-xl font-semibold mb-4">Safety Profile</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                        <span class="text-sm">Overall Safety</span>
+                                        <span class="text-green-400 font-medium">Excellent</span>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="text-sm text-gray-400">Common Side Effects:</div>
+                                        <ul class="text-sm text-gray-300 space-y-1">
+                                            <li>• Gastrointestinal upset (15-20%)</li>
+                                            <li>• Mild nausea (10-15%)</li>
+                                            <li>• Diarrhea (5-10%)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="text-sm text-gray-400">
+                                        <div class="mb-1">Contraindications:</div>
+                                        <div class="text-gray-300">Severe renal impairment, metabolic acidosis</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Key Insights -->
+                            <div class="glass-card p-6 rounded-xl">
+                                <h3 class="text-xl font-semibold mb-4">Key Insights</h3>
+                                <div class="space-y-3">
+                                    <div class="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                                        <div class="text-sm font-medium text-emerald-400 mb-1">Metabolic Targeting</div>
+                                        <div class="text-xs text-gray-300">Exploits cancer cell metabolic vulnerabilities</div>
+                                    </div>
+                                    <div class="p-3 bg-teal-500/10 rounded-lg border border-teal-500/20">
+                                        <div class="text-sm font-medium text-teal-400 mb-1">Synergistic Effects</div>
+                                        <div class="text-xs text-gray-300">Enhances chemotherapy efficacy</div>
+                                    </div>
+                                    <div class="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                        <div class="text-sm font-medium text-green-400 mb-1">Low Cost</div>
+                                        <div class="text-xs text-gray-300">Generic availability reduces treatment costs</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Intelligence Tab -->
+                <div id="business-tab" class="tab-content hidden">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Market Size Analysis</h3>
+                            <div id="market-chart" style="height: 300px;"></div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">ROI Calculator</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Development Cost ($M)</label>
+                                    <input type="number" value="150" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Success Probability (%)</label>
+                                    <input type="number" value="87" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Market Size ($B)</label>
+                                    <input type="number" value="2.3" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-500">
+                                </div>
+                                <div class="pt-4 border-t border-slate-700">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-lg font-semibold">Expected ROI:</span>
+                                        <span class="text-2xl font-bold text-green-400">$1.8B</span>
+                                    </div>
+                                    <div class="text-sm text-gray-400 mt-1">Risk-adjusted net present value</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Competitive Landscape</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                    <div>
+                                        <div class="font-medium">Everolimus</div>
+                                        <div class="text-sm text-gray-400">mTOR inhibitor</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm text-yellow-400">Phase III</div>
+                                        <div class="text-xs text-gray-400">$1.2B market</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                    <div>
+                                        <div class="font-medium">Tamoxifen</div>
+                                        <div class="text-sm text-gray-400">Hormonal therapy</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm text-green-400">Approved</div>
+                                        <div class="text-xs text-gray-400">$3.1B market</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
+                                    <div>
+                                        <div class="font-medium">Trastuzumab</div>
+                                        <div class="text-sm text-gray-400">HER2 inhibitor</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm text-green-400">Approved</div>
+                                        <div class="text-xs text-gray-400">$2.8B market</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Patent Status</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <div class="font-medium text-green-400">Generic Status</div>
+                                            <div class="text-sm text-gray-300">No patent restrictions</div>
+                                        </div>
+                                        <div class="text-green-400">✓</div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-300">
+                                    <div class="mb-2">Advantages:</div>
+                                    <ul class="space-y-1 text-xs">
+                                        <li>• No licensing fees required</li>
+                                        <li>• Immediate market entry possible</li>
+                                        <li>• Lower development costs</li>
+                                        <li>• Faster regulatory pathway</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clinical Insights Tab -->
+                <div id="clinical-tab" class="tab-content hidden">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Patient Selection Criteria</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="text-sm font-medium mb-2">Inclusion Criteria:</div>
+                                    <ul class="text-sm text-gray-300 space-y-1">
+                                        <li>• Histologically confirmed breast cancer</li>
+                                        <li>• Stage II-IV disease</li>
+                                        <li>• ECOG performance status 0-2</li>
+                                        <li>• Adequate organ function</li>
+                                        <li>• Metformin-naive patients</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium mb-2">Exclusion Criteria:</div>
+                                    <ul class="text-sm text-gray-300 space-y-1">
+                                        <li>• Severe renal impairment (eGFR < 30)</li>
+                                        <li>• History of lactic acidosis</li>
+                                        <li>• Uncontrolled diabetes</li>
+                                        <li>• Concurrent anti-diabetic therapy</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Dosing Recommendations</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                                    <div class="font-medium text-emerald-400 mb-2">Recommended Dose</div>
+                                    <div class="text-2xl font-bold mb-1">1000mg</div>
+                                    <div class="text-sm text-gray-300">Twice daily with meals</div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="text-sm font-medium">Dose Escalation Schedule:</div>
+                                    <div class="text-sm text-gray-300 space-y-1">
+                                        <div>• Week 1-2: 500mg once daily</div>
+                                        <div>• Week 3-4: 500mg twice daily</div>
+                                        <div>• Week 5+: 1000mg twice daily</div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-400">
+                                    <div class="mb-1">Monitoring Required:</div>
+                                    <div class="text-xs">Renal function, blood glucose, GI tolerance</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Trial Design Suggestions</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-teal-500/10 rounded-lg border border-teal-500/20">
+                                    <div class="font-medium text-teal-400 mb-2">Phase IIb/III Design</div>
+                                    <div class="text-sm text-gray-300 space-y-1">
+                                        <div>• Randomized, double-blind, placebo-controlled</div>
+                                        <div>• 2:1 randomization (metformin:placebo)</div>
+                                        <div>• Primary endpoint: Progression-free survival</div>
+                                        <div>• Secondary endpoints: OS, ORR, QoL</div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-400">
+                                    <div class="mb-1">Sample Size:</div>
+                                    <div class="text-xs">300 patients (200 active, 100 placebo)</div>
+                                </div>
+                                <div class="text-sm text-gray-400">
+                                    <div class="mb-1">Study Duration:</div>
+                                    <div class="text-xs">24 months treatment, 12 months follow-up</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Safety Considerations</h3>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                    <div class="font-medium text-yellow-400 mb-1">Monitoring Requirements</div>
+                                    <div class="text-sm text-gray-300">
+                                        Regular renal function tests, lactate levels
+                                    </div>
+                                </div>
+                                <div class="p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                                    <div class="font-medium text-red-400 mb-1">Contraindications</div>
+                                    <div class="text-sm text-gray-300">
+                                        Severe renal impairment, hepatic dysfunction
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-300">
+                                    <div class="mb-2">Drug Interactions:</div>
+                                    <ul class="text-xs space-y-1">
+                                        <li>• Caution with nephrotoxic drugs</li>
+                                        <li>• Monitor with contrast agents</li>
+                                        <li>• Avoid in severe heart failure</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regulatory Pathway Tab -->
+                <div id="regulatory-tab" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <!-- Timeline Visualization -->
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Development Timeline</h3>
+                            <div class="relative">
+                                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-slate-600"></div>
+                                <div class="space-y-6">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                                        <div class="flex-1">
+                                            <div class="font-medium">Pre-IND Meeting</div>
+                                            <div class="text-sm text-gray-400">FDA consultation on development plan</div>
+                                            <div class="text-xs text-gray-500">Month 1-2</div>
+                                        </div>
+                                        <div class="text-sm text-green-400">$0.5M</div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                                        <div class="flex-1">
+                                            <div class="font-medium">Phase IIb Trial</div>
+                                            <div class="text-sm text-gray-400">Efficacy and dose optimization study</div>
+                                            <div class="text-xs text-gray-500">Month 3-18</div>
+                                        </div>
+                                        <div class="text-sm text-emerald-400">$25M</div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                                        <div class="flex-1">
+                                            <div class="font-medium">Phase III Trial</div>
+                                            <div class="text-sm text-gray-400">Pivotal registration study</div>
+                                            <div class="text-xs text-gray-500">Month 19-42</div>
+                                        </div>
+                                        <div class="text-sm text-teal-400">$75M</div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-xs font-bold">4</div>
+                                        <div class="flex-1">
+                                            <div class="font-medium">NDA Submission</div>
+                                            <div class="text-sm text-gray-400">New drug application filing</div>
+                                            <div class="text-xs text-gray-500">Month 43-45</div>
+                                        </div>
+                                        <div class="text-sm text-emerald-400">$5M</div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-xs font-bold">5</div>
+                                        <div class="flex-1">
+                                            <div class="font-medium">FDA Review</div>
+                                            <div class="text-sm text-gray-400">Regulatory review and approval</div>
+                                            <div class="text-xs text-gray-500">Month 46-54</div>
+                                        </div>
+                                        <div class="text-sm text-yellow-400">$3M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="glass-card p-6 rounded-xl">
+                                <h3 class="text-xl font-semibold mb-4">Required Studies</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                                        <div>
+                                            <div class="font-medium text-sm">Cardiovascular Safety</div>
+                                            <div class="text-xs text-gray-400">Thorough QT study</div>
+                                        </div>
+                                        <div class="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Required</div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                                        <div>
+                                            <div class="font-medium text-sm">Pharmacokinetics</div>
+                                            <div class="text-xs text-gray-400">Drug interaction studies</div>
+                                        </div>
+                                        <div class="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Required</div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                                        <div>
+                                            <div class="font-medium text-sm">Carcinogenicity</div>
+                                            <div class="text-xs text-gray-400">2-year rodent studies</div>
+                                        </div>
+                                        <div class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">Waived</div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                                        <div>
+                                            <div class="font-medium text-sm">Reproductive Toxicology</div>
+                                            <div class="text-xs text-gray-400">Embryo-fetal development</div>
+                                        </div>
+                                        <div class="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass-card p-6 rounded-xl">
+                                <h3 class="text-xl font-semibold mb-4">Precedent Cases</h3>
+                                <div class="space-y-4">
+                                    <div class="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                                        <div class="font-medium text-green-400 mb-2">Thalidomide → Multiple Myeloma</div>
+                                        <div class="text-sm text-gray-300 mb-2">
+                                            Successful repurposing from sedative to cancer treatment
+                                        </div>
+                                        <div class="text-xs text-gray-400">
+                                            Timeline: 4.2 years • ROI: 340%
+                                        </div>
+                                    </div>
+                                    <div class="p-4 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                                        <div class="font-medium text-emerald-400 mb-2">Aspirin → Colorectal Cancer</div>
+                                        <div class="text-sm text-gray-300 mb-2">
+                                            Preventive use in high-risk populations
+                                        </div>
+                                        <div class="text-xs text-gray-400">
+                                            Timeline: 3.8 years • ROI: 280%
+                                        </div>
+                                    </div>
+                                    <div class="p-4 bg-teal-500/10 rounded-lg border border-teal-500/20">
+                                        <div class="font-medium text-teal-400 mb-2">Propranolol → Hemangioma</div>
+                                        <div class="text-sm text-gray-300 mb-2">
+                                            Beta-blocker for infantile hemangioma treatment
+                                        </div>
+                                        <div class="text-xs text-gray-400">
+                                            Timeline: 2.9 years • ROI: 420%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-4">Cost Breakdown</h3>
+                            <div class="grid md:grid-cols-3 gap-6">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-emerald-400 mb-2">$108.5M</div>
+                                    <div class="text-sm text-gray-300 mb-1">Total Development Cost</div>
+                                    <div class="text-xs text-gray-400">Including all phases</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-green-400 mb-2">4.5</div>
+                                    <div class="text-sm text-gray-300 mb-1">Years to Market</div>
+                                    <div class="text-xs text-gray-400">Estimated timeline</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-teal-400 mb-2">85%</div>
+                                    <div class="text-sm text-gray-300 mb-1">Success Probability</div>
+                                    <div class="text-xs text-gray-400">Based on precedents</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main (1).js"></script>
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.dataset.tab;
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    document.getElementById(`${targetTab}-tab`).classList.remove('hidden');
+                    
+                    // Initialize charts if needed
+                    if (targetTab === 'business') {
+                        initMarketChart();
+                    }
+                });
+            });
+            
+            // Initialize market chart
+            function initMarketChart() {
+                const chartElement = document.getElementById('market-chart');
+                if (chartElement && typeof echarts !== 'undefined') {
+                    const chart = echarts.init(chartElement);
+                    
+                    const option = {
+                        backgroundColor: 'transparent',
+                        tooltip: {
+                            trigger: 'item',
+                            backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                            borderColor: '#10B981',
+                            textStyle: { color: '#F8FAFC' }
+                        },
+                        series: [{
+                            type: 'pie',
+                            radius: ['40%', '70%'],
+                                data: [
+                                { value: 2.3, name: 'Breast Cancer', itemStyle: { color: '#10B981' } },
+                                { value: 1.8, name: 'Colorectal Cancer', itemStyle: { color: '#0D9488' } },
+                                { value: 1.2, name: 'Lung Cancer', itemStyle: { color: '#10B981' } },
+                                { value: 0.8, name: 'Prostate Cancer', itemStyle: { color: '#F59E0B' } }
+                            ],
+                            label: {
+                                color: '#F8FAFC'
+                            }
+                        }]
+                    };
+                    
+                    chart.setOption(option);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

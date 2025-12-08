@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        Copyright (c) 2025 OncoPurpose (trovesx)
+        All Rights Reserved.
+        For licensing info, see LICENSE or contact oncopurpose@trovesx.com
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Discovery - OncoPurpose</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Navy + Teal + Orange (Default - Professional Tech) */
+            --bg-primary: #0a1628;
+            --bg-secondary: rgba(15, 23, 42, 0.8);
+            --bg-card: rgba(30, 41, 59, 0.95);
+            --bg-hover: rgba(6, 182, 212, 0.08);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(51, 65, 85, 0.6);
+            --accent-primary: #06b6d4;
+            --accent-secondary: #22d3ee;
+            --accent-highlight: #f97316;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --nav-bg: rgba(10, 22, 40, 0.95);
+        }
+        
+        [data-scheme="emerald"] {
+            /* Slate + Emerald + Amber (Medical/Health) */
+            --bg-primary: #0f172a;
+            --bg-secondary: rgba(30, 41, 59, 0.7);
+            --bg-card: rgba(30, 41, 59, 0.95);
+            --bg-hover: rgba(16, 185, 129, 0.08);
+            --accent-primary: #10b981;
+            --accent-secondary: #34d399;
+            --accent-highlight: #f59e0b;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+        }
+        
+        [data-scheme="indigo"] {
+            /* Orange + Teal (Reference Design) */
+            --bg-primary: #0a1628;
+            --bg-secondary: rgba(15, 23, 42, 0.8);
+            --bg-card: rgba(30, 41, 59, 0.95);
+            --bg-hover: rgba(249, 115, 22, 0.08);
+            --accent-primary: #f97316;
+            --accent-secondary: #fb923c;
+            --accent-highlight: #06b6d4;
+            --border-color: rgba(51, 65, 85, 0.6);
+            --nav-bg: rgba(10, 22, 40, 0.95);
+        }
+        
+        [data-scheme="purple"] {
+            /* Purple + Pink + Yellow (Modern SaaS) */
+            --bg-primary: #1e1b29;
+            --bg-secondary: rgba(30, 27, 41, 0.8);
+            --bg-card: rgba(59, 53, 76, 0.9);
+            --bg-hover: rgba(139, 92, 246, 0.08);
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #a78bfa;
+            --accent-highlight: #ec4899;
+            --border-color: rgba(139, 92, 246, 0.3);
+            --nav-bg: rgba(30, 27, 41, 0.95);
+        }
+        
+        [data-theme="light"] {
+            /* Light Theme */
+            --bg-primary: #f8fafc;
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-card: #ffffff;
+            --bg-hover: rgba(226, 232, 240, 0.8);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-tertiary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: rgba(226, 232, 240, 0.9);
+            --shadow-color: rgba(0, 0, 0, 0.06);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+        }
+        
+        /* Orange + Teal scheme data overrides */
+        [data-scheme="indigo"] .data-number,
+        [data-scheme="indigo"] .confidence-ring {
+            color: #06b6d4 !important;
+        }
+        [data-scheme="indigo"] .confidence-ring circle[stroke="#f97316"] {
+            stroke: #06b6d4 !important;
+        }
+        
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.35s ease, color 0.35s ease;
+        }
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .data-number {
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: .3s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-primary);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .analyze-btn {
+            background: var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.22);
+        }
+        .filter-tag {
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.18);
+            transition: opacity 0.2s ease;
+        }
+        [data-scheme="indigo"] .analyze-btn {
+            background: var(--accent-primary);
+        }
+        [data-scheme="indigo"] .analyze-btn:hover {
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.22);
+        }
+        .confidence-ring {
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+        .confidence-ring svg {
+            transform: rotate(-90deg);
+        }
+        .confidence-ring .percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body style="background: var(--bg-primary); color: var(--text-primary);">
+    <!-- Top Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50" style="background: var(--nav-bg); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px);">
+        <div class="max-w-7xl mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="text-xl font-semibold" style="color: var(--accent-primary);">OncoPurpose</div>
+                    <div class="hidden md:flex space-x-6 text-sm">
+                        <a href="index (1).html" style="color: var(--text-tertiary); transition: color 0.2s ease;">Home</a>
+                        <a href="dashboard (1).html" style="color: var(--text-tertiary); transition: color 0.2s ease;">Dashboard</a>
+                        <a href="discovery.html" style="color: var(--text-primary);">Discovery</a>
+                        <a href="library.html" style="color: var(--text-tertiary); transition: color 0.2s ease;">Research</a>
+                        <a href="analytics.html" style="color: var(--text-tertiary); transition: color 0.2s ease;">Analytics</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                           <input id="global-search" type="text" placeholder="Search..." 
+                               class="rounded px-3 py-2 text-sm w-56" style="background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); transition: all 0.2s ease;">
+                        <div class="absolute right-3 top-2.5 text-xs" style="color: var(--text-muted);">🔍</div>
+                    </div>
+                    
+                    <!-- Color Scheme Selector -->
+                    <div class="relative">
+                        <button id="scheme-toggle" class="p-2 rounded-lg transition-all duration-200" 
+                                style="background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary);"
+                                title="Change color scheme">
+                            🎨
+                        </button>
+                        <div id="scheme-menu" class="absolute right-0 mt-2 w-56 rounded-lg shadow-xl hidden z-50"
+                             style="background-color: var(--bg-card); border: 1px solid var(--border-color);">
+                            <div class="p-2">
+                                <div class="scheme-option p-2 rounded cursor-pointer hover:bg-opacity-50 transition" 
+                                     data-scheme="default"
+                                     style="border: 1px solid transparent;">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm" style="color: var(--text-primary);">Navy + Teal</span>
+                                        <div class="flex space-x-1">
+                                            <div class="w-3 h-3 rounded-full" style="background: #06b6d4;"></div>
+                                            <div class="w-3 h-3 rounded-full" style="background: #f97316;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scheme-option p-2 rounded cursor-pointer hover:bg-opacity-50 transition" 
+                                     data-scheme="emerald"
+                                     style="border: 1px solid transparent;">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm" style="color: var(--text-primary);">Slate + Emerald</span>
+                                        <div class="flex space-x-1">
+                                            <div class="w-3 h-3 rounded-full" style="background: #10b981;"></div>
+                                            <div class="w-3 h-3 rounded-full" style="background: #f59e0b;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scheme-option p-2 rounded cursor-pointer hover:bg-opacity-50 transition" 
+                                     data-scheme="indigo"
+                                     style="border: 1px solid transparent;">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm" style="color: var(--text-primary);">Orange + Teal</span>
+                                        <div class="flex space-x-1">
+                                            <div class="w-3 h-3 rounded-full" style="background: #f97316;"></div>
+                                            <div class="w-3 h-3 rounded-full" style="background: #06b6d4;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scheme-option p-2 rounded cursor-pointer hover:bg-opacity-50 transition" 
+                                     data-scheme="purple"
+                                     style="border: 1px solid transparent;">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm" style="color: var(--text-primary);">Purple + Pink</span>
+                                        <div class="flex space-x-1">
+                                            <div class="w-3 h-3 rounded-full" style="background: #8b5cf6;"></div>
+                                            <div class="w-3 h-3 rounded-full" style="background: #ec4899;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg transition-all duration-200" 
+                            style="background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary);"
+                            title="Toggle light/dark mode">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <img id="user-avatar" src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                        <div class="hidden md:block">
+                            <div id="user-name" class="text-sm font-medium" style="color: var(--text-primary);">Dr. Sarah Chen</div>
+                            <div id="user-role" class="text-xs" style="color: var(--text-muted);">Senior Research Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 p-6">
+        <!-- Page Header -->
+        <div class="max-w-7xl mx-auto mb-6">
+            <h1 class="text-2xl font-semibold mb-1" style="color: var(--text-primary);">Drug Discovery</h1>
+            <p class="text-sm" style="color: var(--text-tertiary);">AI-powered analysis for drug repurposing opportunities</p>
+        </div>
+
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-4 gap-6">
+                <!-- Search Panel -->
+                <div class="lg:col-span-1">
+                    <div class="glass-card p-5 rounded sticky top-24">
+                        <form id="discovery-search" class="space-y-4">
+                            <!-- Analysis Mode Toggle -->
+                            <div>
+                                <label class="block text-xs font-medium mb-2" style="color: var(--text-secondary);">Analysis Mode</label>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs" style="color: var(--text-muted);">Fast Analysis</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="analysis-mode">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span class="text-sm" style="color: var(--text-muted);">Deep Research</span>
+                                </div>
+                            </div>
+
+                            <!-- Cancer Type -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Cancer Type</label>
+                                <select class="w-full rounded-lg px-4 py-3 focus:outline-none" 
+                                        style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); transition: border-color 0.2s ease;">
+                                    <option value="">Select cancer type...</option>
+                                    <option value="breast">Breast Cancer</option>
+                                    <option value="lung">Lung Cancer</option>
+                                    <option value="colorectal">Colorectal Cancer</option>
+                                    <option value="prostate">Prostate Cancer</option>
+                                    <option value="leukemia">Leukemia</option>
+                                    <option value="lymphoma">Lymphoma</option>
+                                    <option value="melanoma">Melanoma</option>
+                                    <option value="pancreatic">Pancreatic Cancer</option>
+                                </select>
+                            </div>
+
+                            <!-- Drug Name -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Drug Name</label>
+                                        <input type="text" placeholder="Enter drug name..." 
+                                        class="w-full rounded-lg px-4 py-3 focus:outline-none"
+                                        style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); transition: border-color 0.2s ease;">
+                            </div>
+
+                            <!-- Molecular Target -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Molecular Target (Optional)</label>
+                                    <input type="text" placeholder="e.g., EGFR, HER2..." 
+                                        class="w-full rounded-lg px-4 py-3 focus:outline-none"
+                                        style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); transition: border-color 0.2s ease;">
+                            </div>
+
+                            <!-- Current Indication -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Current Indication (Optional)</label>
+                                    <input type="text" placeholder="e.g., Diabetes, Hypertension..." 
+                                        class="w-full rounded-lg px-4 py-3 focus:outline-none"
+                                        style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); transition: border-color 0.2s ease;">
+                            </div>
+
+                            <!-- Advanced Filters Toggle -->
+                            <div>
+                                <button type="button" id="filter-toggle" class="text-sm font-medium transition-colors" 
+                                        style="color: var(--accent-primary);">
+                                    + Advanced Filters
+                                </button>
+                            </div>
+
+                            <!-- Advanced Filters -->
+                            <div id="advanced-filters" class="hidden space-y-4 pt-4" style="border-top: 1px solid var(--border-color);">
+                                <!-- Confidence Threshold -->
+                                <div>
+                                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Confidence Threshold</label>
+                                    <div class="flex items-center space-x-3">
+                                        <span class="text-sm" style="color: var(--text-muted);">50%</span>
+                                        <input type="range" min="50" max="100" value="70" 
+                                               class="flex-1 h-2 rounded-lg appearance-none cursor-pointer"
+                                               style="background: var(--bg-card);">
+                                        <span class="text-sm" style="color: var(--text-muted);">100%</span>
+                                    </div>
+                                    <div class="text-center text-sm mt-1" style="color: var(--accent-primary);">Current: 70%</div>
+                                </div>
+
+                                <!-- Patent Status -->
+                                <div>
+                                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Patent Status</label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="mr-2" checked>
+                                            <span class="text-sm" style="color: var(--text-secondary);">Active</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="mr-2" checked>
+                                            <span class="text-sm" style="color: var(--text-secondary);">Expired</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="mr-2">
+                                            <span class="text-sm" style="color: var(--text-secondary);">Pending</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Clinical Trial Phase -->
+                                <div>
+                                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Clinical Trial Phase</label>
+                                    <select class="w-full rounded-lg px-4 py-2 focus:outline-none"
+                                            style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary);">
+                                        <option value="">Any Phase</option>
+                                        <option value="preclinical">Preclinical</option>
+                                        <option value="phase1">Phase I</option>
+                                        <option value="phase2">Phase II</option>
+                                        <option value="phase3">Phase III</option>
+                                        <option value="approved">Approved</option>
+                                    </select>
+                                </div>
+
+                                <!-- Market Size Range -->
+                                <div>
+                                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Market Size Range</label>
+                                    <select class="w-full rounded-lg px-4 py-2 focus:outline-none"
+                                            style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary);">
+                                        <option value="">Any Size</option>
+                                        <option value="small">< $1B</option>
+                                        <option value="medium">$1B - $5B</option>
+                                        <option value="large">> $5B</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Analyze Button -->
+                            <button id="analyze-btn" type="button" class="analyze-btn w-full py-4 rounded-lg font-semibold text-white transition-all">
+                                🔬 Analyze Opportunities
+                            </button>
+                        </form>
+
+                        <!-- Quick Filters -->
+                        <div class="mt-6 pt-6" style="border-top: 1px solid var(--border-color);">
+                            <h3 class="text-sm font-medium mb-3" style="color: var(--text-secondary);">Quick Filters</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="filter-tag px-3 py-1 rounded-full text-xs" style="color: var(--text-secondary);">High Confidence</button>
+                                <button class="filter-tag px-3 py-1 rounded-full text-xs" style="color: var(--text-secondary);">Breast Cancer</button>
+                                <button class="filter-tag px-3 py-1 rounded-full text-xs" style="color: var(--text-secondary);">Phase II+</button>
+                                <button class="filter-tag px-3 py-1 rounded-full text-xs" style="color: var(--text-secondary);">$1B+ Market</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="lg:col-span-3">
+                    <!-- Results Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-xl font-semibold" style="color: var(--text-primary);">Analysis Results</h2>
+                            <p class="text-sm" style="color: var(--text-tertiary);">Found <span id="results-count">24</span> potential opportunities</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                                    <select class="rounded-lg px-3 py-2 text-sm focus:outline-none"
+                                            style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary);">
+                                <option>Sort by Confidence</option>
+                                <option>Sort by Market Size</option>
+                                <option>Sort by Phase</option>
+                                <option>Sort by Name</option>
+                            </select>
+                            <div class="flex space-x-2">
+                                <button class="p-2 rounded-lg transition-colors" 
+                                        style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary);">
+                                    <span class="text-sm">⊞</span>
+                                </button>
+                                <button class="p-2 rounded-lg transition-colors"
+                                        style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary);">
+                                    <span class="text-sm">☰</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Grid -->
+                    <div id="results-grid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        <!-- Results will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Load More -->
+                    <div class="text-center mt-8">
+                        <button class="px-6 py-3 rounded-lg font-medium transition-colors"
+                                style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary);">
+                            Load More Results
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main (1).js"></script>
+    <script>
+        // Theme and Color Scheme Management
+        const htmlElement = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const schemeToggle = document.getElementById('scheme-toggle');
+        const schemeMenu = document.getElementById('scheme-menu');
+        const schemeOptions = document.querySelectorAll('.scheme-option');
+        
+        // Load saved preferences
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedScheme = localStorage.getItem('colorScheme') || 'default';
+        
+        htmlElement.setAttribute('data-theme', savedTheme);
+        htmlElement.setAttribute('data-scheme', savedScheme);
+        themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+        
+        // Highlight active scheme
+        schemeOptions.forEach(option => {
+            if (option.getAttribute('data-scheme') === savedScheme) {
+                option.style.border = '1px solid var(--accent-primary)';
+            }
+        });
+        
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // Scheme menu toggle
+        schemeToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            schemeMenu.classList.toggle('hidden');
+        });
+        
+        // Close scheme menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!schemeToggle.contains(e.target) && !schemeMenu.contains(e.target)) {
+                schemeMenu.classList.add('hidden');
+            }
+        });
+        
+        // Scheme selection
+        schemeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const scheme = option.getAttribute('data-scheme');
+                
+                // Update scheme
+                htmlElement.setAttribute('data-scheme', scheme);
+                localStorage.setItem('colorScheme', scheme);
+                
+                // Update active indicator
+                schemeOptions.forEach(opt => {
+                    opt.style.border = '1px solid transparent';
+                });
+                option.style.border = '1px solid var(--accent-primary)';
+                
+                // Close menu
+                schemeMenu.classList.add('hidden');
+            });
+        });
+
+        // Initialize discovery page functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Range slider interaction - FIXED
+            const rangeSlider = document.querySelector('input[type="range"]');
+            const rangeValue = document.querySelector('div[style*="Current:"]');
+            
+            if (rangeSlider && rangeValue) {
+                rangeSlider.addEventListener('input', (e) => {
+                    rangeValue.textContent = `Current: ${e.target.value}%`;
+                });
+            }
+            
+            // Advanced Filters Toggle - NEW
+            const filterToggle = document.getElementById('filter-toggle');
+            const advancedFilters = document.getElementById('advanced-filters');
+            if (filterToggle && advancedFilters) {
+                filterToggle.addEventListener('click', () => {
+                    advancedFilters.classList.toggle('hidden');
+                    filterToggle.textContent = advancedFilters.classList.contains('hidden') ? 
+                        '+ Advanced Filters' : '− Advanced Filters';
+                });
+            }
+            
+            // Analyze Button - NEW (CRITICAL)
+            const analyzeBtn = document.getElementById('analyze-btn');
+            if (analyzeBtn) {
+                analyzeBtn.addEventListener('click', async () => {
+                    // Get form data
+                    const cancerType = document.querySelector('select').value;
+                    const drugName = document.querySelector('input[placeholder="Enter drug name..."]').value;
+                    const molecularTarget = document.querySelector('input[placeholder="e.g., EGFR, HER2..."]').value;
+                    const currentIndication = document.querySelector('input[placeholder="e.g., Diabetes, Hypertension..."]').value;
+                    const analysisMode = document.getElementById('analysis-mode').checked ? 'deep' : 'fast';
+                    const confidenceThreshold = rangeSlider ? rangeSlider.value : 70;
+                    
+                    // Validate required fields
+                    if (!cancerType) {
+                        alert('Please select a cancer type');
+                        return;
+                    }
+                    
+                    if (!drugName) {
+                        alert('Please enter a drug name');
+                        return;
+                    }
+                    
+                    // Show loading state
+                    const originalText = analyzeBtn.innerHTML;
+                    analyzeBtn.innerHTML = '🔄 Analyzing...';
+                    analyzeBtn.disabled = true;
+                    analyzeBtn.style.opacity = '0.6';
+                    analyzeBtn.style.cursor = 'not-allowed';
+                    
+                    try {
+                        // Prepare request data
+                        const requestData = {
+                            cancer_type: cancerType,
+                            drug_name: drugName,
+                            molecular_target: molecularTarget || null,
+                            current_indication: currentIndication || null,
+                            analysis_mode: analysisMode,
+                            confidence_threshold: parseInt(confidenceThreshold),
+                            filters: {
+                                patent_status: Array.from(document.querySelectorAll('#advanced-filters input[type="checkbox"]:checked'))
+                                    .map(cb => cb.parentElement.textContent.trim().toLowerCase()),
+                                clinical_phase: document.querySelector('#advanced-filters select')?.value || null,
+                                market_size: document.querySelectorAll('#advanced-filters select')[1]?.value || null
+                            }
+                        };
+                        
+                        console.log('Analysis request:', requestData);
+                        
+                        // Call backend API
+                        const response = await fetch('/api/discovery/analyze', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(requestData)
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`API error: ${response.status} ${response.statusText}`);
+                        }
+                        
+                        const results = await response.json();
+                        console.log('Analysis results:', results);
+                        
+                        // Display results (placeholder - needs implementation)
+                        alert(`Analysis complete! Found ${results.opportunities?.length || 0} opportunities.\n\nResults logged to console.`);
+                        
+                        // TODO: Render results in the results grid
+                        // renderResults(results);
+                        
+                    } catch (error) {
+                        console.error('Analysis failed:', error);
+                        
+                        // Check if it's a network error (backend not running)
+                        if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+                            alert('⚠️ Backend server not running!\n\nPlease start the backend server to perform analysis.\n\nError: ' + error.message);
+                        } else {
+                            alert('Analysis failed: ' + error.message + '\n\nCheck console for details.');
+                        }
+                    } finally {
+                        // Restore button state
+                        analyzeBtn.innerHTML = originalText;
+                        analyzeBtn.disabled = false;
+                        analyzeBtn.style.opacity = '1';
+                        analyzeBtn.style.cursor = 'pointer';
+                    }
+                });
+            }
+            
+            // Filter tags interaction - ENHANCED
+            const filterTags = document.querySelectorAll('.filter-tag');
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    // Toggle active state
+                    tag.classList.toggle('active');
+                    if (tag.classList.contains('active')) {
+                        tag.style.opacity = '1';
+                        tag.style.background = 'var(--accent-primary)';
+                        tag.style.color = 'white';
+                    } else {
+                        tag.style.opacity = '0.7';
+                        tag.style.background = 'rgba(6, 182, 212, 0.12)';
+                        tag.style.color = 'var(--text-secondary)';
+                    }
+                    console.log('Filter toggled:', tag.textContent, tag.classList.contains('active'));
+                });
+            });
+            
+            // Analysis mode toggle
+            const analysisToggle = document.getElementById('analysis-mode');
+            if (analysisToggle) {
+                analysisToggle.addEventListener('change', (e) => {
+                    const mode = e.target.checked ? 'Deep Research' : 'Fast Analysis';
+                    console.log('Analysis mode:', mode);
+                    // Show toast notification
+                    const modeText = document.createElement('div');
+                    modeText.textContent = `Switched to ${mode} mode`;
+                    modeText.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: var(--accent-primary); color: white; padding: 12px 20px; border-radius: 8px; z-index: 9999; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+                    document.body.appendChild(modeText);
+                    setTimeout(() => modeText.remove(), 2000);
+                });
+            }
+            
+            // Load More Results Button - NEW
+            const loadMoreBtn = document.querySelector('button:has-text("Load More Results"), button[class*="Load More"]');
+            const loadMoreButtons = Array.from(document.querySelectorAll('button')).filter(btn => btn.textContent.includes('Load More'));
+            if (loadMoreButtons.length > 0) {
+                loadMoreButtons[0].addEventListener('click', () => {
+                    console.log('Load more results clicked');
+                    alert('Loading more results...\n\n(Backend implementation needed)');
+                });
+            }
+            
+            // Sort Dropdown - NEW
+            const sortDropdown = document.querySelector('select');
+            if (sortDropdown && sortDropdown.closest('.flex')?.textContent.includes('Sort')) {
+                sortDropdown.addEventListener('change', (e) => {
+                    console.log('Sort changed to:', e.target.value);
+                    alert(`Sorting by: ${e.target.options[e.target.selectedIndex].text}\n\n(Backend implementation needed)`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
