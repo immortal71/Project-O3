@@ -1,0 +1,7 @@
+# pip requirements for the backend (trimmed)
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.4.2
+pydantic-settings==2.0.3
+sqlalchemy==2.0.23
+# ... trimmed for brevity
