@@ -14,4 +14,5 @@ OncoPurpose Licensing <oncopurpose@trovesx.com>
 
 ## Want changes to licensing?
 
-If you want this project to be open-source or published under a specific standard license (e.g., MIT, Apache 2.0, GPLv3/AGPL), open an issue or contact the author at the address above to discuss alternative licensing terms.
+If you want this project to be open-source or published under a specific standard license (e.g., MIT, Apache 2.0, GPLv3/AGPL), open an issue or contact the author at the address above to discuss alternative licensing terms. 
+Enjoy !!
