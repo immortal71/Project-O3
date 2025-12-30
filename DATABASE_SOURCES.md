@@ -240,4 +240,4 @@ https://www.ebi.ac.uk/chembl/api/data/molecule/CHEMBL25/bioactivity.json
 - DailyMed and PubChem are U.S. Government public domain
 - RxNorm is NLM public domain
 
-**You can use this data to build and sell your product without restrictions!**
+
