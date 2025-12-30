@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        Copyright (c) 2025 OncoPurpose (trovesx)
+        All Rights Reserved.
+        For licensing info, see LICENSE or contact oncopurpose@trovesx.com
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OncoPurpose - AI-Powered Oncology Drug Repurposing Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(148, 163, 184, 0.3);
+            box-shadow: 0 8px 32px rgba(71, 85, 105, 0.2);
+        }
+        .card-elevated {
+            background: #1e293b;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+        .data-number {
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .hero-card {
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .pricing-card-popular {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(71, 85, 105, 0.3);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(71, 85, 105, 0.25);
+            border-color: rgba(148, 163, 184, 0.3);
+        }
+        .feature-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.4s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(148, 163, 184, 0.3);
+            box-shadow: 0 12px 40px rgba(71, 85, 105, 0.2);
+        }
+        .logo-box {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(51, 65, 85, 0.4);
+            transition: all 0.3s ease;
+        }
+        .logo-box:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(148, 163, 184, 0.25);
+        }
+    </style>
+</head>
+<body style="background: radial-gradient(circle at 15% 20%, rgba(20, 184, 166, 0.04) 0%, transparent 40%), radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.04) 0%, transparent 40%), #0a0f1e; color: #f1f5f9;">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(10, 15, 30, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #1e293b;">
+        <div class="max-w-7xl mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-2">
+                        <div class="text-xl font-semibold" style="color: #14b8a6;">OncoPurpose</div>
+                        <span class="text-xs px-2 py-0.5 rounded" style="background-color: #134e4a; color: #5eead4;">BETA</span>
+                    </div>
+                    <div class="hidden md:flex space-x-6 text-sm">
+                        <a href="index (1).html" style="color: #e2e8f0;">Home</a>
+                        <a href="dashboard (1).html" style="color: #94a3b8;">Dashboard</a>
+                        <a href="discovery.html" style="color: #94a3b8;">Discovery</a>
+                        <a href="library.html" style="color: #94a3b8;">Research</a>
+                        <a href="analytics.html" style="color: #94a3b8;">Analytics</a>
+                    </div>
+                </div>
+                    <div class="flex items-center space-x-4">
+                    <button id="request-demo-btn" class="px-5 py-2 rounded text-sm font-medium transition-colors" style="background-color: #0d9488; color: white;">
+                        Request Demo
+                    </button>
+                    <div class="flex items-center space-x-3">
+                        <img id="user-avatar" src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                        <span id="user-name" class="hidden md:block text-sm" style="color: #94a3b8;">Dr. Sarah Chen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-24" style="background: radial-gradient(circle at 20% 30%, rgba(20, 184, 166, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%), #0a0f1e;">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid lg:grid-cols-[1fr_540px] gap-20 items-center">
+                <div class="space-y-10">
+                    <div class="space-y-6">
+                        <h1 class="text-5xl lg:text-6xl font-bold leading-tight tracking-tight" style="color: #f1f5f9; min-height: 180px;">
+                            <span id="typed-text"></span>
+                        </h1>
+                        <p class="text-xl leading-relaxed" style="color: #94a3b8; max-width: 540px;">
+                            AI-powered analysis of 12,000+ clinical trials and molecular pathway data
+                        </p>
+                        <div class="flex items-center space-x-2 text-sm" style="color: #64748b;">
+                            <svg class="w-4 h-4" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Developed by MIT MicroMasters student with faculty validation. Building for research centers and pharmaceutical companies.</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-xs mt-2" style="color: #64748b;">
+                            <svg class="w-3 h-3" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Data from <a href="https://www.broadinstitute.org/drug-repurposing-hub" target="_blank" class="underline hover:text-emerald-400">Broad Institute Drug Repurposing Hub</a> & <a href="http://www.redo-project.org/" target="_blank" class="underline hover:text-emerald-400">ReDO_DB</a></span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-xs mt-2" style="color: #64748b;">
+                            <svg class="w-3 h-3" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Confidence scores based on clinical trials, molecular pathways, and literature analysis</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Value Props -->
+                    <div class="space-y-4">
+                        <div class="text-xs font-bold uppercase tracking-wider" style="color: #64748b; letter-spacing: 0.15em;">Platform Overview</div>
+                        <div class="grid grid-cols-3 gap-4">
+                        <div class="stat-card p-5 rounded-xl">
+                            <div class="text-3xl font-bold data-number mb-2" style="color: #14b8a6;">64%</div>
+                            <div class="text-xs font-semibold uppercase tracking-wide" style="color: #94a3b8;">Faster to market</div>
+                        </div>
+                        <div class="stat-card p-5 rounded-xl">
+                            <div class="text-3xl font-bold data-number mb-2" style="color: #14b8a6;">1,183</div>
+                            <div class="text-xs font-semibold uppercase tracking-wide" style="color: #94a3b8;">Opportunities</div>
+                        </div>
+                        <div class="stat-card p-5 rounded-xl">
+                            <div class="text-3xl font-bold data-number mb-2" style="color: #14b8a6;">87.3%</div>
+                            <div class="text-xs font-semibold uppercase tracking-wide" style="color: #94a3b8;">Accuracy</div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="flex space-x-4">
+                            <button id="get-started-btn" class="px-8 py-3 rounded-lg font-semibold text-base transition-all hover:shadow-lg" style="background-color: #0d9488; color: white;">
+                                Request Demo
+                            </button>
+                            <button id="watch-demo-btn" class="px-8 py-3 rounded-lg font-semibold text-base border transition-all hover:border-slate-500/30" style="border-color: #334155; color: #94a3b8;">
+                                View Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative flex items-center justify-center lg:justify-end">
+                    <!-- Product Dashboard Card -->
+                    <div class="hero-card rounded-2xl p-8 border w-full" style="background-color: #ffffff; border-color: #e2e8f0; max-width: 540px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between mb-6 pb-4" style="border-bottom: 1px solid #e2e8f0;">
+                            <span class="text-sm font-medium uppercase tracking-wide" style="color: #64748b;">Active Analysis</span>
+                            <span class="text-xs px-3 py-1.5 rounded-full font-medium" style="background-color: #dcfce7; color: #166534;">● Live</span>
+                        </div>
+                        
+                        <!-- Primary Row -->
+                        <div class="mb-6">
+                            <div class="flex items-center space-x-4 mb-3">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background-color: #f0fdfa;">
+                                    <svg class="w-6 h-6" style="color: #14b8a6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-lg font-semibold mb-1" style="color: #0f172a;">Metformin → Breast Cancer</div>
+                                    <div class="text-base font-medium" style="color: #14b8a6;">87% Confidence Match</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Secondary Stats -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-4 rounded-xl" style="background-color: #f8fafc;">
+                                <div class="text-2xl font-bold data-number mb-1" style="color: #0f172a;">1,183</div>
+                                <div class="text-xs font-medium" style="color: #64748b;">Opportunities</div>
+                            </div>
+                            <div class="text-center p-4 rounded-xl" style="background-color: #f8fafc;">
+                                <div class="text-2xl font-bold data-number mb-1" style="color: #0f172a;">89</div>
+                                <div class="text-xs font-medium" style="color: #64748b;">High Confidence</div>
+                            </div>
+                            <div class="text-center p-4 rounded-xl" style="background-color: #f8fafc;">
+                                <div class="text-2xl font-bold data-number mb-1" style="color: #0f172a;">24</div>
+                                <div class="text-xs font-medium" style="color: #64748b;">In Progress</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mini Progress Indicator -->
+                        <div class="pt-5" style="border-top: 1px solid #e2e8f0;">
+                            <div class="flex items-center justify-between text-sm mb-3" style="color: #64748b;">
+                                <span class="font-medium">Analysis Progress</span>
+                                <span style="color: #0f172a; font-weight: 600;">78%</span>
+                            </div>
+                            <div class="w-full rounded-full h-2" style="background-color: #e2e8f0;">
+                                <div class="h-2 rounded-full transition-all duration-500" style="width: 78%; background-color: #14b8a6;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Activity Section -->
+    <section class="py-16" style="background: radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.02) 0%, transparent 50%), #0a0f1e; border-top: 1px solid #1e293b;">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Recent Searches -->
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-sm font-semibold mb-4" style="color: #f1f5f9;">Recent Searches</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between py-2 border-b" style="border-color: #1e293b;">
+                            <div>
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">Metformin + Breast Cancer</div>
+                                <div class="text-xs" style="color: #64748b;">2h ago</div>
+                            </div>
+                            <button class="text-xs px-2 py-1 rounded" style="background-color: #0f172a; color: #14b8a6;">View</button>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <div>
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">Statins + Prostate</div>
+                                <div class="text-xs" style="color: #64748b;">1d ago</div>
+                            </div>
+                            <button class="text-xs px-2 py-1 rounded" style="background-color: #0f172a; color: #14b8a6;">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trending Opportunities -->
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-sm font-semibold mb-4" style="color: #f1f5f9;">Trending Opportunities</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between py-2 border-b" style="border-color: #1e293b;">
+                            <div>
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">Aspirin → Lung Cancer</div>
+                                <div class="text-xs font-semibold" style="color: #14b8a6;">92% match</div>
+                            </div>
+                            <button class="text-xs px-2 py-1 rounded" style="background-color: #0f172a; color: #14b8a6;">Explore</button>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <div>
+                                <div class="text-sm font-medium" style="color: #e2e8f0;">Ibuprofen → Colorectal</div>
+                                <div class="text-xs font-semibold" style="color: #14b8a6;">81% match</div>
+                            </div>
+                            <button class="text-xs px-2 py-1 rounded" style="background-color: #0f172a; color: #14b8a6;">Explore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24" style="background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%), #0a0f1e;">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6" style="color: #f1f5f9;">Powerful Features for Pharma Innovation</h2>
+                <p class="text-lg leading-relaxed" style="color: #94a3b8;">
+                    Advanced AI algorithms combined with comprehensive molecular analysis to accelerate drug discovery
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);">
+                            <i data-lucide="microscope" style="width: 28px; height: 28px; color: #14b8a6; stroke-width: 2;"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" style="color: #f1f5f9;">Molecular Analysis</h3>
+                    <p class="text-base leading-relaxed" style="color: #94a3b8;">
+                        Advanced molecular fingerprinting and pathway analysis to identify novel drug-target interactions
+                    </p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);">
+                            <i data-lucide="brain" style="width: 28px; height: 28px; color: #14b8a6; stroke-width: 2;"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" style="color: #f1f5f9;">AI Predictions</h3>
+                    <p class="text-base leading-relaxed" style="color: #94a3b8;">
+                        Machine learning models trained on vast datasets to predict drug efficacy and safety profiles
+                    </p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);">
+                            <i data-lucide="trending-up" style="width: 28px; height: 28px; color: #14b8a6; stroke-width: 2;"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" style="color: #f1f5f9;">Market Intelligence</h3>
+                    <p class="text-base leading-relaxed" style="color: #94a3b8;">
+                        Comprehensive market analysis and competitive landscape assessment for strategic decision-making
+                    </p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);">
+                            <i data-lucide="database" style="width: 28px; height: 28px; color: #14b8a6; stroke-width: 2;"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" style="color: #f1f5f9;">Evidence Database</h3>
+                    <p class="text-base leading-relaxed" style="color: #94a3b8;">
+                        Access to extensive research literature and clinical trial data for evidence-based recommendations
+                    </p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);">
+                            <i data-lucide="zap" style="width: 28px; height: 28px; color: #14b8a6; stroke-width: 2;"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" style="color: #f1f5f9;">Rapid Screening</h3>
+                    <p class="text-base leading-relaxed" style="color: #94a3b8;">
+                        High-throughput screening capabilities to evaluate thousands of compounds in parallel
+                    </p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);">
+                            <i data-lucide="shield-check" style="width: 28px; height: 28px; color: #14b8a6; stroke-width: 2;"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" style="color: #f1f5f9;">Risk Assessment</h3>
+                    <p class="text-base leading-relaxed" style="color: #94a3b8;">
+                        Comprehensive safety and toxicity analysis to minimize development risks
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-24" style="background: radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.02) 0%, transparent 50%), #0a0f1e;">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6" style="color: #f1f5f9;">Enterprise Solutions</h2>
+                <p class="text-lg leading-relaxed" style="color: #94a3b8;">
+                    Scalable pricing for pharmaceutical companies of all sizes
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+                <div class="glass-card p-8 rounded-2xl transition-all hover:border-teal-500/20" style="border: 1px solid #334155; background-color: #1e293b;">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4" style="color: #f1f5f9;">Research</h3>
+                        <div class="text-5xl font-bold data-number mb-2" style="color: #14b8a6;">$2K</div>
+                        <div class="text-sm font-medium" style="color: #64748b;">per year</div>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-base" style="color: #cbd5e1;">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Basic molecular analysis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>1,284 compounds per month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Standard support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Basic reporting</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg text-base font-semibold transition-all hover:border-teal-500/50" style="border: 1px solid #334155; color: #94a3b8;">
+                        Start Free Trial
+                    </button>
+                </div>
+                
+                <div class="pricing-card-popular glass-card p-10 rounded-2xl relative" style="border: 2px solid #14b8a6; background: linear-gradient(135deg, #1e293b 0%, #134e4a 100%); box-shadow: 0 20px 40px rgba(71, 85, 105, 0.3);">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                        <span class="px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wide" style="background: linear-gradient(135deg, #14b8a6 0%, #10b981 100%); color: white; box-shadow: 0 6px 16px rgba(71, 85, 105, 0.4);">✨ POPULAR</span>
+                    </div>
+                    <div class="text-center mb-8 mt-2">
+                        <h3 class="text-2xl font-bold mb-4" style="color: #f1f5f9;">Professional</h3>
+                        <div class="text-5xl font-bold data-number mb-2" style="color: #14b8a6;">$5K</div>
+                        <div class="text-sm font-medium" style="color: #64748b;">per year</div>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-base" style="color: #cbd5e1;">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Advanced AI predictions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Unlimited compounds</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Priority support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Advanced analytics</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Custom integrations</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3.5 rounded-lg text-base font-bold transition-all hover:shadow-xl" style="background-color: #14b8a6; color: white;">
+                        Request Demo
+                    </button>
+                </div>
+                
+                <div class="glass-card p-8 rounded-2xl transition-all hover:border-slate-400/20" style="border: 1px solid #334155; background-color: #1e293b;">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4" style="color: #f1f5f9;">Enterprise</h3>
+                        <div class="text-5xl font-bold data-number mb-2" style="color: #14b8a6;">$10K</div>
+                        <div class="text-sm font-medium" style="color: #64748b;">per year</div>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-base" style="color: #cbd5e1;">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Full platform access</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Multi-team collaboration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Dedicated support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Custom AI models</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" style="color: #14b8a6;" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>White-label options</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg text-base font-semibold transition-all hover:border-teal-500/50" style="border: 1px solid #334155; color: #94a3b8;">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals Section -->
+    <section class="py-24" style="background: radial-gradient(circle at 20% 80%, rgba(20, 184, 166, 0.03) 0%, transparent 50%), #0a0f1e;">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6" style="color: #f1f5f9;">Trusted by Leading Pharmaceutical Companies</h2>
+                <p class="text-lg leading-relaxed" style="color: #94a3b8;">
+                    Join the world's top pharma companies using OncoPurpose for drug discovery
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 items-center mb-20">
+                <div class="flex items-center justify-center">
+                    <div class="logo-box rounded-xl flex items-center justify-center w-full h-24 backdrop-blur-sm">
+                        <span class="text-sm font-medium" style="color: #64748b;">Partner Logo</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="logo-box rounded-xl flex items-center justify-center w-full h-24 backdrop-blur-sm">
+                        <span class="text-sm font-medium" style="color: #64748b;">Partner Logo</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="logo-box rounded-xl flex items-center justify-center w-full h-24 backdrop-blur-sm">
+                        <span class="text-sm font-medium" style="color: #64748b;">Partner Logo</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="logo-box rounded-xl flex items-center justify-center w-full h-24 backdrop-blur-sm">
+                        <span class="text-sm font-medium" style="color: #64748b;">Partner Logo</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="card-elevated px-6 py-4 rounded-xl text-center backdrop-blur-sm">
+                        <div class="text-3xl font-bold data-number mb-1" style="color: #14b8a6;">6,798</div>
+                        <div class="text-xs font-semibold uppercase tracking-wide" style="color: #64748b;">Drug Compounds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="card-elevated p-8 rounded-2xl text-center">
+                    <div class="text-5xl font-bold data-number mb-4" style="color: #14b8a6;">$2.14B</div>
+                    <div class="text-base leading-relaxed font-medium" style="color: #cbd5e1;">Market Value Identified</div>
+                </div>
+                <div class="card-elevated p-8 rounded-2xl text-center">
+                    <div class="text-5xl font-bold data-number mb-4" style="color: #14b8a6;">147</div>
+                    <div class="text-base leading-relaxed font-medium" style="color: #cbd5e1;">Successful Projects</div>
+                </div>
+                <div class="card-elevated p-8 rounded-2xl text-center">
+                    <div class="text-5xl font-bold data-number mb-4" style="color: #14b8a6;">87.3%</div>
+                    <div class="text-base leading-relaxed font-medium" style="color: #cbd5e1;">Client Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20" style="background: radial-gradient(circle at 50% 100%, rgba(20, 184, 166, 0.02) 0%, transparent 40%), #0a0f1e; border-top: 1px solid #1e293b;">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-4" style="color: #14b8a6;">OncoPurpose</div>
+                <p class="text-base mb-8" style="color: #94a3b8;">Accelerating oncology drug discovery through AI innovation</p>
+                <div class="text-sm mb-2" style="color: #64748b;">
+                    © 2024 OncoPurpose. All rights reserved.
+                </div>
+                <p class="text-sm" style="color: #475569;">Last synced: 3m ago · v0.9.3-beta</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Demo Request Modal -->
+    <div id="demo-modal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0" style="background-color: rgba(0,0,0,0.6);" onclick="closeDemoModal()"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="glass-card max-w-md w-full p-6 rounded">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold" style="color: #f1f5f9;">Request Demo</h3>
+                    <button onclick="closeDemoModal()" class="text-sm" style="color: #94a3b8;">✕</button>
+                </div>
+                <form id="demo-form" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium mb-1" style="color: #cbd5e1;">Full Name</label>
+                        <input type="text" class="w-full rounded px-3 py-2 text-sm" style="background-color: #0f172a; border: 1px solid #334155; color: #e2e8f0;" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium mb-1" style="color: #cbd5e1;">Company</label>
+                        <input type="text" class="w-full rounded px-3 py-2 text-sm" style="background-color: #0f172a; border: 1px solid #334155; color: #e2e8f0;" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium mb-1" style="color: #cbd5e1;">Email</label>
+                        <input type="email" class="w-full rounded px-3 py-2 text-sm" style="background-color: #0f172a; border: 1px solid #334155; color: #e2e8f0;" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Phone</label>
+                        <input type="tel" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-lg font-semibold transition-colors">
+                        Schedule Demo
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="main (1).js"></script>
+    <script src="dashboard-generator.js"></script>
+    <script>
+        // Demo modal functionality
+        function openDemoModal() {
+            document.getElementById('demo-modal').classList.remove('hidden');
+        }
+        
+        function closeDemoModal() {
+            document.getElementById('demo-modal').classList.add('hidden');
+        }
+        
+        // Event listeners
+        document.getElementById('request-demo-btn').addEventListener('click', openDemoModal);
+        document.getElementById('get-started-btn').addEventListener('click', openDemoModal);
+        
+        document.getElementById('demo-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            utils.showToast('Demo request submitted! We\'ll contact you soon.');
+            closeDemoModal();
+        });
+        
+        document.getElementById('watch-demo-btn').addEventListener('click', () => {
+            utils.showToast('Demo video coming soon!');
+        });
+        
+        // Discovery Card View Buttons - NEW
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.textContent.trim() === 'View' && btn.closest('.glass-card')) {
+                btn.addEventListener('click', () => {
+                    const cardText = btn.closest('.flex')?.querySelector('.text-sm')?.textContent || 'Unknown';
+                    console.log('View discovery:', cardText);
+                    window.location.href = 'discovery.html';
+                });
+            }
+        });
+        
+        // Pipeline Explore Buttons - NEW
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.textContent.trim() === 'Explore' && btn.closest('.glass-card')) {
+                btn.addEventListener('click', () => {
+                    const cardText = btn.closest('.flex')?.querySelector('.text-sm')?.textContent || 'Unknown';
+                    console.log('Explore opportunity:', cardText);
+                    window.location.href = 'discovery.html';
+                });
+            }
+        });
+        
+        // Pricing Buttons - NEW
+        document.querySelectorAll('.glass-card button, .pricing-card-popular button').forEach(btn => {
+            const btnText = btn.textContent.trim();
+            if (btnText.includes('Start Free Trial') || btnText.includes('Get Started') || btnText.includes('Contact Sales')) {
+                btn.addEventListener('click', () => {
+                    console.log('Pricing button clicked:', btnText);
+                    if (btnText.includes('Contact Sales')) {
+                        alert('Contact Sales\\n\\nEmail: sales@oncopurpose.com\\nPhone: +1 (555) 123-4567\\n\\n(Or implement contact form)');
+                    } else {
+                        openDemoModal();
+                    }
+                });
+            }
+        });
+        
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Initialize typing animation
+        if (typeof Typed !== 'undefined') {
+            new Typed('#typed-text', {
+                strings: [
+                    'AI-Powered Drug Repurposing for Cancer Treatment',
+                    'Reduce Time to Market by 70%',
+                    'Discover Hidden Treatment Opportunities',
+                    'Accelerate Clinical Trial Success'
+                ],
+                typeSpeed: 50,
+                backSpeed: 30,
+                backDelay: 2000,
+                startDelay: 500,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|',
+                autoInsertCss: true
+            });
+        }
+    </script>
+</body>
+</html>

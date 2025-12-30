@@ -510,27 +510,164 @@
                 button.addEventListener('click', (e) => {
                     const action = e.target.textContent.trim();
                     const paperId = e.target.closest('.paper-card')?.dataset.paperId || 'unknown';
+                    const paperCard = e.target.closest('.paper-card');
+                    const paperTitle = paperCard?.querySelector('h3')?.textContent || 'Research Paper';
+                    const btn = e.target;
                     
                     if (action.includes('Full Paper') || action.includes('View')) {
                         // Navigate to paper details or open PDF
                         console.log('View paper:', paperId);
                         alert(`Opening paper ${paperId}...\\n\\n(Backend needed: GET /api/library/papers/${paperId}/pdf)`);
                     } else if (action.includes('Download')) {
-                        console.log('Download paper:', paperId);
-                        alert(`Downloading paper ${paperId}...\\n\\n(Backend needed: GET /api/library/papers/${paperId}/download)`);
+                        const originalText = btn.textContent;
+                        btn.textContent = '⏳ Downloading...';
+                        btn.disabled = true;
+                        
+                        // Simulate download (replace with real backend call)
+                        setTimeout(() => {
+                            // Create sample PDF citation
+                            const citation = `Title: ${paperTitle}\\nJournal: Nature Medicine\\nYear: 2024\\n\\nThis is a placeholder. Real implementation needs:\\nGET /api/library/papers/${paperId}/pdf`;
+                            const blob = new Blob([citation], { type: 'text/plain' });
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `paper_${paperId}.txt`;
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                            
+                            btn.textContent = '✅ Downloaded!';                            showNotification('✅ Paper downloaded successfully!', 'success');                            setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 2000);
+                        }, 500);
                     } else if (action.includes('Save')) {
-                        console.log('Save paper:', paperId);
-                        alert('Paper saved to library!');
+                        const originalText = btn.textContent;
+                        btn.textContent = '⏳ Saving...';
+                        btn.disabled = true;
+                        
+                        // Save to localStorage
+                        const savedPapers = JSON.parse(localStorage.getItem('savedPapers') || '[]');
+                        const paper = {
+                            id: paperId,
+                            title: paperTitle,
+                            savedAt: new Date().toISOString()
+                        };
+                        
+                        if (!savedPapers.find(p => p.id === paperId)) {
+                            savedPapers.push(paper);
+                            localStorage.setItem('savedPapers', JSON.stringify(savedPapers));
+                            btn.textContent = '✅ Saved!';
+                            showNotification('✅ Paper saved to your library!', 'success');
+                        } else {
+                            btn.textContent = '✓ Already Saved';
+                            showNotification('ℹ️ Paper already in your library', 'info');
+                        }
+                        
+                        setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 2000);
                     } else if (action.includes('Cite')) {
-                        console.log('Copy citation:', paperId);
-                        alert('Citation copied to clipboard!');
+                        const originalText = btn.textContent;
+                        
+                        // Generate APA citation
+                        const citation = `Author et al. (2024). ${paperTitle}. Nature Medicine. https://doi.org/10.1234/example`;
+                        
+                        navigator.clipboard.writeText(citation).then(() => {
+                            btn.textContent = '✅ Copied!';
+                            showNotification('✅ Citation copied to clipboard!', 'success');
+                            setTimeout(() => { btn.textContent = originalText; }, 2000);
+                        }).catch(err => {
+                            // Fallback: show citation in alert
+                            alert(`Citation:\n\n${citation}`);
+                            showNotification('❌ Clipboard access denied. Citation shown in alert.', 'error');
+                        });
                     } else if (action.includes('Share')) {
-                        console.log('Share paper:', paperId);
-                        alert('Share link copied to clipboard!');
+                        const originalText = btn.textContent;
+                        
+                        const shareData = {
+                            title: paperTitle,
+                            text: 'Research paper from OncoPurpose Library',
+                            url: `${window.location.origin}/library.html?paper=${paperId}`
+                        };
+                        
+                        if (navigator.share) {
+                            navigator.share(shareData).then(() => {
+                                btn.textContent = '✅ Shared!';
+                                showNotification('✅ Paper shared successfully!', 'success');
+                                setTimeout(() => { btn.textContent = originalText; }, 2000);
+                            }).catch(err => {
+                                console.log('Share cancelled');
+                                showNotification('ℹ️ Share cancelled', 'info');
+                            });
+                        } else {
+                            // Fallback: Copy link
+                            navigator.clipboard.writeText(shareData.url).then(() => {
+                                btn.textContent = '✅ Link Copied!';
+                                showNotification('✅ Link copied to clipboard!', 'success');
+                                setTimeout(() => { btn.textContent = originalText; }, 2000);
+                            });
+                        }
                     }
                 });
             });
         });
+        
+        // Toast Notification System
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                padding: 16px 24px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = '#10b981';
+            } else if (type === 'error') {
+                notification.style.background = '#ef4444';
+            } else {
+                notification.style.background = '#3b82f6';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Add animation styles
+        if (!document.getElementById('notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'notification-styles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(400px);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOut {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(400px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     </script>
 </body>
 </html>

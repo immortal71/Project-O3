@@ -1,9 +1,61 @@
 /**
  * Dashboard Image Generator
  * Triggers backend API to generate hero dashboard image using Google Imagen
+ * Saves generated outputs to database
  */
 
-const API_BASE_URL = 'http://localhost:8000';
+// Import configuration (if available, otherwise use defaults)
+const CONFIG = typeof window !== 'undefined' && window.CONFIG ? window.CONFIG : {
+    API_BASE_URL: 'http://localhost:8000',
+    ENDPOINTS: {
+        IMAGE_GENERATE: '/api/images/generate-quick',
+        IMAGE_DASHBOARD: '/api/images/dashboard-preview',
+        DB_SAVE_OUTPUT: '/api/v1/db/output'
+    },
+    USE_DATABASE: true
+};
+
+const API_BASE_URL = CONFIG.API_BASE_URL;
+
+/**
+ * Save generated image to database
+ */
+async function saveImageToDatabase(imageData) {
+    if (!CONFIG.USE_DATABASE) {
+        console.log('Database not enabled, skipping save');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}${CONFIG.ENDPOINTS.DB_SAVE_OUTPUT}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                output_type: 'dashboard_image',
+                file_path: imageData.url,
+                input_parameters: {
+                    generation_time: new Date().toISOString(),
+                    method: 'google_imagen'
+                },
+                output_data: {
+                    success: imageData.success,
+                    size: imageData.size || 'unknown'
+                },
+                status: 'completed'
+            })
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('✅ Image saved to database:', result.id);
+            return result;
+        }
+    } catch (error) {
+        console.warn('Could not save to database:', error);
+    }
+}
 
 /**
  * Generate dashboard preview image
@@ -24,7 +76,7 @@ async function generateDashboardImage() {
     
     try {
         // Call the backend API to generate image
-        const response = await fetch(`${API_BASE_URL}/api/images/generate-quick`, {
+        const response = await fetch(`${API_BASE_URL}${CONFIG.ENDPOINTS.IMAGE_GENERATE}`, {
             method: 'POST',
             headers: {
         /*
@@ -43,6 +95,9 @@ async function generateDashboardImage() {
         const result = await response.json();
         
         if (result.success) {
+            // Save to database
+            await saveImageToDatabase(result);
+            
             // Update the dashboard card with the generated image
             if (dashboardCard) {
                 dashboardCard.innerHTML = `

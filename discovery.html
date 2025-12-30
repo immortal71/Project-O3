@@ -554,6 +554,32 @@
 
         // Initialize discovery page functionality
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // Notification function
+            window.showNotification = function(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                    color: white;
+                    padding: 16px 24px;
+                    border-radius: 12px;
+                    z-index: 9999;
+                    font-size: 14px;
+                    font-weight: 600;
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                    animation: slideIn 0.3s ease-out;
+                `;
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            };
+            
             // Range slider interaction - FIXED
             const rangeSlider = document.querySelector('input[type="range"]');
             const rangeValue = document.querySelector('div[style*="Current:"]');
@@ -640,11 +666,11 @@
                         const results = await response.json();
                         console.log('Analysis results:', results);
                         
-                        // Display results (placeholder - needs implementation)
-                        alert(`Analysis complete! Found ${results.opportunities?.length || 0} opportunities.\n\nResults logged to console.`);
+                        // Display results - this will add new cards
+                        renderResults(results);
                         
-                        // TODO: Render results in the results grid
-                        // renderResults(results);
+                        // Show success notification
+                        showNotification('✅ Analysis complete! Results updated.', 'success');
                         
                     } catch (error) {
                         console.error('Analysis failed:', error);
@@ -683,6 +709,265 @@
                     console.log('Filter toggled:', tag.textContent, tag.classList.contains('active'));
                 });
             });
+            
+            // Render analysis results - ADD TO THE GRID ON THE RIGHT
+            function renderResults(results) {
+                const resultsGrid = document.getElementById('results-grid');
+                if (!resultsGrid) {
+                    console.error('Results grid not found!');
+                    return;
+                }
+                
+                console.log('Adding new results to grid:', results);
+                
+                // Check if we have opportunities
+                if (!results.opportunities || results.opportunities.length === 0) {
+                    alert('No opportunities found. Try a different drug or cancer type.');
+                    return;
+                }
+                
+                // Save to localStorage so it persists after refresh
+                const savedResults = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+                results.opportunities.forEach(opp => {
+                    savedResults.push({
+                        drug_name: results.drug_name || opp.drug_name,
+                        cancer_type: opp.cancer_type || results.cancer_type,
+                        confidence_score: opp.confidence_score,
+                        mechanism: opp.mechanism,
+                        clinical_phase: opp.clinical_phase,
+                        market_potential: opp.market_potential,
+                        timeline: opp.timeline,
+                        timestamp: Date.now()
+                    });
+                });
+                localStorage.setItem('userAnalysisResults', JSON.stringify(savedResults));
+                
+                // Update results count - increment by number of new opportunities
+                const currentCount = parseInt(document.getElementById('results-count').textContent) || 24;
+                const newCount = currentCount + results.opportunities.length;
+                document.getElementById('results-count').textContent = newCount;
+                
+                // Add each opportunity as a NEW CARD in the grid (same format as existing 3 cards)
+                results.opportunities.forEach((opp, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10';
+                    card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s backwards`;
+                    
+                    // Convert confidence score to percentage
+                    const confidenceScore = typeof opp.confidence_score === 'number' 
+                        ? (opp.confidence_score > 1 ? opp.confidence_score : (opp.confidence_score * 100))
+                        : 0;
+                    
+                    // Determine confidence color
+                    let confidenceColor = '#ef4444'; // red
+                    if (confidenceScore >= 80) confidenceColor = '#10b981'; // green
+                    else if (confidenceScore >= 60) confidenceColor = '#fbbf24'; // yellow
+                    
+                    card.innerHTML = `
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-1">${results.drug_name || opp.drug_name || 'Unknown Drug'}</h3>
+                                <p class="text-sm text-gray-400">${opp.mechanism ? opp.mechanism.substring(0, 50) + '...' : 'To be determined'}</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg" style="background: var(--bg-secondary); display: flex; align-items: center; justify-content: center;">
+                                <span class="text-xl">💊</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-400">Confidence Score</span>
+                                <span class="text-sm font-medium" style="color: ${confidenceColor};">${confidenceScore.toFixed(1)}%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div class="h-2 rounded" style="width: ${confidenceScore}%; background-color: ${confidenceColor};"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Target Cancer:</span>
+                                <span class="text-white">${opp.cancer_type || results.cancer_type || 'Multiple'}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Market Size:</span>
+                                <span class="text-green-400">${opp.market_potential || 'TBD'}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Phase:</span>
+                                <span class="text-yellow-400">${opp.clinical_phase || 'Preclinical'}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Timeline:</span>
+                                <span class="text-white">${opp.timeline || 'TBD'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button onclick="window.location.href='details.html?drug=${encodeURIComponent(results.drug_name || opp.drug_name || 'Unknown')}&cancer=${encodeURIComponent(opp.cancer_type || results.cancer_type || 'Cancer')}'" 
+                                    class="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded text-sm transition-colors">
+                                View Report
+                            </button>
+                            <button onclick="saveToProject(${index})" 
+                                    class="bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded-lg text-sm transition-colors">
+                                Save
+                            </button>
+                            <button onclick="deleteAnalysisResult('${results.drug_name || opp.drug_name}', '${opp.cancer_type || results.cancer_type}')" 
+                                    class="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg text-sm transition-colors"
+                                    title="Delete this analysis">
+                                🗑️
+                            </button>
+                        </div>
+                        </div>
+                    `;
+                    
+                    // Append to grid
+                    resultsGrid.appendChild(card);
+                });
+                
+                // Add animation CSS if not exists
+                if (!document.getElementById('result-animation')) {
+                    const style = document.createElement('style');
+                    style.id = 'result-animation';
+                    style.textContent = `
+                        @keyframes fadeInUp {
+                            from { opacity: 0; transform: translateY(30px); }
+                            to { opacity: 1; transform: translateY(0); }
+                        }
+                        .hover-scale {
+                            transition: transform 0.2s ease;
+                        }
+                        .hover-scale:hover {
+                            transform: translateY(-4px);
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                // Scroll to results section
+                resultsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Show success message
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-6 right-6 px-6 py-3 rounded-lg shadow-xl z-50';
+                toast.style.cssText = 'background: #10b981; color: white; animation: slideIn 0.3s ease-out;';
+                toast.innerHTML = `✓ Analysis complete! ${results.opportunities.length} new opportunity added`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+            
+            // Show detailed report modal/page
+            function showDetailedReport(drugName, cancerType) {
+                alert(`Opening detailed report for:\n${drugName} → ${cancerType}\n\n(Full report viewer coming soon)`);
+            }
+            
+            // Delete individual analysis result
+            function deleteAnalysisResult(drugName, cancerType) {
+                if (!confirm(`Delete analysis for ${drugName} → ${cancerType}?`)) {
+                    return;
+                }
+                
+                // Remove from localStorage
+                const savedResults = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+                const filtered = savedResults.filter(r => 
+                    !(r.drug_name === drugName && r.cancer_type === cancerType)
+                );
+                localStorage.setItem('userAnalysisResults', JSON.stringify(filtered));
+                
+                // Show notification
+                const notification = document.createElement('div');
+                notification.style.cssText = 'position: fixed; top: 80px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+                notification.textContent = '✅ Analysis deleted successfully';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                    window.location.reload();
+                }, 1500);
+            }
+            
+            // Save to Project Function
+            function saveToProject(index) {
+                // Get the analysis from current results
+                const savedResults = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+                const analysis = savedResults[index];
+                
+                if (!analysis) {
+                    alert('Analysis not found');
+                    return;
+                }
+                
+                // Save to separate projects list
+                const savedProjects = JSON.parse(localStorage.getItem('savedProjects') || '[]');
+                
+                // Check if already saved
+                const alreadySaved = savedProjects.find(p => 
+                    p.drugName === analysis.drug_name && p.cancerType === analysis.cancer_type
+                );
+                
+                if (alreadySaved) {
+                    // Show notification
+                    const notification = document.createElement('div');
+                    notification.style.cssText = 'position: fixed; top: 80px; right: 20px; background: #f59e0b; color: white; padding: 16px 24px; border-radius: 8px; z-index: 9999;';
+                    notification.textContent = '⚠️ Already saved to projects';
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), 2000);
+                    return;
+                }
+                
+                // Add to projects
+                const project = {
+                    id: Date.now(),
+                    drugName: analysis.drug_name,
+                    cancerType: analysis.cancer_type,
+                    confidenceScore: analysis.confidence_score,
+                    phase: analysis.development_phase || 'Research',
+                    savedAt: new Date().toISOString()
+                };
+                
+                savedProjects.push(project);
+                localStorage.setItem('savedProjects', JSON.stringify(savedProjects));
+                
+                // Show success notification
+                const notification = document.createElement('div');
+                notification.style.cssText = 'position: fixed; top: 80px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+                notification.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 4px;">✅ Saved to Projects!</div>
+                    <div style="font-size: 12px;">${analysis.drug_name} → ${analysis.cancer_type}</div>
+                `;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+            
+            // Make saveToProject globally accessible
+            window.saveToProject = saveToProject;
+            
+            // Delete preloaded demo card
+            function deletePreloadedCard(drugName, cancerType) {
+                if (!confirm(`Delete ${drugName} → ${cancerType} from results?`)) {
+                    return;
+                }
+                alert('This is a demo card and will reload on page refresh. Only user-generated analyses can be permanently deleted.');
+            }
+            
+            // Load saved user analysis results from localStorage
+            function loadSavedAnalysisResults() {
+                const savedResults = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+                if (savedResults.length > 0) {
+                    console.log('Loading saved analysis results:', savedResults.length);
+                    
+                    // Render saved results
+                    renderResults({
+                        opportunities: savedResults,
+                        total_found: savedResults.length
+                    });
+                }
+            }
+            
+            // Load saved results when page loads
+            setTimeout(() => {
+                loadSavedAnalysisResults();
+            }, 500); // Wait for demo cards to load first
             
             // Analysis mode toggle
             const analysisToggle = document.getElementById('analysis-mode');

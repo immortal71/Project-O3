@@ -1,11 +1,11 @@
 # Drug Database Sources - Free & Unrestricted
 
-## ✅ Current Status
+##  Current Status
 - **74 FDA-approved drugs** imported
 - All data from **free public sources** with no restrictions for commercial use
 - Database: `database/oncopurpose.db`
 
-## 📊 Drug Categories
+##  Drug Categories
 
 ### Cancer Drugs (20 drugs)
 - **Tyrosine Kinase Inhibitors**: Imatinib, Erlotinib, Gefitinib, Sunitinib, Sorafenib
@@ -61,24 +61,24 @@
 
 ## 🆓 Free Public Data Sources
 
-### ✅ Used in Current Import
+###  Used in Current Import
 
 **1. FDA DailyMed**
 - URL: https://dailymed.nlm.nih.gov
 - License: Public domain (U.S. Government)
 - Content: Official drug labels, indications, mechanisms
-- Commercial use: ✅ Unrestricted
+- Commercial use:  Unrestricted
 - API: REST API available
 
 **2. NIH National Library of Medicine**
 - Source: RxNorm, Drug Information Portal
 - License: Public domain
 - Content: Drug names, classes, relationships
-- Commercial use: ✅ Unrestricted
+- Commercial use:  Unrestricted
 
 ---
 
-## 🔄 Available for Expansion
+##  Available for Expansion
 
 ### PubChem (NIH)
 - URL: https://pubchem.ncbi.nlm.nih.gov
@@ -90,7 +90,7 @@
   - Literature references
 - Size: 110M+ compounds, 270M+ bioactivities
 - API: PUG REST API (free, no rate limits for reasonable use)
-- Commercial use: ✅ Unrestricted
+- Commercial use:  Unrestricted
 - Use case: Enrich drug data with structures, bioactivity, interactions
 
 **Example API calls:**
@@ -115,7 +115,7 @@ https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/2244/xrefs/RegistryID/JSO
   - Binding assays
 - Size: 2.4M+ compounds, 19M+ activities
 - API: REST API (free, no authentication needed)
-- Commercial use: ✅ Allowed with attribution
+- Commercial use:  Allowed with attribution
 - Use case: Target identification, binding data, clinical trial info
 
 **Example API calls:**
@@ -139,7 +139,7 @@ https://www.ebi.ac.uk/chembl/api/data/molecule/CHEMBL25/bioactivity.json
   - Dosage forms
   - Brand/generic mappings
 - API: RxNorm API (free)
-- Commercial use: ✅ Unrestricted
+- Commercial use:  Unrestricted
 - Use case: Drug name standardization, relationships
 
 ### DailyMed API
@@ -151,16 +151,16 @@ https://www.ebi.ac.uk/chembl/api/data/molecule/CHEMBL25/bioactivity.json
   - Contraindications
   - Pharmacology
 - API: REST API
-- Commercial use: ✅ Unrestricted
+- Commercial use:  Unrestricted
 - Use case: Official FDA-approved drug information
 
 ---
 
-## 📈 Expansion Roadmap
+##  Expansion Roadmap
 
-### Phase 1: Quantity (Target: 500+ drugs) ✅ Complete (74 drugs)
-- ✅ Import curated FDA-approved drugs
-- 🔄 Next: Add more categories (immunosuppressants, hormones, vitamins)
+### Phase 1: Quantity (Target: 500+ drugs)  Complete (74 drugs)
+-  Import curated FDA-approved drugs
+-  Next: Add more categories (immunosuppressants, hormones, vitamins)
 
 ### Phase 2: Quality (Enrich existing drugs)
 - Add PubChem CIDs for structure data
@@ -176,7 +176,7 @@ https://www.ebi.ac.uk/chembl/api/data/molecule/CHEMBL25/bioactivity.json
 
 ---
 
-## 💡 Why These Sources?
+##  Why These Sources?
 
 ### 1. **100% Free**
 - No registration required (except DrugBank)
@@ -203,7 +203,7 @@ https://www.ebi.ac.uk/chembl/api/data/molecule/CHEMBL25/bioactivity.json
 
 ---
 
-## 🚀 Next Steps
+##  Next Steps
 
 1. **Expand to 500+ drugs**
    ```bash
@@ -231,7 +231,7 @@ https://www.ebi.ac.uk/chembl/api/data/molecule/CHEMBL25/bioactivity.json
 
 ---
 
-## 📝 Legal Notes
+##  Legal Notes
 
 - All data sources are free for commercial use
 - No proprietary databases used

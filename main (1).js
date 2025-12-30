@@ -298,11 +298,45 @@ const dashboard = {
     initTable: () => {
         const tableBody = document.getElementById('drugs-table-body');
         if (tableBody) {
-            tableBody.innerHTML = OncoPurpose.drugs.map((drug, index) => `
+            // Load from localStorage (user-generated reports) + static demo data
+            const savedReports = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+            
+            // Combine saved reports with demo data
+            const allDrugs = [
+                ...savedReports.map(report => ({
+                    id: report.drug_name + '-' + report.cancer_type,
+                    name: report.drug_name,
+                    currentIndication: report.current_indication || 'Various',
+                    newIndication: report.cancer_type,
+                    confidence: (report.confidence_score > 1 ? report.confidence_score : report.confidence_score * 100),
+                    marketSize: report.market_potential || '$1-3B',
+                    phase: report.development_phase || 'Preclinical',
+                    patentStatus: 'Active',
+                    structure: 'resources/drug structure/metformin.png',
+                    mechanism: report.mechanism || 'Under investigation',
+                    evidence: report.evidence || 'Analysis in progress',
+                    timeline: report.timeline || '2-4 years'
+                })),
+                ...OncoPurpose.drugs
+            ];
+            
+            // Remove duplicates (user reports override demo data)
+            const uniqueDrugs = [];
+            const seen = new Set();
+            
+            allDrugs.forEach(drug => {
+                const key = `${drug.name}-${drug.newIndication}`.toLowerCase();
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    uniqueDrugs.push(drug);
+                }
+            });
+            
+            tableBody.innerHTML = uniqueDrugs.map((drug, index) => `
                 <tr class="table-row">
                     <td class="px-6 py-4">
                         <div class="flex items-center">
-                            <img src="${drug.structure}" alt="${drug.name}" class="w-10 h-10 mr-3 rounded">
+                            <img src="${drug.structure}" alt="${drug.name}" class="w-10 h-10 mr-3 rounded" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%2314b8a6%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22white%22%3E${drug.name.charAt(0)}%3C/text%3E%3C/svg%3E'">
                             <span class="font-medium" style="color: #f1f5f9;">${drug.name}</span>
                         </div>
                     </td>
@@ -318,7 +352,7 @@ const dashboard = {
                     <td class="px-6 py-4 text-right data-number" style="color: var(--accent-primary);">${drug.marketSize}</td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex items-center justify-center space-x-2">
-                            <button onclick="dashboard.viewDetails(${drug.id})" class="action-button-primary px-3 py-1.5 text-xs font-medium" style="color: white;">
+                            <button onclick="dashboard.viewDetails('${drug.name}', '${drug.newIndication}')" class="action-button-primary px-3 py-1.5 text-xs font-medium view-details-btn" style="color: white;" data-drug="${drug.name}" data-cancer="${drug.newIndication}">
                                 <i data-lucide="arrow-right" style="width: 12px; height: 12px; display: inline; vertical-align: middle; margin-right: 4px;"></i>
                                 View Details
                             </button>
@@ -339,8 +373,9 @@ const dashboard = {
         }
     },
     
-    viewDetails: (drugId) => {
-        window.location.href = `details.html?id=${drugId}`;
+    viewDetails: (drugName, cancerType) => {
+        // Navigate to details page with drug and cancer parameters
+        window.location.href = `details.html?drug=${encodeURIComponent(drugName)}&cancer=${encodeURIComponent(cancerType)}`;
     },
     
     saveOpportunity: (drugId) => {
@@ -416,14 +451,17 @@ const discovery = {
     renderResults: (drugs) => {
         const resultsGrid = document.getElementById('results-grid');
         if (resultsGrid) {
-            resultsGrid.innerHTML = drugs.map(drug => `
+            // CHANGED: Use insertAdjacentHTML instead of innerHTML to NOT overwrite existing cards
+            const cardsHTML = drugs.map((drug, index) => `
                 <div class="bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10">
                     <div class="flex items-start justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-semibold text-white mb-1">${drug.name}</h3>
                             <p class="text-sm text-gray-400">${drug.currentIndication}</p>
                         </div>
-                        <img src="${drug.structure}" alt="${drug.name}" class="w-12 h-12 rounded-lg">
+                        <div class="w-12 h-12 rounded-lg" style="background: var(--bg-secondary); display: flex; align-items: center; justify-content: center;">
+                            <span class="text-xl">💊</span>
+                        </div>
                     </div>
                     
                     <div class="mb-4">
@@ -431,7 +469,7 @@ const discovery = {
                             <span class="text-sm text-gray-400">Confidence Score</span>
                             <span class="text-sm font-medium text-emerald-400">${drug.confidence}%</span>
                         </div>
-                            <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div class="w-full bg-gray-700 rounded-full h-2">
                             <div class="h-2 rounded" style="width: ${drug.confidence}%; background-color: #14b8a6;"></div>
                         </div>
                     </div>
@@ -451,16 +489,26 @@ const discovery = {
                         </div>
                     </div>
                     
-                        <div class="flex space-x-2">
+                    <div class="flex space-x-2">
                         <button onclick="discovery.viewDetails(${drug.id})" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded text-sm transition-colors">
                             View Report
                         </button>
                         <button onclick="discovery.saveToProject(${drug.id})" class="bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded-lg text-sm transition-colors">
                             Save
                         </button>
+                        <button onclick="deletePreloadedCard('${drug.name}', '${drug.newIndication}')" 
+                                class="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg text-sm transition-colors"
+                                title="Delete this analysis">
+                            🗑️
+                        </button>
                     </div>
                 </div>
             `).join('');
+            
+            // CHANGED: Only set innerHTML if grid is empty, otherwise don't touch it
+            if (resultsGrid.children.length === 0) {
+                resultsGrid.innerHTML = cardsHTML;
+            }
         }
     },
     
@@ -687,6 +735,35 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     ensureButtonHandlers();
+});
+
+// Listen for localStorage changes (cross-page sync)
+window.addEventListener('storage', (e) => {
+    if (e.key === 'userAnalysisResults') {
+        // Reload dashboard table when new reports are added
+        if (typeof dashboard !== 'undefined' && dashboard.initTable) {
+            dashboard.initTable();
+        }
+    }
+});
+
+// Also listen for same-page localStorage changes
+const originalSetItem = localStorage.setItem;
+localStorage.setItem = function(key, value) {
+    const event = new Event('localStorageChange');
+    event.key = key;
+    event.newValue = value;
+    window.dispatchEvent(event);
+    originalSetItem.apply(this, arguments);
+};
+
+window.addEventListener('localStorageChange', (e) => {
+    if (e.key === 'userAnalysisResults') {
+        // Reload dashboard table when new reports are added
+        if (typeof dashboard !== 'undefined' && dashboard.initTable) {
+            dashboard.initTable();
+        }
+    }
 });
 
 // Export for global access

@@ -1,5 +1,6 @@
 """
 OpenAI Integration Service for Drug Repurposing Analysis
+Generates detailed market reports for drug repurposing opportunities
 """
 
 # Copyright (c) 2025 OncoPurpose (trovesx)
@@ -8,27 +9,228 @@ OpenAI Integration Service for Drug Repurposing Analysis
 
 import json
 import logging
+import os
 from typing import Dict, List, Optional, Any
 
-import openai
 from openai import OpenAI
-from config import Settings
 
 logger = logging.getLogger(__name__)
+
+# OpenAI API Key from environment variable
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
 class OpenAIService:
     """Service for OpenAI API interactions"""
     
-    def __init__(self, settings: Settings):
+    def __init__(self):
         """Initialize OpenAI service"""
-        self.settings = settings
-        self.client = None
+        if not OPENAI_API_KEY:
+            logger.warning("OpenAI API key not found in environment variables")
+        self.client = OpenAI(api_key=OPENAI_API_KEY)
+        logger.info("OpenAI service initialized successfully")
+    
+    async def generate_market_report(
+        self,
+        drug_name: str,
+        cancer_type: str,
+        confidence_score: float,
+        mechanism: str = "",
+        clinical_phase: str = "",
+        market_potential: str = ""
+    ) -> Dict[str, Any]:
+        """
+        Generate comprehensive market analysis report using OpenAI
         
-        if settings.OPENAI_API_KEY:
-            self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
-            logger.info("OpenAI service initialized successfully")
-        else:
-            logger.warning("OpenAI API key not configured")
+        Args:
+            drug_name: Name of the drug
+            cancer_type: Type of cancer for repurposing
+            confidence_score: Confidence score (0-1 or 0-100)
+            mechanism: Mechanism of action
+            clinical_phase: Current clinical development phase
+            market_potential: Estimated market size
+            
+        Returns:
+            Dictionary containing:
+            - executive_summary: Brief overview
+            - market_analysis: Detailed market analysis
+            - competitive_landscape: Competitor analysis
+            - regulatory_pathway: Regulatory considerations
+            - financial_projections: Revenue and cost projections
+            - risks_mitigation: Risk analysis and mitigation strategies
+            - recommendations: Strategic recommendations
+        """
+        try:
+            # Normalize confidence score
+            conf_pct = confidence_score if confidence_score > 1 else confidence_score * 100
+            
+            prompt = f"""Generate a comprehensive, detailed market analysis report for drug repurposing:
+
+Drug: {drug_name}
+Target Indication: {cancer_type}
+Confidence Score: {conf_pct:.1f}%
+Mechanism of Action: {mechanism or 'Under investigation'}
+Clinical Phase: {clinical_phase or 'Preclinical'}
+Market Potential: {market_potential or 'To be determined'}
+
+Create a detailed, professional, IN-DEPTH market report with the following sections. BE COMPREHENSIVE - each section should be 2-4 paragraphs with specific details, data, and analysis:
+
+1. EXECUTIVE SUMMARY
+- Comprehensive overview of the repurposing opportunity (3-4 paragraphs)
+- Key value proposition and market opportunity
+- Critical success factors and timeline overview
+- Investment thesis and expected returns
+
+2. MARKET ANALYSIS
+- Detailed market size analysis (current and projected 5-year CAGR)
+- Patient population demographics and epidemiology
+- Current treatment paradigm and market dynamics
+- Unmet medical needs and pain points
+- Pricing landscape and reimbursement environment
+- Market access considerations
+
+3. COMPETITIVE LANDSCAPE
+- Comprehensive competitor analysis (list 5-7 specific drugs/companies)
+- Market share breakdown
+- Comparative efficacy and safety profiles
+- Differentiation strategy and competitive advantages
+- Intellectual property landscape
+- Emerging therapies in pipeline
+
+4. REGULATORY PATHWAY
+- Detailed FDA approval strategy and timeline (include specific milestones)
+- Required clinical trial phases with patient enrollment numbers
+- Regulatory precedents for similar repurposing cases
+- Orphan drug designation opportunities
+- Fast track/breakthrough therapy potential
+- International regulatory considerations (EMA, PMDA)
+
+5. FINANCIAL PROJECTIONS
+- Year-by-year revenue forecast (Years 1-5) with specific numbers
+- Development cost breakdown by phase
+- Peak sales estimates
+- Operating margin projections
+- Return on investment analysis
+- Break-even analysis and payback period
+
+6. RISKS & MITIGATION STRATEGIES
+- Technical/scientific risks (efficacy, safety, mechanism)
+- Clinical trial risks (recruitment, endpoints, competition)
+- Regulatory risks (approval delays, additional requirements)
+- Market/commercial risks (adoption, competition, pricing pressure)
+- Financial risks (funding, burn rate)
+- Specific mitigation strategies for each risk category
+
+7. STRATEGIC RECOMMENDATIONS
+- Detailed clinical development roadmap (specific trials, timelines, budgets)
+- Partnership and business development opportunities
+- Key opinion leader engagement strategy
+- Medical affairs and publication plan
+- Commercial strategy and go-to-market approach
+- Milestone-based decision framework
+
+Make this report detailed, data-driven, and professional. Use realistic pharmaceutical industry numbers, timelines, and benchmarks. Each section should provide actionable insights with specific recommendations."""
+
+            response = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a senior pharmaceutical market analyst and oncology drug development expert with 15+ years of experience in drug repurposing, market assessments, and FDA regulatory strategy. Provide highly detailed, data-driven, comprehensive market reports with specific numbers, timelines, and actionable recommendations. Draw from real pharmaceutical industry benchmarks and oncology market data."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=4000
+            )
+            
+            report_text = response.choices[0].message.content
+            
+            # Parse sections (simple split by section headers)
+            sections = {
+                "full_report": report_text,
+                "executive_summary": self._extract_section(report_text, "EXECUTIVE SUMMARY"),
+                "market_analysis": self._extract_section(report_text, "MARKET ANALYSIS"),
+                "competitive_landscape": self._extract_section(report_text, "COMPETITIVE LANDSCAPE"),
+                "regulatory_pathway": self._extract_section(report_text, "REGULATORY PATHWAY"),
+                "financial_projections": self._extract_section(report_text, "FINANCIAL PROJECTIONS"),
+                "risks_mitigation": self._extract_section(report_text, "RISKS"),
+                "recommendations": self._extract_section(report_text, "RECOMMENDATIONS")
+            }
+            
+            return {
+                "success": True,
+                "drug_name": drug_name,
+                "cancer_type": cancer_type,
+                "confidence_score": conf_pct,
+                "report": sections,
+                "generated_at": "2025-12-29",
+                "tokens_used": response.usage.total_tokens
+            }
+            
+        except Exception as e:
+            logger.error(f"OpenAI market report generation failed: {e}")
+            return {
+                "success": False,
+                "error": str(e),
+                "fallback_report": self._generate_fallback_report(drug_name, cancer_type, conf_pct)
+            }
+    
+    def _extract_section(self, text: str, section_name: str) -> str:
+        """Extract a specific section from the report"""
+        try:
+            # Find section start
+            start_idx = text.find(section_name)
+            if start_idx == -1:
+                return ""
+            
+            # Find next section or end
+            next_sections = ["EXECUTIVE SUMMARY", "MARKET ANALYSIS", "COMPETITIVE LANDSCAPE", 
+                           "REGULATORY PATHWAY", "FINANCIAL PROJECTIONS", "RISKS", "RECOMMENDATIONS"]
+            
+            end_idx = len(text)
+            for next_section in next_sections:
+                if next_section == section_name:
+                    continue
+                next_idx = text.find(next_section, start_idx + len(section_name))
+                if next_idx != -1 and next_idx < end_idx:
+                    end_idx = next_idx
+            
+            section_text = text[start_idx:end_idx].strip()
+            # Remove section header
+            section_text = section_text[len(section_name):].strip()
+            # Remove leading colons, dashes, etc.
+            section_text = section_text.lstrip(':- \n')
+            
+            return section_text
+        except:
+            return ""
+    
+    def _generate_fallback_report(self, drug_name: str, cancer_type: str, confidence: float) -> str:
+        """Generate a basic fallback report if OpenAI fails"""
+        return f"""MARKET ANALYSIS REPORT
+Drug: {drug_name}
+Indication: {cancer_type}
+Confidence: {confidence:.1f}%
+
+EXECUTIVE SUMMARY
+{drug_name} shows promising potential for repurposing in {cancer_type} treatment with a confidence score of {confidence:.1f}%. 
+Further clinical validation is recommended.
+
+MARKET ANALYSIS
+The {cancer_type} market represents a significant opportunity for innovative treatments. 
+Standard therapies face challenges including resistance and toxicity.
+
+REGULATORY PATHWAY
+The drug repurposing pathway may accelerate FDA approval through expedited review programs.
+Estimated timeline: 3-5 years to market.
+
+FINANCIAL PROJECTIONS
+Market Size: $1-3B annually
+Development Costs: $50-150M
+ROI Potential: 200-400%
+
+RECOMMENDATIONS
+1. Initiate Phase II clinical trials
+2. Seek partnership with oncology-focused pharmaceutical companies
+3. Engage with FDA for regulatory strategy
+4. Publish preclinical findings in peer-reviewed journals"""
     
     async def analyze_drug_repurposing(
         self,
@@ -65,8 +267,8 @@ class OpenAIService:
             )
             
             # Set parameters based on analysis mode
-            max_tokens = self.settings.OPENAI_MAX_TOKENS
-            temperature = self.settings.OPENAI_TEMPERATURE
+            max_tokens = 2000
+            temperature = 0.7
             
             if analysis_mode == "deep":
                 max_tokens = 3000
@@ -76,7 +278,7 @@ class OpenAIService:
             logger.info(f"Analyzing {drug_name} for {cancer_type} using {analysis_mode} mode")
             
             response = self.client.chat.completions.create(
-                model=self.settings.OPENAI_MODEL,
+                model="gpt-3.5-turbo",
                 messages=[
                     {
                         "role": "system",
@@ -97,13 +299,13 @@ class OpenAIService:
             
             # Add metadata
             result["analysis_mode"] = analysis_mode
-            result["model_used"] = self.settings.OPENAI_MODEL
+            result["model_used"] = "gpt-3.5-turbo"
             result["tokens_used"] = response.usage.total_tokens
             
             logger.info(f"Analysis completed for {drug_name} - {cancer_type}")
             return result
             
-        except openai.APIError as e:
+        except Exception as e:
             logger.error(f"OpenAI API error: {e}")
             raise
         except Exception as e:
@@ -248,7 +450,7 @@ Format as JSON:
 """
             
             response = self.client.chat.completions.create(
-                model=self.settings.OPENAI_MODEL,
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a pharmacology expert."},
                     {"role": "user", "content": prompt}
@@ -269,11 +471,11 @@ Format as JSON:
 _service_instance: Optional[OpenAIService] = None
 
 
-def get_openai_service(settings: Settings) -> OpenAIService:
+def get_openai_service() -> OpenAIService:
     """Get or create OpenAI service instance"""
     global _service_instance
     
     if _service_instance is None:
-        _service_instance = OpenAIService(settings)
+        _service_instance = OpenAIService()
     
     return _service_instance

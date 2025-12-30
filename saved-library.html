@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Library - OncoPurpose</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-card { background: #1e293b; border: 1px solid #334155; }
+    </style>
+</head>
+<body class="bg-slate-900 text-gray-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-emerald-400">OncoPurpose</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+                        <a href="dashboard.html" class="text-gray-300 hover:text-white">Dashboard</a>
+                        <a href="discovery.html" class="text-gray-300 hover:text-white">Discovery</a>
+                        <a href="library_live.html" class="text-gray-300 hover:text-white">Research</a>
+                        <a href="analytics.html" class="text-gray-300 hover:text-white">Analytics</a>
+                        <a href="saved-library.html" class="text-white">Saved Library</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <input type="text" placeholder="Search saved items..." 
+                        class="bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 w-64 focus:outline-none focus:border-emerald-500 text-sm">
+                    <img src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24 p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-2">Saved Library</h1>
+                <p class="text-gray-400">Your saved research papers and analysis reports</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Saved Papers</div>
+                    <div class="text-3xl font-bold text-emerald-400" id="saved-papers-count">0</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Saved Reports</div>
+                    <div class="text-3xl font-bold text-blue-400" id="saved-reports-count">0</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Total Items</div>
+                    <div class="text-3xl font-bold" id="total-saved">0</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="mb-6 flex space-x-4 border-b border-slate-700">
+                <button onclick="showTab('papers')" id="papers-tab" 
+                    class="px-6 py-3 border-b-2 border-emerald-500 text-emerald-400 font-medium">
+                    Research Papers
+                </button>
+                <button onclick="showTab('reports')" id="reports-tab" 
+                    class="px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white">
+                    Analysis Reports
+                </button>
+            </div>
+
+            <!-- Saved Papers Section -->
+            <div id="papers-section">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Saved Research Papers</h2>
+                    <button onclick="clearAllPapers()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm">
+                        Clear All Papers
+                    </button>
+                </div>
+                <div id="saved-papers-grid" class="grid grid-cols-1 gap-4">
+                    <div class="glass-card p-8 rounded-xl text-center">
+                        <div class="text-4xl mb-2">📄</div>
+                        <div>No saved papers yet</div>
+                        <div class="text-sm text-gray-400 mt-1">Go to <a href="library_live.html" class="text-emerald-400 underline">Research Library</a> to save papers</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Reports Section (hidden by default) -->
+            <div id="reports-section" style="display:none;">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Saved Analysis Reports</h2>
+                    <button onclick="clearAllReports()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm">
+                        Clear All Reports
+                    </button>
+                </div>
+                <div id="saved-reports-grid" class="grid grid-cols-1 gap-4">
+                    <!-- Reports populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let savedPapers = [];
+        let savedReports = [];
+
+        // Load saved items
+        function loadSavedItems() {
+            savedPapers = JSON.parse(localStorage.getItem('savedPapers') || '[]');
+            savedReports = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+            
+            // Update stats
+            document.getElementById('saved-papers-count').textContent = savedPapers.length;
+            document.getElementById('saved-reports-count').textContent = savedReports.length;
+            document.getElementById('total-saved').textContent = savedPapers.length + savedReports.length;
+            
+            renderPapers();
+            renderReports();
+        }
+
+        // Render saved papers
+        function renderPapers() {
+            const grid = document.getElementById('saved-papers-grid');
+            
+            if (savedPapers.length === 0) {
+                grid.innerHTML = `
+                    <div class="glass-card p-8 rounded-xl text-center">
+                        <div class="text-4xl mb-2">📄</div>
+                        <div>No saved papers yet</div>
+                        <div class="text-sm text-gray-400 mt-1">Go to <a href="library_live.html" class="text-emerald-400 underline">Research Library</a> to save papers</div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = savedPapers.map((paper, index) => `
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex justify-between">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">${paper.title}</h3>
+                            <div class="text-sm text-gray-400 mb-2">
+                                ${paper.author_string || 'Unknown authors'} • ${paper.journal} (${paper.year})
+                            </div>
+                            <div class="text-sm text-gray-300 mb-3 line-clamp-2">
+                                ${paper.abstract || 'No abstract available'}
+                            </div>
+                            <div class="flex space-x-2">
+                                <a href="${paper.url}" target="_blank" 
+                                   class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm">
+                                    📄 View Paper
+                                </a>
+                                <button onclick="downloadPaperPDF('${paper.pmid}', '${paper.title}')" 
+                                        class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm">
+                                    📥 Download PDF
+                                </button>
+                                <button onclick="removePaper(${index})" 
+                                        class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm">
+                                    🗑️ Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render saved reports
+        function renderReports() {
+            const grid = document.getElementById('saved-reports-grid');
+            
+            if (savedReports.length === 0) {
+                grid.innerHTML = `
+                    <div class="glass-card p-8 rounded-xl text-center">
+                        <div class="text-4xl mb-2">📊</div>
+                        <div>No saved reports yet</div>
+                        <div class="text-sm text-gray-400 mt-1">Go to <a href="discovery.html" class="text-emerald-400 underline">Discovery</a> to create analyses</div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = savedReports.map((report, index) => {
+                const conf = (report.confidence_score || 0) > 1 ? report.confidence_score : (report.confidence_score || 0) * 100;
+                const confColor = conf >= 80 ? '#10b981' : conf >= 60 ? '#fbbf24' : '#ef4444';
+                
+                return `
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex justify-between">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold mb-2">${report.drug_name} → ${report.cancer_type}</h3>
+                                <p class="text-sm text-gray-400 mb-4">${report.mechanism || 'Mechanism under investigation'}</p>
+                                
+                                <div class="grid grid-cols-4 gap-4 mb-4">
+                                    <div>
+                                        <div class="text-xs text-gray-400">Confidence</div>
+                                        <div class="text-lg font-bold" style="color: ${confColor};">${conf.toFixed(0)}%</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Phase</div>
+                                        <div class="text-sm font-semibold text-yellow-400">${report.clinical_phase || 'Preclinical'}</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Market</div>
+                                        <div class="text-sm font-semibold text-green-400">${report.market_potential || 'TBD'}</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Timeline</div>
+                                        <div class="text-sm font-semibold">${report.timeline || 'TBD'}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2">
+                                    <button onclick="window.location.href='details.html?drug=${encodeURIComponent(report.drug_name)}&cancer=${encodeURIComponent(report.cancer_type)}'" 
+                                            class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm">
+                                        View Full Report
+                                    </button>
+                                    <button onclick="removeReport(${index})" 
+                                            class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm">
+                                        🗑️ Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Tab switching
+        function showTab(tab) {
+            if (tab === 'papers') {
+                document.getElementById('papers-section').style.display = 'block';
+                document.getElementById('reports-section').style.display = 'none';
+                document.getElementById('papers-tab').className = 'px-6 py-3 border-b-2 border-emerald-500 text-emerald-400 font-medium';
+                document.getElementById('reports-tab').className = 'px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white';
+            } else {
+                document.getElementById('papers-section').style.display = 'none';
+                document.getElementById('reports-section').style.display = 'block';
+                document.getElementById('papers-tab').className = 'px-6 py-3 border-b-2 border-transparent text-gray-400 hover:text-white';
+                document.getElementById('reports-tab').className = 'px-6 py-3 border-b-2 border-emerald-500 text-emerald-400 font-medium';
+            }
+        }
+
+        // Remove paper
+        function removePaper(index) {
+            if (!confirm('Remove this paper from saved library?')) return;
+            
+            savedPapers.splice(index, 1);
+            localStorage.setItem('savedPapers', JSON.stringify(savedPapers));
+            loadSavedItems();
+        }
+
+        // Remove report
+        function removeReport(index) {
+            if (!confirm('Remove this report from saved library?')) return;
+            
+            savedReports.splice(index, 1);
+            localStorage.setItem('userAnalysisResults', JSON.stringify(savedReports));
+            loadSavedItems();
+        }
+
+        // Clear all
+        function clearAllPapers() {
+            if (!confirm('Remove ALL saved papers? This cannot be undone.')) return;
+            
+            localStorage.removeItem('savedPapers');
+            loadSavedItems();
+        }
+
+        function clearAllReports() {
+            if (!confirm('Remove ALL saved reports? This cannot be undone.')) return;
+            
+            localStorage.removeItem('userAnalysisResults');
+            loadSavedItems();
+        }
+
+        // Download PDF (reuse function from library_live.html)
+        async function downloadPaperPDF(pmid, title) {
+            try {
+                const response = await fetch(`http://localhost:8000/api/v1/library/download-pdf/${pmid}`);
+                if (!response.ok) throw new Error('PDF generation failed');
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${pmid}_${title.substring(0, 30)}.pdf`;
+                link.click();
+                window.URL.revokeObjectURL(url);
+                
+                alert('✅ PDF downloaded!');
+            } catch (error) {
+                console.error(error);
+                window.open(`https://pubmed.ncbi.nlm.nih.gov/${pmid}/`, '_blank');
+                alert('❌ PDF failed. Opening PubMed instead.');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadSavedItems);
+
+        // Listen for storage changes
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'savedPapers' || e.key === 'userAnalysisResults') {
+                loadSavedItems();
+            }
+        });
+    </script>
+</body>
+</html>

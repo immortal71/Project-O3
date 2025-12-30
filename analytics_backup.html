@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        Copyright (c) 2025 OncoPurpose (trovesx)
+        All Rights Reserved.
+        For licensing info, see LICENSE or contact oncopurpose@trovesx.com
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - OncoPurpose</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+        }
+        .glass-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+        }
+        .data-number {
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+        }
+        .chart-container {
+            min-height: 300px;
+        }
+        .selected-row {
+            background: #334155 !important;
+            border-left: 3px solid #10b981;
+        }
+    </style>
+</head>
+<body style="background-color: #0f172a; color: #f1f5f9;">
+    <!-- Top Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold gradient-text">OncoPurpose</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors">Home</a>
+                        <a href="dashboard.html" class="nav-link text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                        <a href="discovery.html" class="nav-link text-gray-300 hover:text-white transition-colors">Discovery</a>
+                        <a href="library.html" class="nav-link text-gray-300 hover:text-white transition-colors">Research</a>
+                        <a href="analytics.html" class="nav-link text-white transition-colors">Analytics</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                       <div class="relative">
+                       <input id="global-search" type="text" placeholder="Search drugs, targets, diseases..." 
+                           class="bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 w-64 focus:outline-none focus:border-emerald-500 text-sm">
+                       <div class="absolute right-3 top-2.5 text-gray-400">🔍</div>
+                      </div>
+                    <div class="flex items-center space-x-3">
+                        <img id="user-avatar" src="resources/user avtars/exec2 (1).png" alt="User" class="w-8 h-8 rounded-full">
+                        <div class="hidden md:block">
+                            <div id="user-name" class="text-sm font-medium">Dr. Sarah Chen</div>
+                            <div id="user-role" class="text-xs text-gray-400">Senior Research Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-2">Analysis Reports</h1>
+                <p class="text-gray-300">All your drug repurposing analysis reports in one place</p>
+            </div>
+
+            <!-- Summary Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Total Reports</div>
+                    <div class="text-3xl font-bold" id="total-reports">0</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">High Confidence</div>
+                    <div class="text-3xl font-bold text-green-400" id="high-confidence">0</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Total Market Value</div>
+                    <div class="text-3xl font-bold text-emerald-400" id="total-market">$0B</div>
+                </div>
+            </div>
+
+            <!-- Reports List -->
+            <div class="mb-6 flex items-center justify-between">
+                <h2 class="text-2xl font-semibold">Generated Reports</h2>
+                <div class="flex space-x-3">
+                    <select id="sort-reports" class="bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 text-sm">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="confidence">Highest Confidence</option>
+                    </select>
+                    <button onclick="clearAllReports()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                        Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reports Grid -->
+            <div id="reports-container" class="space-y-4">
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="text-xl mb-2">📊</div>
+                    <div>Loading reports...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main (1).js"></script>
+    <script>
+        // Load all reports from localStorage
+        function loadReports() {
+            const savedResults = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+            const container = document.getElementById('reports-container');
+            
+            if (savedResults.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-card p-12 rounded-xl text-center">
+                        <div class="text-6xl mb-4">📊</div>
+                        <div class="text-xl mb-2">No Reports Generated Yet</div>
+                        <div class="text-gray-400 mb-6">Start analyzing drugs in the Discovery page to see reports here</div>
+                        <a href="discovery.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                            Go to Discovery
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Update stats
+            document.getElementById('total-reports').textContent = savedResults.length;
+            const highConf = savedResults.filter(r => r.confidence_score >= 0.8).length;
+            document.getElementById('high-confidence').textContent = highConf;
+            
+            // Calculate total market (simplified)
+            const totalMarket = savedResults.length * 1.5; // Rough estimate
+            document.getElementById('total-market').textContent = `$${totalMarket.toFixed(1)}B`;
+            
+            // Sort reports
+            const sortedResults = [...savedResults].reverse(); // Newest first by default
+            
+            // Render reports
+            container.innerHTML = sortedResults.map((report, index) => {
+                const confidence = typeof report.confidence_score === 'number' 
+                    ? (report.confidence_score > 1 ? report.confidence_score : (report.confidence_score * 100))
+                    : 0;
+                
+                const confidenceColor = confidence >= 80 ? '#10b981' : confidence >= 60 ? '#fbbf24' : '#ef4444';
+                const date = new Date(report.timestamp).toLocaleDateString();
+                
+                return `
+                    <div class="glass-card p-6 rounded-xl hover:border-emerald-500/50 transition-all cursor-pointer"
+                         onclick="viewReportDetails('${report.drug_name}', '${report.cancer_type}')">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    ${index === 0 ? '<span class="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded text-xs font-medium">LATEST</span>' : ''}
+                                    <span class="text-xs text-gray-400">${date}</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">${report.drug_name} → ${report.cancer_type}</h3>
+                                <p class="text-sm text-gray-400 mb-4">${report.mechanism || 'Mechanism under investigation'}</p>
+                                
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <div class="text-xs text-gray-400">Confidence</div>
+                                        <div class="text-lg font-bold" style="color: ${confidenceColor};">${confidence.toFixed(0)}%</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Phase</div>
+                                        <div class="text-sm font-semibold text-yellow-400">${report.clinical_phase || 'Preclinical'}</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Market</div>
+                                        <div class="text-sm font-semibold text-green-400">${report.market_potential || 'TBD'}</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Timeline</div>
+                                        <div class="text-sm font-semibold">${report.timeline || 'TBD'}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ml-4 flex flex-col items-end space-y-2">
+                                <button onclick="event.stopPropagation(); window.location.href='details.html?drug=${encodeURIComponent(report.drug_name)}&cancer=${encodeURIComponent(report.cancer_type)}'" 
+                                        class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                    View Full Report
+                                </button>
+                                <button onclick="event.stopPropagation(); deleteReport('${report.drug_name}', '${report.cancer_type}')" 
+                                        class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // View report details
+        function viewReportDetails(drugName, cancerType) {
+            window.location.href = `details.html?drug=${encodeURIComponent(drugName)}&cancer=${encodeURIComponent(cancerType)}`;
+        }
+        
+        // Delete individual report
+        function deleteReport(drugName, cancerType) {
+            if (!confirm(`Delete analysis for ${drugName} → ${cancerType}?`)) {
+                return;
+            }
+            
+            const savedResults = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+            const filtered = savedResults.filter(r => 
+                !(r.drug_name === drugName && r.cancer_type === cancerType)
+            );
+            localStorage.setItem('userAnalysisResults', JSON.stringify(filtered));
+            
+            loadReports(); // Reload
+        }
+        
+        // Clear all reports
+        function clearAllReports() {
+            if (!confirm('Delete ALL analysis reports? This cannot be undone.')) {
+                return;
+            }
+            
+            localStorage.removeItem('userAnalysisResults');
+            loadReports(); // Reload
+        }
+        
+        // Sort reports
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReports();
+            
+            document.getElementById('sort-reports').addEventListener('change', (e) => {
+                const savedResults = JSON.parse(localStorage.getItem('userAnalysisResults') || '[]');
+                let sorted = [...savedResults];
+                
+                if (e.target.value === 'newest') {
+                    sorted.reverse();
+                } else if (e.target.value === 'confidence') {
+                    sorted.sort((a, b) => b.confidence_score - a.confidence_score);
+                }
+                
+                // Re-render with sorted data
+                localStorage.setItem('userAnalysisResults', JSON.stringify(sorted));
+                loadReports();
+            });
+        });
+    </script>
+</body>
+</html>
+                    <div class="flex items-center justify-between mb-4">
+                        <svg class="w-6 h-6" style="color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div class="text-sm text-gray-400">Success</div>
+                    </div>
+                    <div class="text-3xl font-bold data-number" style="color: #e5e7eb;">68.4%</div>
+                    <div class="text-sm" style="color: #9ca3af;">Avg Success Rate</div>
+                    <div class="mt-2 text-xs" style="color: #ef4444;">-3% QTD</div>
+                </div>
+
+                <div class="metric-card glass-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <svg class="w-6 h-6" style="color: #f59e0b;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div class="text-sm text-gray-400">Timeline</div>
+                    </div>
+                    <div class="text-3xl font-bold data-number" style="color: #e5e7eb;">3.7</div>
+                    <div class="text-sm" style="color: #9ca3af;">Avg Years to Market</div>
+                    <div class="mt-2 text-xs" style="color: #10b981;">-0.4 yrs faster</div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="grid lg:grid-cols-2 gap-6 mb-8">
+                <!-- Success Probability Distribution -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <h2 class="text-xl font-semibold">Success Probability Distribution</h2>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 4px;">Showing 1,183 opportunities</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #334155; color: #9ca3af;">All Time</button>
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #334155; color: #9ca3af;">This Year</button>
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #14b8a6; color: #fff;">This Quarter</button>
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #334155; color: #9ca3af;">This Month</button>
+                        </div>
+                    </div>
+                    <div id="success-distribution-chart" class="chart-container"></div>
+                </div>
+
+                <!-- Market Opportunity Matrix -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold">Market Opportunity Matrix</h2>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #334155; color: #9ca3af;">All Time</button>
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #334155; color: #9ca3af;">This Year</button>
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #14b8a6; color: #fff;">This Quarter</button>
+                            <button class="px-3 py-1 rounded text-xs" style="background-color: #334155; color: #9ca3af;">This Month</button>
+                        </div>
+                    </div>
+                    <div id="opportunity-matrix-chart" class="chart-container"></div>
+                </div>
+            </div>
+
+            <!-- Timeline Projections -->
+            <div class="glass-card p-6 rounded-xl mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold">Development Timeline Projections</h2>
+                    <div class="flex space-x-2">
+                            <button class="export-btn bg-emerald-600 hover:bg-emerald-700 px-3 py-1 rounded text-sm transition-all">
+                            	📊 Export
+                            </button>
+                        <button class="export-btn bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm transition-all">
+                            💾 Save
+                        </button>
+                    </div>
+                </div>
+                <div id="timeline-chart" style="height: 400px;"></div>
+            </div>
+
+            <!-- Portfolio Performance Table -->
+            <div class="glass-card rounded-xl overflow-hidden">
+                <div class="p-6 border-b border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-semibold">Top Performing Opportunities</h2>
+                        <div class="flex space-x-2">
+                            <button class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                📊 Export Report
+                            </button>
+                            <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                📤 Share Dashboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-700/50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-300">Drug Name</th>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-300">Target Cancer</th>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-300">Confidence Score</th>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-300">Market Size</th>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-300">Success Probability</th>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-300">Timeline</th>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-300">ROI</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700">
+                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <img src="resources/drug structure/metformin.png" alt="Metformin" class="w-8 h-8 mr-3 rounded">
+                                        <span class="font-medium">Metformin</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-gray-300">Breast Cancer</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-16 bg-gray-700 rounded-full h-2 mr-2">
+                                            <div class="bg-emerald-500 h-2 rounded-full" style="width: 87%"></div>
+                                        </div>
+                                        <span class="text-sm text-emerald-400">87%</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-green-400">$2.3B</td>
+                                <td class="px-6 py-4 text-teal-400">85%</td>
+                                <td class="px-6 py-4 text-emerald-400">3.2 years</td>
+                                <td class="px-6 py-4 text-yellow-400">340%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <img src="resources/drug structure/aspirin.png" alt="Aspirin" class="w-8 h-8 mr-3 rounded">
+                                        <span class="font-medium">Aspirin</span>
+                                    </div>
+                                </td>
+(continued...)

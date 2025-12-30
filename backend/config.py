@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     
     # Database
-    DATABASE_URL: str = Field(default="sqlite+aiosqlite:///./oncopurpose.db", env="DATABASE_URL")
+    DATABASE_URL: str = Field(default="mysql+pymysql://oncopurpose_user:oncopurpose_pass@localhost:3306/oncopurpose", env="DATABASE_URL")
     DATABASE_POOL_SIZE: int = Field(default=20, env="DATABASE_POOL_SIZE")
     DATABASE_MAX_OVERFLOW: int = Field(default=30, env="DATABASE_MAX_OVERFLOW")
     

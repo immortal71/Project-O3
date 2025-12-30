@@ -1,0 +1,1884 @@
+{
+  "oncology_drugs": [
+    {
+      "pert_iname": "abemaciclib",
+      "clinical_phase": "Launched",
+      "moa": "CDK inhibitor",
+      "target": "CDK4|CDK6",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "abiraterone",
+      "clinical_phase": "Launched",
+      "moa": "androgen biosynthesis inhibitor",
+      "target": "CYP11B1|CYP17A1",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "abiraterone-acetate",
+      "clinical_phase": "Launched",
+      "moa": "androgen biosynthesis inhibitor",
+      "target": "CYP17A1",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "acalabrutinib",
+      "clinical_phase": "Launched",
+      "moa": "Bruton's tyrosine kinase (BTK) inhibitor",
+      "target": "BTK",
+      "disease_area": "hematologic malignancy",
+      "indication": "mantle cell lymphoma (MCL)"
+    },
+    {
+      "pert_iname": "acelarin",
+      "clinical_phase": "Phase 2/Phase 3",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "aclarubicin",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP1|TOP2A",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "actinomycin-d",
+      "clinical_phase": "Launched",
+      "moa": "RNA polymerase inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "Wilm's tumor|Ewing's sarcoma|rhabdomyosarcoma|testicular carcinoma"
+    },
+    {
+      "pert_iname": "afatinib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor",
+      "target": "EGFR|ERBB2|ERBB4",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "alectinib",
+      "clinical_phase": "Launched",
+      "moa": "ALK tyrosine kinase receptor inhibitor",
+      "target": "ALK|MET",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "aloe-emodin",
+      "clinical_phase": "Preclinical",
+      "moa": "anticancer agent",
+      "target": "CASP8",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "alpelisib",
+      "clinical_phase": "Launched",
+      "moa": "PI3K inhibitor",
+      "target": "PIK3CA|PIK3CB|PIK3CD|PIK3CG",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "altretamine",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "ovarian cancer"
+    },
+    {
+      "pert_iname": "ametantrone",
+      "clinical_phase": "Preclinical",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "aminoglutethimide",
+      "clinical_phase": "Launched",
+      "moa": "glucocorticoid receptor antagonist",
+      "target": "CYP11A1|CYP19A1",
+      "disease_area": "endocrinology|oncology",
+      "indication": "Cushing's syndrome|breast cancer"
+    },
+    {
+      "pert_iname": "amrubicin",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A|TOP2B",
+      "disease_area": "oncology",
+      "indication": "small cell lung cancer"
+    },
+    {
+      "pert_iname": "amsacrine",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "KCNH2|TOP2A",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "anastrozole",
+      "clinical_phase": "Launched",
+      "moa": "aromatase inhibitor",
+      "target": "CYP19A1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "andrographolide",
+      "clinical_phase": "Phase 2",
+      "moa": "tumor necrosis factor production inhibitor",
+      "target": "IL1B|IL6|NFKB1|NFKB2|TNF",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "apalutamide",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor antagonist",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "apratastat",
+      "clinical_phase": "Phase 2",
+      "moa": "matrix metalloprotease inhibitor|tumor necrosis factor production inhibitor",
+      "target": "ADAM17|MMP1|MMP13|MMP9",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "avadomide",
+      "clinical_phase": "Phase 2",
+      "moa": "antitumor agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "axitinib",
+      "clinical_phase": "Launched",
+      "moa": "PDGFR tyrosine kinase receptor inhibitor|VEGFR inhibitor",
+      "target": "CSF1|FLT1|FLT4|KDR|PLK4",
+      "disease_area": "oncology",
+      "indication": "renal cell carcinoma (RCC)"
+    },
+    {
+      "pert_iname": "azacitidine",
+      "clinical_phase": "Launched",
+      "moa": "DNA methyltransferase inhibitor",
+      "target": "DNMT1|DNMT3A",
+      "disease_area": "hematologic malignancy|hematology",
+      "indication": "myelodysplastic diseases (MDS)|anemia|chronic myelomonocytic leukemia (CMMoL)"
+    },
+    {
+      "pert_iname": "belinostat",
+      "clinical_phase": "Launched",
+      "moa": "HDAC inhibitor",
+      "target": "HDAC1|HDAC10|HDAC11|HDAC2|HDAC3|HDAC4|HDAC5|HDAC6|HDAC7|HDAC8|HDAC9",
+      "disease_area": "hematologic malignancy",
+      "indication": "peripheral T-cell lymphoma (PTCL)"
+    },
+    {
+      "pert_iname": "bendamustine",
+      "clinical_phase": "Launched",
+      "moa": "DNA inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic lymphocytic leukemia (CLL)|non-Hodgkin lymphoma (NHL)"
+    },
+    {
+      "pert_iname": "bexarotene",
+      "clinical_phase": "Launched",
+      "moa": "retinoid receptor agonist",
+      "target": "RXRA|RXRB|RXRG",
+      "disease_area": "hematologic malignancy",
+      "indication": "cutaneous T-cell lymphoma (CTCL)"
+    },
+    {
+      "pert_iname": "bicalutamide",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor antagonist",
+      "target": "AR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "binimetinib",
+      "clinical_phase": "Launched",
+      "moa": "MEK inhibitor",
+      "target": "MAP2K1|MAP2K2",
+      "disease_area": "oncology",
+      "indication": "melanoma"
+    },
+    {
+      "pert_iname": "bleomycin",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy|pulmonary|oncology",
+      "indication": "non-Hodgkin lymphoma (NHL)|Hodgkin's lymphoma|pleural effusion|testicular carcinoma|squamous cell carcinoma"
+    },
+    {
+      "pert_iname": "bortezomib",
+      "clinical_phase": "Launched",
+      "moa": "NFkB pathway inhibitor|proteasome inhibitor",
+      "target": "PSMA1|PSMA2|PSMA3|PSMA4|PSMA5|PSMA6|PSMA7|PSMA8|PSMB1|PSMB10|PSMB11|PSMB2|PSMB3|PSMB4|PSMB5|PSMB6|PSMB7|PSMB8|PSMB9|PSMD1|PSMD2|RELA",
+      "disease_area": "hematologic malignancy",
+      "indication": "multiple myeloma|mantle cell lymphoma (MCL)"
+    },
+    {
+      "pert_iname": "bosutinib",
+      "clinical_phase": "Launched",
+      "moa": "Abl kinase inhibitor|Bcr-Abl kinase inhibitor|SRC inhibitor",
+      "target": "ABL1|BCR|CAMK1D|CAMK2G|CDK2|FRK|FYN|HCK|LYN|MAP2K1|MAP2K2|MAP3K2|MAP4K5|SRC|STK10|STK24|STK4|TNK2|TXK",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic myeloid leukemia (CML)"
+    },
+    {
+      "pert_iname": "brigatinib",
+      "clinical_phase": "Launched",
+      "moa": "ALK tyrosine kinase receptor inhibitor|EGFR inhibitor",
+      "target": "ALK|EGFR",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "buserelin",
+      "clinical_phase": "Launched",
+      "moa": "gonadotropin releasing factor hormone receptor agonist",
+      "target": "",
+      "disease_area": "oncology|obstetrics/gynecology",
+      "indication": "prostate cancer|endometriosis"
+    },
+    {
+      "pert_iname": "busulfan",
+      "clinical_phase": "Launched",
+      "moa": "DNA inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic myeloid leukemia (CML)"
+    },
+    {
+      "pert_iname": "cabazitaxel",
+      "clinical_phase": "Launched",
+      "moa": "microtubule inhibitor",
+      "target": "TUBA1A|TUBA1B|TUBA1C|TUBA3C|TUBA3D|TUBA3E|TUBA4A|TUBB|TUBB1|TUBB2A|TUBB2B|TUBB3|TUBB4A|TUBB4B|TUBB6|TUBB8",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "cabozantinib",
+      "clinical_phase": "Launched",
+      "moa": "RET tyrosine kinase inhibitor|VEGFR inhibitor",
+      "target": "KDR|MET|RET",
+      "disease_area": "oncology",
+      "indication": "medullary thyroid cancer (MTC)"
+    },
+    {
+      "pert_iname": "caffeic-acid",
+      "clinical_phase": "Preclinical",
+      "moa": "HIV integrase inhibitor|lipoxygenase inhibitor|nitric oxide production inhibitor|tumor necrosis factor production inhibitor",
+      "target": "ALOX5|MIF",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "capecitabine",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor|thymidylate synthase inhibitor",
+      "target": "TYMS",
+      "disease_area": "oncology",
+      "indication": "breast cancer|colorectal cancer"
+    },
+    {
+      "pert_iname": "carboplatin",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent|DNA inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "ovarian cancer"
+    },
+    {
+      "pert_iname": "carmofur",
+      "clinical_phase": "Launched",
+      "moa": "thymidylate synthase inhibitor",
+      "target": "TYMS",
+      "disease_area": "oncology",
+      "indication": "breast cancer|colorectal cancer"
+    },
+    {
+      "pert_iname": "carmustine",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent|DNA inhibitor",
+      "target": "GSR",
+      "disease_area": "hematologic malignancy|oncology",
+      "indication": "non-Hodgkin lymphoma (NHL)|Hodgkin's lymphoma|multiple myeloma|glioblastoma|brainstem glioma|medulloblastoma|astrocytoma|ependymoma"
+    },
+    {
+      "pert_iname": "ceritinib",
+      "clinical_phase": "Launched",
+      "moa": "ALK tyrosine kinase receptor inhibitor",
+      "target": "ALK|FLT3|IGF1R|INSR|TSSK1B",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "chidamide",
+      "clinical_phase": "Launched",
+      "moa": "HDAC inhibitor",
+      "target": "HDAC10|HDAC3",
+      "disease_area": "hematologic malignancy",
+      "indication": "peripheral T-cell lymphoma (PTCL)"
+    },
+    {
+      "pert_iname": "chlorambucil",
+      "clinical_phase": "Launched",
+      "moa": "DNA inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic lymphocytic leukemia (CLL)|Hodgkin's lymphoma"
+    },
+    {
+      "pert_iname": "chlorotrianisene",
+      "clinical_phase": "Launched",
+      "moa": "estrogenic hormone",
+      "target": "ESR1|ESR2",
+      "disease_area": "endocrinology|oncology",
+      "indication": "menopause|prostate cancer"
+    },
+    {
+      "pert_iname": "chrysin",
+      "clinical_phase": "Phase 1",
+      "moa": "breast cancer resistance protein inhibitor",
+      "target": "AKR1B1|CDK6|CYP19A1|CYP1B1",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "cinacalcet",
+      "clinical_phase": "Launched",
+      "moa": "calcium channel activator",
+      "target": "CASR",
+      "disease_area": "endocrinology|nephrology|oncology",
+      "indication": "hyperparathyroidism|chronic kidney disease (CKD)|parathyroid carcinoma|hypercalcemia"
+    },
+    {
+      "pert_iname": "cinobufotalin",
+      "clinical_phase": "Phase 1",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "cisplatin",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent|DNA synthesis inhibitor",
+      "target": "XIAP",
+      "disease_area": "oncology",
+      "indication": "testicular carcinoma|ovarian cancer|bladder cancer"
+    },
+    {
+      "pert_iname": "cladribine",
+      "clinical_phase": "Launched",
+      "moa": "adenosine deaminase inhibitor|ribonucleotide reductase inhibitor",
+      "target": "ADA|PNP|POLA1|POLE|POLE2|POLE3|POLE4|RRM1|RRM2|RRM2B",
+      "disease_area": "hematologic malignancy",
+      "indication": "hairy cell leukemia"
+    },
+    {
+      "pert_iname": "clanfenur",
+      "clinical_phase": "Preclinical",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "clofarabine",
+      "clinical_phase": "Launched",
+      "moa": "ribonucleotide reductase inhibitor",
+      "target": "POLA1|POLD1|POLE|RRM1|RRM2|RRM2B",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "cobimetinib",
+      "clinical_phase": "Launched",
+      "moa": "MEK inhibitor",
+      "target": "MAP2K1",
+      "disease_area": "oncology",
+      "indication": "melanoma"
+    },
+    {
+      "pert_iname": "copanlisib",
+      "clinical_phase": "Launched",
+      "moa": "PI3K inhibitor",
+      "target": "PIK3CA|PIK3CB|PIK3CD|PIK3CG",
+      "disease_area": "hematologic malignancy",
+      "indication": "follicular lymphoma"
+    },
+    {
+      "pert_iname": "COTI-2",
+      "clinical_phase": "Phase 1",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "CPI-1189",
+      "clinical_phase": "Phase 2",
+      "moa": "tumor necrosis factor release inhibitor",
+      "target": "TNF",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "crizotinib",
+      "clinical_phase": "Launched",
+      "moa": "ALK tyrosine kinase receptor inhibitor",
+      "target": "ALK|MET",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "cyclophosphamide",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent",
+      "target": "CYP2A6|CYP2B6|CYP2C18|CYP2C19|CYP2C8|CYP2C9|CYP2D6|CYP3A4|CYP3A5|CYP3A7",
+      "disease_area": "hematologic malignancy|oncology",
+      "indication": "Hodgkin's lymphoma|small lymphocytic lymphoma (SLL)|breast cancer|neuroblastoma|Burkitt's lymphoma|multiple myeloma|chronic lymphocytic leukemia (CLL)|acute myeloid leukemia (AML)|acute lymphoblastic leukemia (ALL)|chronic myeloid leukemia (CML)|true histiocytic lymphoma (THL)|retinoblastoma|ovarian cancer"
+    },
+    {
+      "pert_iname": "cyclovalone",
+      "clinical_phase": "Launched",
+      "moa": "breast cancer resistance protein inhibitor",
+      "target": "ABCG2",
+      "disease_area": "gastroenterology",
+      "indication": "bile stimulation"
+    },
+    {
+      "pert_iname": "cyproterone-acetate",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor antagonist",
+      "target": "ADORA1|AR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "cytarabine",
+      "clinical_phase": "Launched",
+      "moa": "ribonucleotide reductase inhibitor",
+      "target": "POLA1|POLB|POLD1|POLE",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute lymphoblastic leukemia (ALL)|chronic lymphocytic leukemia (CLL)|acute myeloid leukemia (AML)|non-Hodgkin lymphoma (NHL)"
+    },
+    {
+      "pert_iname": "dabrafenib",
+      "clinical_phase": "Launched",
+      "moa": "RAF inhibitor",
+      "target": "BRAF|LIMK1|NEK11|RAF1|SIK1",
+      "disease_area": "oncology",
+      "indication": "melanoma"
+    },
+    {
+      "pert_iname": "dacarbazine",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent",
+      "target": "PGD|POLA2",
+      "disease_area": "oncology|hematologic malignancy",
+      "indication": "melanoma|Hodgkin's lymphoma"
+    },
+    {
+      "pert_iname": "dactinomycin",
+      "clinical_phase": "Launched",
+      "moa": "RNA polymerase inhibitor",
+      "target": "POLR2A",
+      "disease_area": "oncology",
+      "indication": "testicular carcinoma|Wilm's tumor|rhabdomyosarcoma|Ewing's sarcoma|gestational trophoblastic disease (GTD)"
+    },
+    {
+      "pert_iname": "darolutamide",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor antagonist",
+      "target": "AR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "dasatinib",
+      "clinical_phase": "Launched",
+      "moa": "Bcr-Abl kinase inhibitor|ephrin inhibitor|KIT inhibitor|PDGFR tyrosine kinase receptor inhibitor|SRC inhibitor|tyrosine kinase inhibitor",
+      "target": "ABL1|ABL2|BLK|EPHA2|FGR|FRK|FYN|HCK|KIT|LCK|LYN|PDGFRB|SRC|SRMS|STAT5B|YES1",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic myeloid leukemia (CML)|acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "daunorubicin",
+      "clinical_phase": "Launched",
+      "moa": "RNA synthesis inhibitor|topoisomerase inhibitor",
+      "target": "TOP2A|TOP2B",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)|acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "decitabine",
+      "clinical_phase": "Launched",
+      "moa": "DNA methyltransferase inhibitor",
+      "target": "DNMT1|DNMT3A",
+      "disease_area": "hematologic malignancy|hematology",
+      "indication": "myelodysplastic diseases (MDS)|anemia|chronic myeloid leukemia (CML)"
+    },
+    {
+      "pert_iname": "degarelix",
+      "clinical_phase": "Launched",
+      "moa": "gonadotropin releasing factor hormone receptor antagonist",
+      "target": "GNRHR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "didox",
+      "clinical_phase": "Launched",
+      "moa": "ribonucleotide reductase inhibitor",
+      "target": "RRM1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "docetaxel",
+      "clinical_phase": "Launched",
+      "moa": "tubulin polymerization inhibitor",
+      "target": "BCL2|MAP2|MAP4|MAPT|NR1I2|TUBA1A|TUBA1B|TUBA1C|TUBA3C|TUBA3D|TUBA3E|TUBA4A|TUBB|TUBB1|TUBB2A|TUBB2B|TUBB3|TUBB4A|TUBB4B|TUBB6|TUBB8",
+      "disease_area": "oncology",
+      "indication": "breast cancer|non-small cell lung cancer (NSCLC)|prostate cancer|gastric adenocarcinoma|head and neck squamous cell carcinoma (HNSCC)"
+    },
+    {
+      "pert_iname": "doxifluridine",
+      "clinical_phase": "Launched",
+      "moa": "thymidylate synthase inhibitor",
+      "target": "TYMS",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "doxorubicin",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A",
+      "disease_area": "hematologic malignancy|oncology",
+      "indication": "acute lymphoblastic leukemia (ALL)|acute myeloid leukemia (AML)|Wilm's tumor|breast cancer|ovarian cancer|Hodgkin's lymphoma|bladder cancer|multiple myeloma"
+    },
+    {
+      "pert_iname": "dromostanolone-propionate",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor modulator",
+      "target": "AR",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "elacytarabine",
+      "clinical_phase": "Phase 3",
+      "moa": "antineoplastic agent",
+      "target": "DCK",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "enasidenib",
+      "clinical_phase": "Launched",
+      "moa": "isocitrate dehydrogenase inhibitor",
+      "target": "IDH1",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "encorafenib",
+      "clinical_phase": "Launched",
+      "moa": "RAF inhibitor",
+      "target": "BRAF",
+      "disease_area": "oncology",
+      "indication": "melanoma"
+    },
+    {
+      "pert_iname": "enocitabine",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "CMPK1|RRM1|TYMS",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "entrectinib",
+      "clinical_phase": "Launched",
+      "moa": "ALK tyrosine kinase receptor inhibitor|proto-oncogene tyrosine protein kinase inhibitor",
+      "target": "ALK|NTRK1|NTRK2|NTRK3|ROS1",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "enzalutamide",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor antagonist",
+      "target": "AR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "epirubicin",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "CHD1|TOP2A",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "epitiostanol",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor agonist",
+      "target": "AR",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "eribulin",
+      "clinical_phase": "Launched",
+      "moa": "microtubule inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "erlotinib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor",
+      "target": "EGFR|NR1I2",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)|pancreatic cancer"
+    },
+    {
+      "pert_iname": "estradiol-valerate",
+      "clinical_phase": "Launched",
+      "moa": "estrogen receptor agonist",
+      "target": "ESR1",
+      "disease_area": "oncology|endocrinology|obstetrics/gynecology",
+      "indication": "prostate cancer|hypoestrogenism|menopause|vaginal atrophy"
+    },
+    {
+      "pert_iname": "estramustine",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent",
+      "target": "ESR1|ESR2|MAP1A|MAP2",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "estramustine-phosphate",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor|microtubule inhibitor",
+      "target": "ESR1|ESR2|MAP1A|MAP2",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "ethyl-pyruvate",
+      "clinical_phase": "Phase 2",
+      "moa": "tumor necrosis factor production inhibitor",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "etoposide",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A|TOP2B",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "etoposide-phosphate",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A",
+      "disease_area": "oncology",
+      "indication": "testicular carcinoma|small cell lung cancer"
+    },
+    {
+      "pert_iname": "everolimus",
+      "clinical_phase": "Launched",
+      "moa": "mTOR inhibitor",
+      "target": "MTOR",
+      "disease_area": "oncology|neurology/psychiatry|genetics|urology",
+      "indication": "breast cancer|neuroendocrine tumors of pancreatic origin (PNET)|renal cell carcinoma (RCC)|subependymal giant cell astrocytoma (SEGA)|tuberous sclerosis complex (TSC)|renal angiomyolipoma"
+    },
+    {
+      "pert_iname": "exemestane",
+      "clinical_phase": "Launched",
+      "moa": "aromatase inhibitor",
+      "target": "CYP19A1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "fadrozole",
+      "clinical_phase": "Launched",
+      "moa": "aromatase inhibitor",
+      "target": "CYP11B1|CYP19A1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "floxuridine",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "TYMS",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "fludarabine",
+      "clinical_phase": "Launched",
+      "moa": "ribonucleotide reductase inhibitor",
+      "target": "ADA|DCK|POLA1|RRM1|RRM2",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic lymphocytic leukemia (CLL)"
+    },
+    {
+      "pert_iname": "fludarabine-phosphate",
+      "clinical_phase": "Launched",
+      "moa": "ribonucleotide reductase inhibitor",
+      "target": "POLA1|POLD1|POLE|RRM1|RRM2|RRM2B",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic lymphocytic leukemia (CLL)"
+    },
+    {
+      "pert_iname": "flutamide",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor antagonist",
+      "target": "AHR|AR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "formestane",
+      "clinical_phase": "Launched",
+      "moa": "aromatase inhibitor",
+      "target": "CYP19A1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "forodesine",
+      "clinical_phase": "Launched",
+      "moa": "purinergic receptor antagonist",
+      "target": "PNP",
+      "disease_area": "hematologic malignancy",
+      "indication": "peripheral T-cell lymphoma (PTCL)"
+    },
+    {
+      "pert_iname": "fosfestrol",
+      "clinical_phase": "Launched",
+      "moa": "synthetic estrogen",
+      "target": "ESR1|ESR2",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "fotemustine",
+      "clinical_phase": "Launched",
+      "moa": "thioredoxin inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "melanoma"
+    },
+    {
+      "pert_iname": "fruquintinib",
+      "clinical_phase": "Launched",
+      "moa": "VEGFR inhibitor",
+      "target": "KDR",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "ftorafur",
+      "clinical_phase": "Launched",
+      "moa": "thymidylate synthase inhibitor",
+      "target": "TYMS",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "fucoxanthin",
+      "clinical_phase": "Phase 2",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "fulvestrant",
+      "clinical_phase": "Launched",
+      "moa": "estrogen receptor antagonist",
+      "target": "ESR1|ESR2|GPER1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "gefitinib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor",
+      "target": "EGFR",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "gemcitabine",
+      "clinical_phase": "Launched",
+      "moa": "ribonucleotide reductase inhibitor",
+      "target": "CMPK1|RRM1|RRM2|TYMS",
+      "disease_area": "oncology",
+      "indication": "ovarian cancer|breast cancer|non-small cell lung cancer (NSCLC)|pancreatic cancer"
+    },
+    {
+      "pert_iname": "gimeracil",
+      "clinical_phase": "Launched",
+      "moa": "dihydropyrimidine dehydrogenase inhibitor",
+      "target": "DPYD",
+      "disease_area": "oncology",
+      "indication": "gastric adenocarcinoma"
+    },
+    {
+      "pert_iname": "glasdegib",
+      "clinical_phase": "Launched",
+      "moa": "hedgehog pathway inhibitor",
+      "target": "SMO",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "glycitein",
+      "clinical_phase": "Phase 3",
+      "moa": "tumor necrosis factor release inhibitor",
+      "target": "TNF",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "goserelin-acetate",
+      "clinical_phase": "Launched",
+      "moa": "gonadotropin releasing factor hormone receptor agonist",
+      "target": "GNRHR|LHCGR",
+      "disease_area": "oncology|obstetrics/gynecology",
+      "indication": "prostate cancer|breast cancer|endometriosis"
+    },
+    {
+      "pert_iname": "homoharringtonine",
+      "clinical_phase": "Launched",
+      "moa": "protein synthesis inhibitor",
+      "target": "RPL3",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic myeloid leukemia (CML)"
+    },
+    {
+      "pert_iname": "hydroxysafflor-yellow-A",
+      "clinical_phase": "Preclinical",
+      "moa": "antitumor agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "hydroxyurea",
+      "clinical_phase": "Launched",
+      "moa": "ribonucleotide reductase inhibitor",
+      "target": "RRM1|RRM2|RRM2B",
+      "disease_area": "hematologic malignancy|oncology",
+      "indication": "chronic myeloid leukemia (CML)|head and neck squamous cell carcinoma (HNSCC)"
+    },
+    {
+      "pert_iname": "ibrutinib",
+      "clinical_phase": "Launched",
+      "moa": "Bruton's tyrosine kinase (BTK) inhibitor",
+      "target": "BLK|BMX|BTK",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic lymphocytic leukemia (CLL)|mantle cell lymphoma (MCL)|Waldenstrom's macroglobulinemia (WM)"
+    },
+    {
+      "pert_iname": "icotinib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor",
+      "target": "EGFR",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "idarubicin",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "idelalisib",
+      "clinical_phase": "Launched",
+      "moa": "PI3K inhibitor",
+      "target": "PIK3CA|PIK3CB|PIK3CD|PIK3CG",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic lymphocytic leukemia (CLL)"
+    },
+    {
+      "pert_iname": "ifosfamide",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent",
+      "target": "CYP2A6|CYP2B6|CYP2C18|CYP2C19|CYP2C8|CYP2C9|CYP3A4|CYP3A5|CYP3A7|PTGS1",
+      "disease_area": "oncology|urology",
+      "indication": "testicular carcinoma|hemorrhagic cystitis"
+    },
+    {
+      "pert_iname": "imatinib",
+      "clinical_phase": "Launched",
+      "moa": "Bcr-Abl kinase inhibitor|KIT inhibitor|PDGFR tyrosine kinase receptor inhibitor",
+      "target": "ABL1|CSF1R|DDR1|KIT|NTRK1|PDGFRA|PDGFRB|RET",
+      "disease_area": "hematologic malignancy|oncology",
+      "indication": "chronic myeloid leukemia (CML)|acute lymphoblastic leukemia (ALL)|myelodysplastic diseases (MDS)|aggressive systemic mastocytosis (ASM)|hypereosinophilic syndrome (HES)|chronic eosinophilic leukemia (CEL)|dermatofibrosarcoma protuberans (DFSP)|gastrointestinal stromal tumors (GIST)"
+    },
+    {
+      "pert_iname": "imidazoacridinone",
+      "clinical_phase": "Preclinical",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "imiquimod",
+      "clinical_phase": "Launched",
+      "moa": "interferon inducer|toll-like receptor agonist",
+      "target": "TLR7|TLR8",
+      "disease_area": "dermatology|infectious disease|oncology",
+      "indication": "actinic keratosis (AK)|genital warts|basal cell carcinoma (BCC)"
+    },
+    {
+      "pert_iname": "iobenguane",
+      "clinical_phase": "Launched",
+      "moa": "antineoplastic agent",
+      "target": "",
+      "disease_area": "oncology|cardiology|endocrinology",
+      "indication": "neuroblastoma|congestive heart failure|pheochromocytoma"
+    },
+    {
+      "pert_iname": "irinotecan",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP1|TOP1MT",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "ivosidenib",
+      "clinical_phase": "Launched",
+      "moa": "isocitrate dehydrogenase inhibitor",
+      "target": "IDH1",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "ixabepilone",
+      "clinical_phase": "Launched",
+      "moa": "microtubule stabilizing agent",
+      "target": "TUBB",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "KM-0118",
+      "clinical_phase": "Phase 1",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "lapatinib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor",
+      "target": "EGFR|ERBB2",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "lasofoxifene",
+      "clinical_phase": "Launched",
+      "moa": "selective estrogen receptor modulator (SERM)",
+      "target": "ESR1|ESR2",
+      "disease_area": "orthopedics|oncology",
+      "indication": "osteoporosis|breast cancer"
+    },
+    {
+      "pert_iname": "lenalidomide",
+      "clinical_phase": "Launched",
+      "moa": "anticancer agent",
+      "target": "TNF",
+      "disease_area": "hematologic malignancy",
+      "indication": "multiple myeloma|mantle cell lymphoma (MCL)|myelodysplastic diseases (MDS)"
+    },
+    {
+      "pert_iname": "lenvatinib",
+      "clinical_phase": "Launched",
+      "moa": "FGFR inhibitor|KIT inhibitor|PDGFR tyrosine kinase receptor inhibitor|VEGFR inhibitor",
+      "target": "FLT4|KDR",
+      "disease_area": "oncology",
+      "indication": "thyroid cancer"
+    },
+    {
+      "pert_iname": "letrozole",
+      "clinical_phase": "Launched",
+      "moa": "aromatase inhibitor",
+      "target": "CYP19A1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "leucovorin",
+      "clinical_phase": "Launched",
+      "moa": "folate receptor ligand",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "osteosarcoma"
+    },
+    {
+      "pert_iname": "leuprolide",
+      "clinical_phase": "Launched",
+      "moa": "gonadotropin releasing factor hormone receptor agonist",
+      "target": "GNRHR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "ligustilide",
+      "clinical_phase": "Preclinical",
+      "moa": "tumor necrosis factor production inhibitor",
+      "target": "TNF",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "lomustine",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy|oncology",
+      "indication": "Hodgkin's lymphoma|brain tumors"
+    },
+    {
+      "pert_iname": "lorlatinib",
+      "clinical_phase": "Launched",
+      "moa": "ALK tyrosine kinase receptor inhibitor",
+      "target": "ALK",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "LTX-315",
+      "clinical_phase": "Phase 2",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "LY2334737",
+      "clinical_phase": "Phase 1",
+      "moa": "antitumor agent|ribonucleotide reductase inhibitor",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "megestrol",
+      "clinical_phase": "Launched",
+      "moa": "progesterone receptor agonist",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "mercaptopurine",
+      "clinical_phase": "Launched",
+      "moa": "immunosuppressant|protein synthesis inhibitor|purine antagonist",
+      "target": "HPRT1|IMPDH1|IMPDH2|PPAT",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "methotrexate",
+      "clinical_phase": "Launched",
+      "moa": "dihydrofolate reductase inhibitor",
+      "target": "DHFR",
+      "disease_area": "oncology|hematologic malignancy|dermatology|rheumatology",
+      "indication": "gestational choriocarcinoma|hydatidiform mole|acute lymphoblastic leukemia (ALL)|psoriasis|rheumatoid arthritis"
+    },
+    {
+      "pert_iname": "midostaurin",
+      "clinical_phase": "Launched",
+      "moa": "FLT3 inhibitor|KIT inhibitor|PKC inhibitor",
+      "target": "FLT3|PRKCG",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "miriplatin",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "hepatocellular carcinoma (HCC)"
+    },
+    {
+      "pert_iname": "mitoflaxone",
+      "clinical_phase": "Phase 2",
+      "moa": "antitumor agent",
+      "target": "VWF",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "mitomycin-C",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent|DNA synthesis inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "pancreatic cancer|gastric adenocarcinoma"
+    },
+    {
+      "pert_iname": "mitotane",
+      "clinical_phase": "Launched",
+      "moa": "antineoplastic agent",
+      "target": "CYP11A1|CYP11B1|ESR1",
+      "disease_area": "oncology",
+      "indication": "adrenal cortical carcinoma"
+    },
+    {
+      "pert_iname": "mitoxantrone",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A",
+      "disease_area": "neurology/psychiatry|oncology|hematologic malignancy",
+      "indication": "multiple sclerosis|prostate cancer|acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "monocrotaline",
+      "clinical_phase": "Preclinical",
+      "moa": "antitumor agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "nedaplatin",
+      "clinical_phase": "Launched",
+      "moa": "DNA inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)|small cell lung cancer|esophageal cancer"
+    },
+    {
+      "pert_iname": "nelarabine",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor|T cell inhibitor",
+      "target": "POLA1",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "neratinib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor",
+      "target": "EGFR|ERBB2|KDR",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "nilotinib",
+      "clinical_phase": "Launched",
+      "moa": "Abl kinase inhibitor|Bcr-Abl kinase inhibitor",
+      "target": "ABL1|KIT",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic myeloid leukemia (CML)"
+    },
+    {
+      "pert_iname": "nilutamide",
+      "clinical_phase": "Launched",
+      "moa": "androgen receptor antagonist",
+      "target": "AR",
+      "disease_area": "oncology",
+      "indication": "prostate cancer"
+    },
+    {
+      "pert_iname": "nimorazole",
+      "clinical_phase": "Launched",
+      "moa": "bacterial DNA inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "head and neck squamous cell carcinoma (HNSCC)"
+    },
+    {
+      "pert_iname": "niraparib",
+      "clinical_phase": "Launched",
+      "moa": "PARP inhibitor",
+      "target": "PARP1",
+      "disease_area": "oncology",
+      "indication": "primary peritoneal cancer (PPC)"
+    },
+    {
+      "pert_iname": "octodrine",
+      "clinical_phase": "Preclinical",
+      "moa": "antitumor agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "octreotide",
+      "clinical_phase": "Launched",
+      "moa": "somatostatin receptor agonist",
+      "target": "SSTR2|SSTR3|SSTR5",
+      "disease_area": "gastroenterology|endocrinology|oncology",
+      "indication": "diarrhea|acromegaly|carcinoid tumors"
+    },
+    {
+      "pert_iname": "olaparib",
+      "clinical_phase": "Launched",
+      "moa": "PARP inhibitor",
+      "target": "PARP1|PARP2",
+      "disease_area": "oncology",
+      "indication": "ovarian cancer"
+    },
+    {
+      "pert_iname": "olmutinib",
+      "clinical_phase": "Launched",
+      "moa": "Bruton's tyrosine kinase (BTK) inhibitor|EGFR inhibitor",
+      "target": "BTK|EGFR",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "osimertinib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor",
+      "target": "EGFR",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "oxaliplatin",
+      "clinical_phase": "Launched",
+      "moa": "DNA inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "paclitaxel",
+      "clinical_phase": "Launched",
+      "moa": "tubulin polymerization inhibitor",
+      "target": "BCL2|MAP2|MAP4|MAPT|NR1I2|TLR4|TUBA1A|TUBA1B|TUBA1C|TUBA3C|TUBA3D|TUBA3E|TUBA4A|TUBB|TUBB1|TUBB2A|TUBB2B|TUBB3|TUBB4A|TUBB4B|TUBB6|TUBB8",
+      "disease_area": "oncology",
+      "indication": "ovarian cancer|breast cancer|non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "palbociclib",
+      "clinical_phase": "Launched",
+      "moa": "CDK inhibitor",
+      "target": "CDK4|CDK6",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "pamidronate",
+      "clinical_phase": "Launched",
+      "moa": "bone resorption inhibitor",
+      "target": "FDPS",
+      "disease_area": "endocrinology|oncology|hematologic malignancy",
+      "indication": "hypercalcemia|Paget's disease|breast cancer|multiple myeloma"
+    },
+    {
+      "pert_iname": "pazopanib",
+      "clinical_phase": "Launched",
+      "moa": "KIT inhibitor|PDGFR tyrosine kinase receptor inhibitor|VEGFR inhibitor",
+      "target": "CSF1R|FGF1|FGFR1|FGFR3|FLT1|FLT4|ITK|KDR|KIT|PDGFRA|PDGFRB|SH2B3",
+      "disease_area": "oncology",
+      "indication": "renal cell carcinoma (RCC)|soft tissue sarcoma (STS)"
+    },
+    {
+      "pert_iname": "pemetrexed",
+      "clinical_phase": "Launched",
+      "moa": "dihydrofolate reductase inhibitor|thymidylate synthase inhibitor",
+      "target": "ATIC|DHFR|GART|TYMS",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)|mesothelioma"
+    },
+    {
+      "pert_iname": "pentostatin",
+      "clinical_phase": "Launched",
+      "moa": "adenosine deaminase inhibitor|ribonucleotide reductase inhibitor",
+      "target": "ADA",
+      "disease_area": "hematologic malignancy",
+      "indication": "hairy cell leukemia"
+    },
+    {
+      "pert_iname": "PF-06463922",
+      "clinical_phase": "Launched",
+      "moa": "ALK tyrosine kinase receptor inhibitor",
+      "target": "ALK|FES|ROS1",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "phenethyl-isothiocyanate",
+      "clinical_phase": "Phase 2",
+      "moa": "anticancer agent",
+      "target": "CYP2E1",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "pirarubicin",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "pixantrone",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A",
+      "disease_area": "hematologic malignancy",
+      "indication": "non-Hodgkin lymphoma (NHL)"
+    },
+    {
+      "pert_iname": "plerixafor",
+      "clinical_phase": "Launched",
+      "moa": "CC chemokine receptor antagonist",
+      "target": "ACKR3|CCR4|CXCR4",
+      "disease_area": "hematologic malignancy",
+      "indication": "non-Hodgkin lymphoma (NHL)|multiple myeloma"
+    },
+    {
+      "pert_iname": "plicamycin",
+      "clinical_phase": "Launched",
+      "moa": "alcohol dehydrogenase inhibitor",
+      "target": "",
+      "disease_area": "oncology|endocrinology",
+      "indication": "testicular carcinoma|Paget's disease|hypercalcemia"
+    },
+    {
+      "pert_iname": "plumbagin",
+      "clinical_phase": "Preclinical",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "pomalidomide",
+      "clinical_phase": "Launched",
+      "moa": "angiogenesis inhibitor|tumor necrosis factor production inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "multiple myeloma"
+    },
+    {
+      "pert_iname": "ponatinib",
+      "clinical_phase": "Launched",
+      "moa": "Bcr-Abl kinase inhibitor|FLT3 inhibitor|PDGFR tyrosine kinase receptor inhibitor",
+      "target": "ABL1|BCR|FGFR1|FGFR2|FGFR3|FGFR4|FLT3|KDR|KIT|LCK|LYN|PDGFRA|RET|SRC|TEK",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic myeloid leukemia (CML)|acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "pralatrexate",
+      "clinical_phase": "Launched",
+      "moa": "dihydrofolate reductase inhibitor",
+      "target": "DHFR",
+      "disease_area": "hematologic malignancy",
+      "indication": "peripheral T-cell lymphoma (PTCL)"
+    },
+    {
+      "pert_iname": "procarbazine",
+      "clinical_phase": "Launched",
+      "moa": "monoamine oxidase inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "Hodgkin's lymphoma"
+    },
+    {
+      "pert_iname": "raloxifene",
+      "clinical_phase": "Launched",
+      "moa": "estrogen receptor antagonist|selective estrogen receptor modulator (SERM)",
+      "target": "ESR1|ESR2",
+      "disease_area": "orthopedics|oncology",
+      "indication": "osteoporosis|breast cancer"
+    },
+    {
+      "pert_iname": "raltitrexed",
+      "clinical_phase": "Launched",
+      "moa": "thymidylate synthase inhibitor",
+      "target": "FPGS|TYMS",
+      "disease_area": "oncology",
+      "indication": "mesothelioma"
+    },
+    {
+      "pert_iname": "regorafenib",
+      "clinical_phase": "Launched",
+      "moa": "FGFR inhibitor|KIT inhibitor|PDGFR tyrosine kinase receptor inhibitor|RAF inhibitor|RET tyrosine kinase inhibitor|VEGFR inhibitor",
+      "target": "ABL1|BRAF|DDR2|EPHA2|FGFR1|FGFR2|FLT1|FLT4|FRK|KDR|KIT|MAPK11|NTRK1|PDGFRA|PDGFRB|RAF1|RET|TEK",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer|gastrointestinal stromal tumors (GIST)"
+    },
+    {
+      "pert_iname": "ribociclib",
+      "clinical_phase": "Launched",
+      "moa": "CDK inhibitor",
+      "target": "CDK4|CDK6",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "romidepsin",
+      "clinical_phase": "Launched",
+      "moa": "HDAC inhibitor",
+      "target": "HDAC1|HDAC2|HDAC3|HDAC4|HDAC5|HDAC6|HDAC7|HDAC8|HDAC9",
+      "disease_area": "hematologic malignancy",
+      "indication": "cutaneous T-cell lymphoma (CTCL)"
+    },
+    {
+      "pert_iname": "roquinimex",
+      "clinical_phase": "Phase 3",
+      "moa": "angiogenesis inhibitor|tumor necrosis factor production inhibitor",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "sancycline",
+      "clinical_phase": "Preclinical",
+      "moa": "antitumor agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "scabertopin",
+      "clinical_phase": "Preclinical",
+      "moa": "anticancer agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "SN-38",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP1",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "sobuzoxane",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "peripheral T-cell lymphoma (PTCL)"
+    },
+    {
+      "pert_iname": "sonidegib",
+      "clinical_phase": "Launched",
+      "moa": "smoothened receptor antagonist",
+      "target": "SMO",
+      "disease_area": "oncology",
+      "indication": "basal cell carcinoma (BCC)"
+    },
+    {
+      "pert_iname": "sorafenib",
+      "clinical_phase": "Launched",
+      "moa": "FLT3 inhibitor|KIT inhibitor|PDGFR tyrosine kinase receptor inhibitor|RAF inhibitor|RET tyrosine kinase inhibitor|VEGFR inhibitor",
+      "target": "BRAF|DDR2|FGFR1|FLT1|FLT3|FLT4|KDR|KIT|PDGFRB|RAF1|RET",
+      "disease_area": "oncology",
+      "indication": "renal cell carcinoma (RCC)|thyroid cancer|hepatocellular carcinoma (HCC)"
+    },
+    {
+      "pert_iname": "streptozotocin",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "pancreatic cancer"
+    },
+    {
+      "pert_iname": "sulforaphane",
+      "clinical_phase": "Phase 2",
+      "moa": "anticancer agent|aryl hydrocarbon receptor antagonist",
+      "target": "NFE2L2",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "sunitinib",
+      "clinical_phase": "Launched",
+      "moa": "FLT3 inhibitor|KIT inhibitor|PDGFR tyrosine kinase receptor inhibitor|RET tyrosine kinase inhibitor|VEGFR inhibitor",
+      "target": "CSF1R|FGFR1|FLT1|FLT3|FLT4|KDR|KIT|PDGFRA|PDGFRB|RET",
+      "disease_area": "oncology",
+      "indication": "gastrointestinal stromal tumors (GIST)|renal cell carcinoma (RCC)|neuroendocrine tumors of pancreatic origin (PNET)"
+    },
+    {
+      "pert_iname": "talazoparib",
+      "clinical_phase": "Launched",
+      "moa": "PARP inhibitor",
+      "target": "PARP2",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "tamibarotene",
+      "clinical_phase": "Launched",
+      "moa": "retinoid receptor agonist",
+      "target": "RARA|RARB",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute promyelocytic leukemia (APL)"
+    },
+    {
+      "pert_iname": "tamoxifen",
+      "clinical_phase": "Launched",
+      "moa": "estrogen receptor antagonist|selective estrogen receptor modulator (SERM)",
+      "target": "EBP|ESR1|ESR2|GPER1|PRKCA|PRKCB|PRKCD|PRKCE|PRKCG|PRKCI|PRKCQ|PRKCZ",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "temoporfin",
+      "clinical_phase": "Launched",
+      "moa": "radical formation stimulant",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "head and neck squamous cell carcinoma (HNSCC)"
+    },
+    {
+      "pert_iname": "temozolomide",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent",
+      "target": "MGMT",
+      "disease_area": "oncology",
+      "indication": "glioblastoma|astrocytoma"
+    },
+    {
+      "pert_iname": "temsirolimus",
+      "clinical_phase": "Launched",
+      "moa": "mTOR inhibitor",
+      "target": "MTOR",
+      "disease_area": "oncology",
+      "indication": "renal cell carcinoma (RCC)"
+    },
+    {
+      "pert_iname": "teniposide",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP2A|TOP2B",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "thalidomide",
+      "clinical_phase": "Launched",
+      "moa": "tumor necrosis factor production inhibitor",
+      "target": "TNF",
+      "disease_area": "oncology",
+      "indication": "myeloma"
+    },
+    {
+      "pert_iname": "thioguanine",
+      "clinical_phase": "Launched",
+      "moa": "purine antagonist",
+      "target": "IMPDH1|IMPDH2",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "thiotepa",
+      "clinical_phase": "Launched",
+      "moa": "cytochrome P450 inhibitor",
+      "target": "CYP2B6|CYP3A4",
+      "disease_area": "oncology",
+      "indication": "breast cancer|ovarian cancer|bladder cancer"
+    },
+    {
+      "pert_iname": "tioguanine",
+      "clinical_phase": "Launched",
+      "moa": "purine antagonist",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)|acute lymphoblastic leukemia (ALL)|chronic myeloid leukemia (CML)"
+    },
+    {
+      "pert_iname": "tipiracil",
+      "clinical_phase": "Launched",
+      "moa": "thymidine phosphorylase inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer"
+    },
+    {
+      "pert_iname": "tivozanib",
+      "clinical_phase": "Launched",
+      "moa": "VEGFR inhibitor",
+      "target": "FLT1|FLT4|KDR|KIT|PDGFRA|PDGFRB",
+      "disease_area": "oncology",
+      "indication": "renal cell carcinoma (RCC)"
+    },
+    {
+      "pert_iname": "toceranib",
+      "clinical_phase": "Launched",
+      "moa": "protein tyrosine kinase inhibitor",
+      "target": "FLT1|FLT3|KDR|PDGFRA|PDGFRB",
+      "disease_area": "oncology",
+      "indication": "cutaneous mast cell tumors"
+    },
+    {
+      "pert_iname": "topotecan",
+      "clinical_phase": "Launched",
+      "moa": "topoisomerase inhibitor",
+      "target": "TOP1|TOP1MT",
+      "disease_area": "oncology",
+      "indication": "small cell lung cancer|cervical cancer"
+    },
+    {
+      "pert_iname": "toremifene",
+      "clinical_phase": "Launched",
+      "moa": "estrogen receptor antagonist|selective estrogen receptor modulator (SERM)",
+      "target": "ESR1",
+      "disease_area": "oncology",
+      "indication": "breast cancer"
+    },
+    {
+      "pert_iname": "trabectedin",
+      "clinical_phase": "Phase 3",
+      "moa": "antitumor agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "trametinib",
+      "clinical_phase": "Launched",
+      "moa": "MEK inhibitor",
+      "target": "MAP2K1|MAP2K2",
+      "disease_area": "oncology",
+      "indication": "melanoma"
+    },
+    {
+      "pert_iname": "treosulfan",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "ovarian cancer"
+    },
+    {
+      "pert_iname": "tretinoin",
+      "clinical_phase": "Launched",
+      "moa": "retinoid receptor agonist|retinoid receptor ligand",
+      "target": "ALDH1A1|ALDH1A2|GPRC5A|NR0B1|NR2C2|PPARD|RARA|RARB|RARG|RARRES1|RORB|RORC|RXRB|RXRG",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute promyelocytic leukemia (APL)"
+    },
+    {
+      "pert_iname": "triptorelin",
+      "clinical_phase": "Launched",
+      "moa": "gonadotropin releasing factor hormone receptor agonist",
+      "target": "GNRHR",
+      "disease_area": "oncology|endocrinology|obstetrics/gynecology",
+      "indication": "prostate cancer|breast cancer|precocious puberty|endometriosis|myoma|gender dysphoria"
+    },
+    {
+      "pert_iname": "trofosfamide",
+      "clinical_phase": "Launched",
+      "moa": "DNA alkylating agent",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "medulloblastoma"
+    },
+    {
+      "pert_iname": "ubenimex",
+      "clinical_phase": "Launched",
+      "moa": "leukotriene synthesis inhibitor",
+      "target": "LTA4H|RNPEP",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute myeloid leukemia (AML)"
+    },
+    {
+      "pert_iname": "uracil-mustard",
+      "clinical_phase": "Launched",
+      "moa": "DNA synthesis inhibitor",
+      "target": "",
+      "disease_area": "hematologic malignancy",
+      "indication": "non-Hodgkin lymphoma (NHL)"
+    },
+    {
+      "pert_iname": "valrubicin",
+      "clinical_phase": "Launched",
+      "moa": "DNA inhibitor|topoisomerase inhibitor",
+      "target": "TOP2A",
+      "disease_area": "oncology",
+      "indication": "bladder cancer"
+    },
+    {
+      "pert_iname": "vandetanib",
+      "clinical_phase": "Launched",
+      "moa": "EGFR inhibitor|RET tyrosine kinase inhibitor|VEGFR inhibitor",
+      "target": "EGFR|EPHA1|EPHA10|EPHA2|EPHA3|EPHA4|EPHA5|EPHA6|EPHA7|EPHA8|EPHB1|EPHB2|EPHB3|EPHB4|EPHB6|ERBB2|ERBB3|ERBB4|FLT1|FLT4|KDR|PTK6|RET|SRC|TEK|VEGFA",
+      "disease_area": "oncology",
+      "indication": "medullary thyroid cancer (MTC)"
+    },
+    {
+      "pert_iname": "vemurafenib",
+      "clinical_phase": "Launched",
+      "moa": "RAF inhibitor",
+      "target": "BRAF|RAF1",
+      "disease_area": "oncology",
+      "indication": "melanoma"
+    },
+    {
+      "pert_iname": "venetoclax",
+      "clinical_phase": "Launched",
+      "moa": "BCL inhibitor",
+      "target": "BCL2",
+      "disease_area": "hematologic malignancy",
+      "indication": "chronic lymphocytic leukemia (CLL)"
+    },
+    {
+      "pert_iname": "VGX-1027",
+      "clinical_phase": "Phase 1",
+      "moa": "tumor necrosis factor receptor antagonist",
+      "target": "TLR4",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "vinblastine",
+      "clinical_phase": "Launched",
+      "moa": "microtubule inhibitor|tubulin polymerization inhibitor",
+      "target": "JUN|TUBA1A|TUBB|TUBD1|TUBE1|TUBG1",
+      "disease_area": "hematologic malignancy|infectious disease|oncology",
+      "indication": "Hodgkin's lymphoma|true histiocytic lymphoma (THL)|mycosis|small lymphocytic lymphoma (SLL)|testicular carcinoma|Kaposi sarcoma"
+    },
+    {
+      "pert_iname": "vincristine",
+      "clinical_phase": "Launched",
+      "moa": "tubulin polymerization inhibitor",
+      "target": "TUBA4A|TUBB",
+      "disease_area": "hematologic malignancy",
+      "indication": "acute lymphoblastic leukemia (ALL)"
+    },
+    {
+      "pert_iname": "vindesine",
+      "clinical_phase": "Launched",
+      "moa": "tubulin polymerization inhibitor",
+      "target": "TUBB|TUBB1",
+      "disease_area": "oncology",
+      "indication": "breast cancer|non-small cell lung cancer (NSCLC)|melanoma"
+    },
+    {
+      "pert_iname": "vinflunine",
+      "clinical_phase": "Launched",
+      "moa": "microtubule inhibitor",
+      "target": "",
+      "disease_area": "oncology",
+      "indication": "bladder cancer"
+    },
+    {
+      "pert_iname": "vinorelbine",
+      "clinical_phase": "Launched",
+      "moa": "tubulin polymerization inhibitor",
+      "target": "TUBA1A|TUBA1B|TUBA1C|TUBA3C|TUBA3D|TUBA3E|TUBA4A|TUBB|TUBB1|TUBB2A|TUBB2B|TUBB3|TUBB4A|TUBB4B|TUBB6|TUBB8",
+      "disease_area": "oncology",
+      "indication": "non-small cell lung cancer (NSCLC)"
+    },
+    {
+      "pert_iname": "vismodegib",
+      "clinical_phase": "Launched",
+      "moa": "hedgehog pathway inhibitor|smoothened receptor antagonist",
+      "target": "SMO",
+      "disease_area": "oncology",
+      "indication": "basal cell carcinoma (BCC)"
+    },
+    {
+      "pert_iname": "VLX600",
+      "clinical_phase": "Phase 1",
+      "moa": "antitumor agent|ubiquitin C-terminal hydrolase inhibitor",
+      "target": "TP53|USP14",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "vorinostat",
+      "clinical_phase": "Launched",
+      "moa": "HDAC inhibitor",
+      "target": "HDAC1|HDAC10|HDAC11|HDAC2|HDAC3|HDAC5|HDAC6|HDAC8|HDAC9",
+      "disease_area": "hematologic malignancy",
+      "indication": "cutaneous T-cell lymphoma (CTCL)"
+    },
+    {
+      "pert_iname": "10-deacetylbaccatin",
+      "clinical_phase": "Preclinical",
+      "moa": "antitumor agent",
+      "target": "",
+      "disease_area": "",
+      "indication": ""
+    },
+    {
+      "pert_iname": "2-deoxy-2-([methyl(nitroso)carbamoyl]amino)hexose",
+      "clinical_phase": "Preclinical",
+      "moa": "",
+      "target": "",
+      "disease_area": "oncology|endocrinology",
+      "indication": "pancreatic cancer|hypoglycemia"
+    },
+    {
+      "pert_iname": "5-aminolevulinic-acid",
+      "clinical_phase": "Launched",
+      "moa": "oxidizing agent",
+      "target": "ALAD",
+      "disease_area": "oncology|dermatology",
+      "indication": "glioma|actinic keratosis (AK)"
+    },
+    {
+      "pert_iname": "5-fluorouracil",
+      "clinical_phase": "Launched",
+      "moa": "thymidylate synthase inhibitor",
+      "target": "DPYD|TYMS",
+      "disease_area": "oncology",
+      "indication": "colorectal cancer|breast cancer|pancreatic cancer|gastric adenocarcinoma"
+    }
+  ]
+}

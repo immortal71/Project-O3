@@ -339,14 +339,14 @@
                                 <span class="font-semibold" style="color: white; font-size: 15px;">New Analysis</span>
                             </div>
                         </a>
-                        <button class="action-button-secondary relative w-full p-4 text-center">
+                        <button onclick="generateDashboardReport()" class="action-button-secondary relative w-full p-4 text-center">
                             <span class="notification-badge"></span>
                             <div class="flex items-center justify-center space-x-3">
                                 <i data-lucide="file-bar-chart" style="width: 20px; height: 20px; color: #cbd5e1;"></i>
                                 <span class="font-semibold" style="color: #cbd5e1; font-size: 15px;">Generate Report</span>
                             </div>
                         </button>
-                        <button class="action-button-secondary w-full p-4 text-center">
+                        <button onclick="exportDashboardData()" class="action-button-secondary w-full p-4 text-center">
                             <div class="flex items-center justify-center space-x-3">
                                 <i data-lucide="download" style="width: 20px; height: 20px; color: #cbd5e1;"></i>
                                 <span class="font-semibold" style="color: #cbd5e1; font-size: 15px;">Export Data</span>
@@ -783,6 +783,171 @@
                 }
             });
         });
+        
+        // Generate Dashboard Report Function
+        async function generateDashboardReport() {
+            const btn = event.target.closest('button');
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="flex items-center justify-center space-x-3"><span>⏳ Generating...</span></div>';
+            
+            try {
+                // Get all analytics data
+                const response = await fetch('/api/reports/all');
+                
+                if (response.ok) {
+                    const reports = await response.json();
+                    
+                    // Create comprehensive dashboard report
+                    const reportData = {
+                        drug_name: 'Dashboard Summary',
+                        cancer_type: 'All Cancer Types',
+                        confidence_score: 0.85,
+                        current_phase: 'Multiple',
+                        total_reports: reports.length
+                    };
+                    
+                    const pdfResponse = await fetch('/api/reports/download-market-report-pdf', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(reportData)
+                    });
+                    
+                    if (pdfResponse.ok) {
+                        const blob = await pdfResponse.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Dashboard_Summary_Report.pdf';
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        
+                        btn.innerHTML = '<div class="flex items-center justify-center space-x-3"><span>✅ Downloaded!</span></div>';
+                        showNotification('✅ Dashboard report generated and downloaded!', 'success');
+                        setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 2000);
+                    } else {
+                        throw new Error('Failed to generate PDF');
+                    }
+                } else {
+                    throw new Error('Failed to fetch reports');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                btn.innerHTML = '<div class="flex items-center justify-center space-x-3"><span>❌ Error</span></div>';
+                showNotification('❌ Failed to generate report. Please try again.', 'error');
+                setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 2000);
+            }
+        }
+        
+        // Export Dashboard Data Function
+        async function exportDashboardData() {
+            const btn = event.target.closest('button');
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="flex items-center justify-center space-x-3"><span>⏳ Exporting...</span></div>';
+            
+            try {
+                const response = await fetch('/api/reports/all');
+                
+                if (response.ok) {
+                    const reports = await response.json();
+                    
+                    // Convert to CSV
+                    const headers = ['Drug Name', 'Cancer Type', 'Confidence Score', 'Phase', 'Market Potential'];
+                    const csvRows = [headers.join(',')];
+                    
+                    reports.forEach(report => {
+                        const row = [
+                            report.drug_name || '',
+                            report.cancer_type || '',
+                            report.confidence_score || '',
+                            report.development_phase || '',
+                            report.market_potential || ''
+                        ];
+                        csvRows.push(row.join(','));
+                    });
+                    
+                    const csvContent = csvRows.join('\\n');
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'dashboard_data_export.csv';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    
+                    btn.innerHTML = '<div class="flex items-center justify-center space-x-3"><span>✅ Exported!</span></div>';
+                    showNotification(`✅ Dashboard data exported! (${reports.length} records)`, 'success');
+                    setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 2000);
+                } else {
+                    throw new Error('Failed to fetch data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                btn.innerHTML = '<div class="flex items-center justify-center space-x-3"><span>❌ Error</span></div>';
+                showNotification('❌ Failed to export data. Please try again.', 'error');
+                setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 2000);
+            }
+        }
+        
+        // Toast Notification System
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                padding: 16px 24px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = '#10b981';
+            } else if (type === 'error') {
+                notification.style.background = '#ef4444';
+            } else {
+                notification.style.background = '#3b82f6';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>

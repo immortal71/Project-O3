@@ -1,0 +1,13 @@
+# Minimal Demo Requirements - For Founders Fest
+# Install with: pip install -r requirements-demo.txt
+
+# Core API Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# HTTP Client for data collection (optional)
+requests==2.31.0
+
+# That's it! The demo works with just these 3 packages.
+# No database, no ML libraries, no heavy dependencies!

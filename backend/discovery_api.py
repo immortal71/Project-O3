@@ -99,8 +99,131 @@ def get_openai_service_dep(
 
 
 # Endpoints
-@router.post("/analyze", response_model=AnalysisResponse, status_code=status.HTTP_200_OK)
-async def analyze_drug_repurposing(
+@router.post("/analyze")
+async def analyze_drug_repurposing_demo(
+    request: AnalysisRequest
+):
+    """
+    DEMO VERSION: Analyze drug repurposing using existing data
+    (No OpenAI required for beta testing)
+    """
+    try:
+        from data_loader import get_data_loader
+        import re
+        
+        loader = get_data_loader()
+        drug_name = request.drug_name.strip()
+        cancer_type = request.cancer_type.strip()
+        
+        logger.info(f"Demo analysis: {drug_name} for {cancer_type}")
+        
+        # Search for drug in hero cases first
+        opportunities = []
+        hero_case = None
+        for case in loader.get_hero_cases():
+            if drug_name.lower() in case["drug_name"].lower():
+                hero_case = case
+                break
+        
+        # If found in hero cases, create high-confidence opportunities
+        if hero_case:
+            for cancer in hero_case.get("repurposed_cancer", []):
+                opportunities.append({
+                    "cancer_type": cancer,
+                    "confidence_score": hero_case["confidence_score"],
+                    "clinical_phase": hero_case["phase"],
+                    "evidence_level": hero_case["evidence_level"],
+                    "mechanism": hero_case["mechanism"],
+                    "pathways": hero_case.get("pathways", []),
+                    "market_potential": "$2-5B",
+                    "timeline": "18-24 months",
+                    "key_findings": [
+                        f"✓ {hero_case['trial_count']} clinical trials completed",
+                        f"✓ {hero_case['citations']} scientific citations",
+                        f"✓ Proven mechanism: {hero_case['mechanism']}",
+                        hero_case.get("why_high_confidence", "Strong evidence base")
+                    ],
+                    "recommendations": [
+                        f"Fast-track to Phase {hero_case['phase']} trials",
+                        "Leverage existing safety data",
+                        "Target combination therapy protocols"
+                    ]
+                })
+        
+        # Search Broad Hub for additional matches
+        broad_matches = loader.search_drugs(drug_name, limit=5)
+        for drug in broad_matches[:3]:
+            if drug.get("pert_iname", "").lower() == drug_name.lower() or drug_name.lower() in drug.get("pert_iname", "").lower():
+                # Create opportunity based on mechanism and disease area
+                conf_score = 0.75 if drug.get("clinical_phase") in ["Phase III", "Phase II"] else 0.60
+                
+                opportunities.append({
+                    "cancer_type": cancer_type,
+                    "confidence_score": conf_score,
+                    "clinical_phase": drug.get("clinical_phase", "Preclinical"),
+                    "evidence_level": "Moderate",
+                    "mechanism": drug.get("moa", "Unknown"),
+                    "pathways": drug.get("target", "").split("|")[:3] if drug.get("target") else [],
+                    "market_potential": "$1-3B",
+                    "timeline": "24-36 months",
+                    "key_findings": [
+                        f"✓ MOA: {drug.get('moa', 'Under investigation')}",
+                        f"✓ Disease area: {drug.get('disease_area', 'Oncology')}",
+                        f"✓ Clinical phase: {drug.get('clinical_phase', 'Preclinical')}",
+                        "Mechanism supports repurposing potential"
+                    ],
+                    "recommendations": [
+                        "Conduct mechanism validation studies",
+                        "Review existing trial data",
+                        "Assess patent landscape"
+                    ]
+                })
+        
+        # If no matches, create generic opportunity based on query
+        if not opportunities:
+            opportunities = [{
+                "cancer_type": cancer_type,
+                "confidence_score": 0.45,
+                "clinical_phase": "Preclinical",
+                "evidence_level": "Limited",
+                "mechanism": "To be determined",
+                "pathways": [],
+                "market_potential": "$500M-1B",
+                "timeline": "36-48 months",
+                "key_findings": [
+                    "⚠ Limited data available",
+                    "Requires mechanism validation",
+                    "Preliminary evidence suggests potential",
+                    "Need comprehensive literature review"
+                ],
+                "recommendations": [
+                    "Conduct initial screening studies",
+                    "Review scientific literature",
+                    "Consult oncology experts",
+                    "Consider alternative mechanisms"
+                ]
+            }]
+        
+        return {
+            "success": True,
+            "drug_name": drug_name,
+            "cancer_type": cancer_type,
+            "total_found": len(opportunities),
+            "opportunities": opportunities,
+            "message": "Analysis completed using existing database (Demo mode - no AI required)",
+            "note": "This is demo data. For AI-powered analysis, configure OpenAI API key."
+        }
+        
+    except Exception as e:
+        logger.error(f"Demo analysis error: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Analysis failed: {str(e)}"
+        )
+
+
+@router.post("/analyze-ai", response_model=AnalysisResponse, status_code=status.HTTP_200_OK)
+async def analyze_drug_repurposing_ai(
     request: AnalysisRequest,
     openai_service: OpenAIService = Depends(get_openai_service_dep)
 ) -> AnalysisResponse:

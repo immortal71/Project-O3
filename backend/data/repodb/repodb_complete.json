@@ -1,0 +1,547 @@
+{
+  "full": [
+    {
+      "<!DOCTYPE html>": "<html>"
+    },
+    {
+      "<!DOCTYPE html>": "<head>"
+    },
+    {
+      "<!DOCTYPE html>": "<meta charset=\"utf-8\">"
+    },
+    {
+      "<!DOCTYPE html>": "<meta http-equiv='X-UA-Compatible' content='IE=edge",
+      "null": [
+        "chrome=1'>"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "<meta name='viewport' content='width=device-width",
+      "null": [
+        " initial-scale=1' />"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "<style>"
+    },
+    {
+      "<!DOCTYPE html>": "html",
+      "null": [
+        " body",
+        " iframe",
+        " #outer {"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "width: 100%;"
+    },
+    {
+      "<!DOCTYPE html>": "height: 100%;"
+    },
+    {
+      "<!DOCTYPE html>": "padding: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "margin: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "html",
+      "null": [
+        " body {"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "overflow: hidden;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "#outer {"
+    },
+    {
+      "<!DOCTYPE html>": "overflow: auto;"
+    },
+    {
+      "<!DOCTYPE html>": "-webkit-overflow-scrolling: touch;"
+    },
+    {
+      "<!DOCTYPE html>": "position: absolute;"
+    },
+    {
+      "<!DOCTYPE html>": "top: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "left: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "right: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "bottom: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "#shinyapps {"
+    },
+    {
+      "<!DOCTYPE html>": "position: absolute;"
+    },
+    {
+      "<!DOCTYPE html>": "top: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "left: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "right: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "bottom: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "</style>"
+    },
+    {
+      "<!DOCTYPE html>": "</head>"
+    },
+    {
+      "<!DOCTYPE html>": "<body>"
+    },
+    {
+      "<!DOCTYPE html>": "<div id=\"outer\">"
+    },
+    {
+      "<!DOCTYPE html>": "<iframe id=\"shinyapps\" src=\"https://chiragjp.shinyapps.io/repoDB/download/full_database.csv\" frameborder=\"no\"></iframe>"
+    },
+    {
+      "<!DOCTYPE html>": "</div>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/components/jquery/dist/jquery.min.js?v=bf6089ed4698cb8270a8b0c8ad9508ff886a7a842278e98064d5c1790ca3a36d5d69d9f047ef196882554fc104da2c88eb5395f1ee8cf0f3f6ff8869408350fe\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/components/iframe-resizer/js/iframeResizer.min.js?v=1a739716702568859705716e8f06bb43b85525a26b2373a0d7acf8ac6fafed5038fd348ba56bcc302af99b1d357fbbc0142f08895f6928146fad5f7a10847f65\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/frontend/scripts/shinyapps.frame.parent.js?v=f3c1c8411cb2d969e1bc434bd0d5ff15bd7bb35d4a2dfe7eaeb9ac2fc965ef00f5e6cf575f70d9907398c6ab7fd6223f156f9b153269af19306d823dd729cd30\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\">"
+    },
+    {
+      "<!DOCTYPE html>": "// initialize frame"
+    },
+    {
+      "<!DOCTYPE html>": "var app_url = 'http://apps.chiragjpgroup.org/repoDB/';"
+    },
+    {
+      "<!DOCTYPE html>": "var frame_url = 'https://chiragjp.shinyapps.io/repoDB/download/full_database.csv';"
+    },
+    {
+      "<!DOCTYPE html>": "var frame_settings = JSON.parse('{\"log\": false",
+      "null": [
+        " \"sizeHeight\": true",
+        " \"sizeWidth\": false",
+        " \"heightCalculationMethod\": \"bodyOffset\"",
+        " \"widthCalculationMethod\": \"bodyOffset\"}');"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "initializeParentFrame(document.getElementById('shinyapps')",
+      "null": [
+        " frame_settings",
+        " app_url);"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "// set focus to frame so keyboard scrolling will work"
+    },
+    {
+      "<!DOCTYPE html>": "document.getElementById(\"shinyapps\").contentWindow.focus();"
+    },
+    {
+      "<!DOCTYPE html>": "</script>"
+    },
+    {
+      "<!DOCTYPE html>": "</body>"
+    },
+    {
+      "<!DOCTYPE html>": "<html>"
+    }
+  ],
+  "approved": [
+    {
+      "<!DOCTYPE html>": "<html>"
+    },
+    {
+      "<!DOCTYPE html>": "<head>"
+    },
+    {
+      "<!DOCTYPE html>": "<meta charset=\"utf-8\">"
+    },
+    {
+      "<!DOCTYPE html>": "<meta http-equiv='X-UA-Compatible' content='IE=edge",
+      "null": [
+        "chrome=1'>"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "<meta name='viewport' content='width=device-width",
+      "null": [
+        " initial-scale=1' />"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "<style>"
+    },
+    {
+      "<!DOCTYPE html>": "html",
+      "null": [
+        " body",
+        " iframe",
+        " #outer {"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "width: 100%;"
+    },
+    {
+      "<!DOCTYPE html>": "height: 100%;"
+    },
+    {
+      "<!DOCTYPE html>": "padding: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "margin: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "html",
+      "null": [
+        " body {"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "overflow: hidden;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "#outer {"
+    },
+    {
+      "<!DOCTYPE html>": "overflow: auto;"
+    },
+    {
+      "<!DOCTYPE html>": "-webkit-overflow-scrolling: touch;"
+    },
+    {
+      "<!DOCTYPE html>": "position: absolute;"
+    },
+    {
+      "<!DOCTYPE html>": "top: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "left: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "right: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "bottom: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "#shinyapps {"
+    },
+    {
+      "<!DOCTYPE html>": "position: absolute;"
+    },
+    {
+      "<!DOCTYPE html>": "top: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "left: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "right: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "bottom: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "</style>"
+    },
+    {
+      "<!DOCTYPE html>": "</head>"
+    },
+    {
+      "<!DOCTYPE html>": "<body>"
+    },
+    {
+      "<!DOCTYPE html>": "<div id=\"outer\">"
+    },
+    {
+      "<!DOCTYPE html>": "<iframe id=\"shinyapps\" src=\"https://chiragjp.shinyapps.io/repoDB/download/approved_database.csv\" frameborder=\"no\"></iframe>"
+    },
+    {
+      "<!DOCTYPE html>": "</div>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/components/jquery/dist/jquery.min.js?v=bf6089ed4698cb8270a8b0c8ad9508ff886a7a842278e98064d5c1790ca3a36d5d69d9f047ef196882554fc104da2c88eb5395f1ee8cf0f3f6ff8869408350fe\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/components/iframe-resizer/js/iframeResizer.min.js?v=1a739716702568859705716e8f06bb43b85525a26b2373a0d7acf8ac6fafed5038fd348ba56bcc302af99b1d357fbbc0142f08895f6928146fad5f7a10847f65\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/frontend/scripts/shinyapps.frame.parent.js?v=f3c1c8411cb2d969e1bc434bd0d5ff15bd7bb35d4a2dfe7eaeb9ac2fc965ef00f5e6cf575f70d9907398c6ab7fd6223f156f9b153269af19306d823dd729cd30\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\">"
+    },
+    {
+      "<!DOCTYPE html>": "// initialize frame"
+    },
+    {
+      "<!DOCTYPE html>": "var app_url = 'http://apps.chiragjpgroup.org/repoDB/';"
+    },
+    {
+      "<!DOCTYPE html>": "var frame_url = 'https://chiragjp.shinyapps.io/repoDB/download/approved_database.csv';"
+    },
+    {
+      "<!DOCTYPE html>": "var frame_settings = JSON.parse('{\"log\": false",
+      "null": [
+        " \"sizeHeight\": true",
+        " \"sizeWidth\": false",
+        " \"heightCalculationMethod\": \"bodyOffset\"",
+        " \"widthCalculationMethod\": \"bodyOffset\"}');"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "initializeParentFrame(document.getElementById('shinyapps')",
+      "null": [
+        " frame_settings",
+        " app_url);"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "// set focus to frame so keyboard scrolling will work"
+    },
+    {
+      "<!DOCTYPE html>": "document.getElementById(\"shinyapps\").contentWindow.focus();"
+    },
+    {
+      "<!DOCTYPE html>": "</script>"
+    },
+    {
+      "<!DOCTYPE html>": "</body>"
+    },
+    {
+      "<!DOCTYPE html>": "<html>"
+    }
+  ],
+  "failed": [
+    {
+      "<!DOCTYPE html>": "<html>"
+    },
+    {
+      "<!DOCTYPE html>": "<head>"
+    },
+    {
+      "<!DOCTYPE html>": "<meta charset=\"utf-8\">"
+    },
+    {
+      "<!DOCTYPE html>": "<meta http-equiv='X-UA-Compatible' content='IE=edge",
+      "null": [
+        "chrome=1'>"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "<meta name='viewport' content='width=device-width",
+      "null": [
+        " initial-scale=1' />"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "<style>"
+    },
+    {
+      "<!DOCTYPE html>": "html",
+      "null": [
+        " body",
+        " iframe",
+        " #outer {"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "width: 100%;"
+    },
+    {
+      "<!DOCTYPE html>": "height: 100%;"
+    },
+    {
+      "<!DOCTYPE html>": "padding: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "margin: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "html",
+      "null": [
+        " body {"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "overflow: hidden;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "#outer {"
+    },
+    {
+      "<!DOCTYPE html>": "overflow: auto;"
+    },
+    {
+      "<!DOCTYPE html>": "-webkit-overflow-scrolling: touch;"
+    },
+    {
+      "<!DOCTYPE html>": "position: absolute;"
+    },
+    {
+      "<!DOCTYPE html>": "top: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "left: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "right: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "bottom: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "#shinyapps {"
+    },
+    {
+      "<!DOCTYPE html>": "position: absolute;"
+    },
+    {
+      "<!DOCTYPE html>": "top: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "left: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "right: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "bottom: 0;"
+    },
+    {
+      "<!DOCTYPE html>": "}"
+    },
+    {
+      "<!DOCTYPE html>": "</style>"
+    },
+    {
+      "<!DOCTYPE html>": "</head>"
+    },
+    {
+      "<!DOCTYPE html>": "<body>"
+    },
+    {
+      "<!DOCTYPE html>": "<div id=\"outer\">"
+    },
+    {
+      "<!DOCTYPE html>": "<iframe id=\"shinyapps\" src=\"https://chiragjp.shinyapps.io/repoDB/download/failed_database.csv\" frameborder=\"no\"></iframe>"
+    },
+    {
+      "<!DOCTYPE html>": "</div>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/components/jquery/dist/jquery.min.js?v=bf6089ed4698cb8270a8b0c8ad9508ff886a7a842278e98064d5c1790ca3a36d5d69d9f047ef196882554fc104da2c88eb5395f1ee8cf0f3f6ff8869408350fe\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/components/iframe-resizer/js/iframeResizer.min.js?v=1a739716702568859705716e8f06bb43b85525a26b2373a0d7acf8ac6fafed5038fd348ba56bcc302af99b1d357fbbc0142f08895f6928146fad5f7a10847f65\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\" src=\"/__static__/frontend/scripts/shinyapps.frame.parent.js?v=f3c1c8411cb2d969e1bc434bd0d5ff15bd7bb35d4a2dfe7eaeb9ac2fc965ef00f5e6cf575f70d9907398c6ab7fd6223f156f9b153269af19306d823dd729cd30\"></script>"
+    },
+    {
+      "<!DOCTYPE html>": "<script type=\"text/javascript\">"
+    },
+    {
+      "<!DOCTYPE html>": "// initialize frame"
+    },
+    {
+      "<!DOCTYPE html>": "var app_url = 'http://apps.chiragjpgroup.org/repoDB/';"
+    },
+    {
+      "<!DOCTYPE html>": "var frame_url = 'https://chiragjp.shinyapps.io/repoDB/download/failed_database.csv';"
+    },
+    {
+      "<!DOCTYPE html>": "var frame_settings = JSON.parse('{\"log\": false",
+      "null": [
+        " \"sizeHeight\": true",
+        " \"sizeWidth\": false",
+        " \"heightCalculationMethod\": \"bodyOffset\"",
+        " \"widthCalculationMethod\": \"bodyOffset\"}');"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "initializeParentFrame(document.getElementById('shinyapps')",
+      "null": [
+        " frame_settings",
+        " app_url);"
+      ]
+    },
+    {
+      "<!DOCTYPE html>": "// set focus to frame so keyboard scrolling will work"
+    },
+    {
+      "<!DOCTYPE html>": "document.getElementById(\"shinyapps\").contentWindow.focus();"
+    },
+    {
+      "<!DOCTYPE html>": "</script>"
+    },
+    {
+      "<!DOCTYPE html>": "</body>"
+    },
+    {
+      "<!DOCTYPE html>": "<html>"
+    }
+  ],
+  "metadata": {
+    "total_records": 51,
+    "approved_records": 51,
+    "failed_records": 51,
+    "oncology_full": 0,
+    "oncology_approved": 0,
+    "oncology_failed": 0
+  }
+}

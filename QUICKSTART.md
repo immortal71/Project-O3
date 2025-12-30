@@ -1,6 +1,6 @@
 # OpenAI Integration - Quick Start
 
-## ✅ What's Been Done
+##  What's Been Done
 
 1. **Backend Service Created**
    - `backend/openai_service.py` - OpenAI integration with GPT-4
@@ -18,7 +18,7 @@
    - Loading states implemented
    - Error handling ready
 
-## 🚀 Next Steps
+##  Next Steps
 
 ### Step 1: Get OpenAI API Key
 
@@ -70,7 +70,7 @@ Server will start at: http://localhost:8000
 3. Click "Analyze Drug"
 4. View results in console and alert
 
-## 📋 API Endpoint
+##  API Endpoint
 
 **POST** `/api/discovery/analyze`
 
@@ -108,7 +108,7 @@ Server will start at: http://localhost:8000
 }
 ```
 
-## 🔍 Testing Without API Key
+##  Testing Without API Key
 
 If you don't have an OpenAI API key yet, you can test with mock data:
 
@@ -116,23 +116,23 @@ If you don't have an OpenAI API key yet, you can test with mock data:
 2. This confirms the endpoint is working
 3. Once you add the API key, real analysis will work
 
-## 💰 Cost Estimate
+##  Cost Estimate
 
 - **Fast mode**: ~$0.05-0.10 per analysis
 - **Deep mode**: ~$0.15-0.25 per analysis
 - **Monthly** (100 analyses): ~$5-25 depending on mode
 
-## 📝 Current Status
+##  Current Status
 
-✅ Backend service implemented
-✅ API endpoints created  
-✅ OpenAI package installed
-✅ Frontend configured
+ Backend service implemented
+ API endpoints created  
+ OpenAI package installed
+ Frontend configured
 ⏳ Needs: OpenAI API key in .env
 ⏳ Needs: Backend server running
 ⏳ Needs: Results rendering in UI
 
-## 🎯 Next Implementation
+##  Next Implementation
 
 After getting basic analysis working, we can add:
 
@@ -159,7 +159,7 @@ After getting basic analysis working, we can add:
 **"Connection refused"**
 → Backend not started or wrong port
 
-## 📞 Support
+##  Support
 
 Check these resources:
 - OpenAI Status: https://status.openai.com

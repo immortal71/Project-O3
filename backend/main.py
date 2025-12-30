@@ -240,6 +240,14 @@ app.include_router(api_router, prefix="/api/v1")
 app.include_router(discovery_router)  # Discovery analysis endpoints
 app.include_router(image_router)  # Image generation endpoints
 
+# 🚀 DEMO ENDPOINTS - For Founders Fest live presentation
+try:
+    from demo_api import router as demo_router
+    app.include_router(demo_router)
+    logger.info("✅ Demo API endpoints loaded - ready for presentation!")
+except ImportError:
+    logger.warning("Demo API not available - install demo dependencies")
+
 # Mount Prometheus metrics
 metrics_app = make_asgi_app()
 app.mount("/metrics", metrics_app)

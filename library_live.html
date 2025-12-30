@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Library - OncoPurpose (LIVE DATA)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-weight: 400;
+        }
+        .glass-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+        }
+        .paper-card {
+            transition: all 0.2s ease;
+        }
+        .paper-card:hover {
+            border-color: #14b8a6;
+        }
+    </style>
+</head>
+<body style="background-color: #0f172a; color: #f1f5f9;">
+    <!-- Top Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold" style="background: linear-gradient(135deg, #14b8a6 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">OncoPurpose</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                        <a href="dashboard.html" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                        <a href="discovery.html" class="text-gray-300 hover:text-white transition-colors">Discovery</a>
+                        <a href="library.html" class="text-white transition-colors">Research</a>
+                        <a href="analytics.html" class="text-gray-300 hover:text-white transition-colors">Analytics</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-2">Research Library <span class="text-emerald-400" id="library-status">🔄 Loading...</span></h1>
+                <p class="text-gray-300">Comprehensive database of pharmaceutical research and clinical studies</p>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid md:grid-cols-4 gap-4 mb-8" id="stats-cards">
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Total Papers</div>
+                    <div class="text-3xl font-bold" id="total-papers">-</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Cancer Types</div>
+                    <div class="text-3xl font-bold" id="cancer-types">-</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Study Types</div>
+                    <div class="text-3xl font-bold" id="study-types">-</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-sm text-gray-400 mb-1">Years Covered</div>
+                    <div class="text-3xl font-bold" id="year-range">-</div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-4 gap-6">
+                <!-- Filter Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="glass-card p-6 rounded-xl sticky top-24">
+                        <div class="space-y-6">
+                            <!-- Search within results -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Search Papers</label>
+                                <input type="text" id="paper-search" placeholder="Title, author, keywords..." 
+                                    class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-500 text-sm">
+                            </div>
+
+                            <!-- Cancer Type Filter -->
+                            <div>
+                                <label class="block text-sm font-medium mb-3">Cancer Type</label>
+                                <div id="cancer-filter" class="space-y-2">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Study Type Filter -->
+                            <div>
+                                <label class="block text-sm font-medium mb-3">Study Type</label>
+                                <div id="study-filter" class="space-y-2">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Year Filter -->
+                            <div>
+                                <label class="block text-sm font-medium mb-3">Publication Year</label>
+                                <select id="year-filter" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-500 text-sm">
+                                    <option value="">All Years</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                </select>
+                            </div>
+
+                            <!-- Clear Filters -->
+                            <button id="clear-filters" class="w-full bg-slate-700 hover:bg-slate-600 py-2 rounded-lg font-medium transition-colors">
+                                Clear All Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Grid -->
+                <div class="lg:col-span-3">
+                    <!-- Results Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-xl font-semibold">Research Papers</h2>
+                            <p class="text-gray-400 text-sm">Showing <span id="filtered-count">0</span> papers</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <select id="sort-papers" class="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500">
+                                <option value="year-desc">Newest First</option>
+                                <option value="year-asc">Oldest First</option>
+                                <option value="title">Sort by Title</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Papers Grid -->
+                    <div class="space-y-4" id="papers-grid">
+                        <!-- Papers populated dynamically -->
+                        <div class="glass-card p-6 rounded-xl text-center">
+                            <div class="text-xl mb-2">🔄</div>
+                            <div>Loading research papers...</div>
+                        </div>
+                    </div>
+
+                    <!-- Load More -->
+                    <div class="mt-6 text-center" id="load-more-container" style="display:none;">
+                        <button id="load-more-btn" class="bg-emerald-600 hover:bg-emerald-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                            Load More Papers
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:8000/api/v1/library';
+        
+        let allPapers = [];
+        let filteredPapers = [];
+        let displayedCount = 20;
+        let currentFilters = {
+            query: '',
+            cancer_type: '',
+            study_type: '',
+            year: ''
+        };
+
+        // Load library stats
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const data = await response.json();
+                
+                document.getElementById('total-papers').textContent = data.total_papers.toLocaleString();
+                document.getElementById('cancer-types').textContent = data.cancer_type_counts.length;
+                document.getElementById('study-types').textContent = data.study_type_counts.length;
+                document.getElementById('year-range').textContent = 
+                    `${data.year_range.min}-${data.year_range.max}`;
+                
+                // Populate filters
+                populateCancerFilter(data.cancer_type_counts);
+                populateStudyFilter(data.study_type_counts);
+                
+                document.getElementById('library-status').innerHTML = '✅ Live';
+                document.getElementById('library-status').className = 'text-emerald-400';
+                
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+                document.getElementById('library-status').innerHTML = '❌ Offline';
+                document.getElementById('library-status').className = 'text-red-400';
+            }
+        }
+
+        // Load papers
+        async function loadPapers(limit = 500) {
+            try {
+                const response = await fetch(`${API_BASE}/papers?limit=${limit}`);
+                const data = await response.json();
+                allPapers = data.papers || [];
+                filteredPapers = [...allPapers];
+                renderPapers();
+                
+            } catch (error) {
+                console.error('Failed to load papers:', error);
+                document.getElementById('papers-grid').innerHTML = `
+                    <div class="glass-card p-6 rounded-xl text-center border border-red-500">
+                        <div class="text-xl mb-2">❌</div>
+                        <div>Failed to load papers. Make sure the API server is running.</div>
+                        <div class="text-sm text-gray-400 mt-2">Error: ${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Populate cancer type filter
+        function populateCancerFilter(cancerTypes) {
+            const container = document.getElementById('cancer-filter');
+            container.innerHTML = cancerTypes.slice(0, 10).map(([type, count]) => `
+                <label class="flex items-center">
+                    <input type="radio" name="cancer-filter" value="${type}" class="mr-2">
+                    <span class="text-sm">${type} (${count})</span>
+                </label>
+            `).join('');
+            
+            // Add "All" option
+            container.insertAdjacentHTML('afterbegin', `
+                <label class="flex items-center">
+                    <input type="radio" name="cancer-filter" value="" class="mr-2" checked>
+                    <span class="text-sm font-medium">All Types</span>
+                </label>
+            `);
+            
+            // Add change event listener
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    currentFilters.cancer_type = input.value;
+                    applyFilters();
+                });
+            });
+        }
+
+        // Populate study type filter
+        function populateStudyFilter(studyTypes) {
+            const container = document.getElementById('study-filter');
+            container.innerHTML = studyTypes.map(([type, count]) => `
+                <label class="flex items-center">
+                    <input type="radio" name="study-filter" value="${type}" class="mr-2">
+                    <span class="text-sm">${type} (${count})</span>
+                </label>
+            `).join('');
+            
+            // Add "All" option
+            container.insertAdjacentHTML('afterbegin', `
+                <label class="flex items-center">
+                    <input type="radio" name="study-filter" value="" class="mr-2" checked>
+                    <span class="text-sm font-medium">All Types</span>
+                </label>
+            `);
+            
+            // Add change event listener
+            container.querySelectorAll('input').forEach(input => {
+                input.addEventListener('change', () => {
+                    currentFilters.study_type = input.value;
+                    applyFilters();
+                });
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            filteredPapers = allPapers.filter(paper => {
+                // Search query filter
+                if (currentFilters.query) {
+                    const query = currentFilters.query.toLowerCase();
+                    const matches = 
+                        paper.title.toLowerCase().includes(query) ||
+                        paper.abstract.toLowerCase().includes(query) ||
+                        (paper.author_string && paper.author_string.toLowerCase().includes(query)) ||
+                        (paper.keywords && paper.keywords.some(k => k.toLowerCase().includes(query)));
+                    if (!matches) return false;
+                }
+                
+                // Cancer type filter
+                if (currentFilters.cancer_type && 
+                    !paper.cancer_types.includes(currentFilters.cancer_type)) {
+                    return false;
+                }
+                
+                // Study type filter
+                if (currentFilters.study_type && 
+                    paper.study_type !== currentFilters.study_type) {
+                    return false;
+                }
+                
+                // Year filter
+                if (currentFilters.year && 
+                    paper.year !== parseInt(currentFilters.year)) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            displayedCount = 20;
+            renderPapers();
+        }
+
+        // Render papers
+        function renderPapers() {
+            const container = document.getElementById('papers-grid');
+            const papers = filteredPapers.slice(0, displayedCount);
+            
+            if (papers.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-card p-6 rounded-xl text-center">
+                        <div class="text-xl mb-2">🔍</div>
+                        <div>No papers found matching your filters.</div>
+                        <div class="text-sm text-gray-400 mt-2">Try adjusting your search criteria.</div>
+                    </div>
+                `;
+                document.getElementById('load-more-container').style.display = 'none';
+                return;
+            }
+            
+            container.innerHTML = papers.map(paper => `
+                <div class="paper-card glass-card p-6 rounded-xl border border-slate-700" data-pmid="${paper.pmid}">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2 hover:text-emerald-400 cursor-pointer">
+                                ${paper.title}
+                            </h3>
+                            <div class="flex items-center space-x-4 text-sm text-gray-400 mb-2">
+                                <span>${paper.author_string || 'Unknown authors'}</span>
+                                <span>•</span>
+                                <span>${paper.journal} (${paper.year})</span>
+                            </div>
+                            <div class="flex items-center space-x-4 text-sm text-gray-400">
+                                <span>PMID: ${paper.pmid}</span>
+                                ${paper.cancer_types.length > 0 ? `
+                                <span>•</span>
+                                <span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">
+                                    ${paper.cancer_types.join(', ')}
+                                </span>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="text-sm text-gray-300 mb-2 line-clamp-3">
+                            ${paper.abstract || 'No abstract available.'}
+                        </div>
+                        ${paper.keywords && paper.keywords.length > 0 ? `
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            ${paper.keywords.slice(0, 5).map(kw => `
+                                <span class="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded text-xs">${kw}</span>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <a href="${paper.url}" target="_blank" 
+                               class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                📄 View on PubMed
+                            </a>
+                            <button onclick="downloadPaperPDF('${paper.pmid}', '${paper.title.replace(/'/g, "\\'")}')"
+                                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                📥 Download PDF
+                            </button>
+                            <button onclick="savePaper(${JSON.stringify(paper).replace(/"/g, '&quot;')})"
+                                    class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                                💾 Save
+                            </button>
+                            <span class="px-3 py-2 bg-green-500/20 text-green-400 rounded text-xs">
+                                ${paper.study_type}
+                            </span>
+                        </div>
+                        <div class="text-sm text-gray-400">
+                            Published: ${paper.publication_date || paper.year}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('filtered-count').textContent = filteredPapers.length;
+            
+            // Show/hide load more button
+            if (filteredPapers.length > displayedCount) {
+                document.getElementById('load-more-container').style.display = 'block';
+            } else {
+                document.getElementById('load-more-container').style.display = 'none';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('paper-search').addEventListener('input', (e) => {
+            currentFilters.query = e.target.value;
+            applyFilters();
+        });
+
+        document.getElementById('year-filter').addEventListener('change', (e) => {
+            currentFilters.year = e.target.value;
+            applyFilters();
+        });
+
+        document.getElementById('clear-filters').addEventListener('click', () => {
+            document.getElementById('paper-search').value = '';
+            document.getElementById('year-filter').value = '';
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                if (radio.value === '') radio.checked = true;
+            });
+            currentFilters = { query: '', cancer_type: '', study_type: '', year: '' };
+            applyFilters();
+        });
+
+        document.getElementById('load-more-btn').addEventListener('click', () => {
+            displayedCount += 20;
+            renderPapers();
+        });
+
+        document.getElementById('sort-papers').addEventListener('change', (e) => {
+            const sortBy = e.target.value;
+            if (sortBy === 'year-desc') {
+                filteredPapers.sort((a, b) => b.year - a.year);
+            } else if (sortBy === 'year-asc') {
+                filteredPapers.sort((a, b) => a.year - b.year);
+            } else if (sortBy === 'title') {
+                filteredPapers.sort((a, b) => a.title.localeCompare(b.title));
+            }
+            renderPapers();
+        });
+        
+        // Download paper PDF
+        async function downloadPaperPDF(pmid, title) {
+            // Show loading notification
+            const notification = document.createElement('div');
+            notification.style.cssText = 'position: fixed; top: 80px; right: 20px; background: #14b8a6; color: white; padding: 16px 24px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+            notification.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 4px;">📥 Generating PDF...</div>
+                <div style="font-size: 14px;">PMID: ${pmid}</div>
+            `;
+            document.body.appendChild(notification);
+            
+            try {
+                // Call backend to generate PDF
+                const response = await fetch(`http://localhost:8000/api/v1/library/download-pdf/${pmid}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to generate PDF');
+                }
+                
+                // Download the PDF
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${pmid}_${title.substring(0, 30).replace(/[^a-z0-9]/gi, '_')}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                
+                // Update notification
+                notification.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 4px;">✅ PDF Downloaded!</div>
+                    <div style="font-size: 14px;">PMID: ${pmid}</div>
+                `;
+                notification.style.background = '#10b981';
+                
+            } catch (error) {
+                console.error('PDF download error:', error);
+                
+                // Update notification with error
+                notification.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 4px;">❌ PDF Failed</div>
+                    <div style="font-size: 12px;">Opening PubMed page...</div>
+                `;
+                notification.style.background = '#ef4444';
+                
+                // Fallback: open PubMed page
+                setTimeout(() => {
+                    window.open(`https://pubmed.ncbi.nlm.nih.gov/${pmid}/`, '_blank');
+                }, 1000);
+            }
+            
+            setTimeout(() => notification.remove(), 4000);
+        }
+
+        // Save paper to library
+        function savePaper(paper) {
+            const savedPapers = JSON.parse(localStorage.getItem('savedPapers') || '[]');
+            
+            // Check if already saved
+            if (savedPapers.some(p => p.pmid === paper.pmid)) {
+                alert('📄 This paper is already in your saved library!');
+                return;
+            }
+            
+            // Add to saved
+            savedPapers.push(paper);
+            localStorage.setItem('savedPapers', JSON.stringify(savedPapers));
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.style.cssText = 'position: fixed; top: 80px; right: 20px; background: #8b5cf6; color: white; padding: 16px 24px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+            notification.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 4px;">✅ Paper Saved!</div>
+                <div style="font-size: 12px;">View in <a href="saved-library.html" style="color: white; text-decoration: underline;">Saved Library</a></div>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Initialize
+        loadStats();
+        loadPapers();
+    </script>
+</body>
+</html>

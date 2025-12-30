@@ -1,8 +1,8 @@
 # Dashboard Image Generator - Quick Setup Guide
 
-## 🎯 Two Options for Dashboard Image
+##  Two Options for Dashboard Image
 
-### Option 1: HTML Screenshot (Recommended - Works Immediately!) ✅
+### Option 1: HTML Screenshot (Recommended - Works Immediately!) 
 
 Since the Google API key is for Gemini (text) and not Imagen (images), I've created an HTML mockup that looks exactly like a real dashboard.
 
@@ -13,20 +13,20 @@ Since the Google API key is for Gemini (text) and not Imagen (images), I've crea
 4. The homepage will automatically load it!
 
 **Files Created:**
-- ✅ `dashboard-preview-generator.html` - Beautiful HTML dashboard mockup
-- ✅ `dashboard-generator.js` - Frontend script to load the image
-- ✅ `test_image_generation.py` - API test script
-- ✅ `backend/image_generation.py` - Image generation service
-- ✅ `backend/image_api.py` - API endpoints
-- ✅ Updated `index (1).html` with generate button
+-  `dashboard-preview-generator.html` - Beautiful HTML dashboard mockup
+-  `dashboard-generator.js` - Frontend script to load the image
+-  `test_image_generation.py` - API test script
+-  `backend/image_generation.py` - Image generation service
+-  `backend/image_api.py` - API endpoints
+-  Updated `index (1).html` with generate button
 
 ---
 
 ### Option 2: Use Google Imagen API (Requires Different API Key)
 
 The API key you provided (`AIzaSyBUkCwt3sZDicU_-_MUsqjWlaiO7Uo7TAQ`) is for:
-- ✅ Google Gemini (text generation)
-- ❌ Google Imagen (image generation)
+-  Google Gemini (text generation)
+-  Google Imagen (image generation)
 
 **To use real AI image generation:**
 
@@ -53,7 +53,7 @@ The API key you provided (`AIzaSyBUkCwt3sZDicU_-_MUsqjWlaiO7Uo7TAQ`) is for:
 
 ---
 
-## 🚀 Quick Start (HTML Screenshot Method)
+##  Quick Start (HTML Screenshot Method)
 
 ### Step 1: Generate the Dashboard Image
 ```bash
@@ -84,26 +84,26 @@ http://localhost:8000/index%20(1).html
 
 ---
 
-## 📁 File Structure
+##  File Structure
 
 ```
 Project_O3/
-├── index (1).html              # ✨ Updated with generate button
+├── index (1).html              #  Updated with generate button
 ├── dashboard-generator.js      # Auto-loads dashboard image
 ├── dashboard-preview-generator.html  # HTML mockup for screenshots
 ├── test_image_generation.py    # API test script
 ├── backend/
 │   ├── image_generation.py     # Image generation service
 │   ├── image_api.py           # API endpoints
-│   └── main.py                # ✨ Updated with image routes
+│   └── main.py                #  Updated with image routes
 └── resources/
     └── generated/
-        └── dashboard-preview.png  # 👈 Put your screenshot here
+        └── dashboard-preview.png  #  Put your screenshot here
 ```
 
 ---
 
-## 🎨 Homepage Features Added
+##  Homepage Features Added
 
 1. **Generate Button**: Click to trigger image generation (currently uses screenshot)
 2. **Auto-load**: Automatically loads existing dashboard image
@@ -113,7 +113,7 @@ Project_O3/
 
 ---
 
-## 🔧 Backend API Endpoints (Ready for Future Use)
+##  Backend API Endpoints (Ready for Future Use)
 
 Once you get Imagen/DALL-E API access:
 
@@ -139,7 +139,7 @@ GET /api/images/dashboard-preview
 
 ---
 
-## 💡 Next Steps
+##  Next Steps
 
 1. **Immediate**: Use HTML screenshot method (works now!)
 2. **Later**: Get proper Imagen/DALL-E API key for real AI generation
@@ -147,7 +147,7 @@ GET /api/images/dashboard-preview
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 **"Can't see the dashboard image"**
 - Make sure file is named exactly: `dashboard-preview.png`
